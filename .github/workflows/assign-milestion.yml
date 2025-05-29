@@ -1,0 +1,37 @@
+name: Assign Milestone from Issue
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  assign-milestone:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Assign milestone from linked issue
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pr = context.payload.pull_request;
+            const body = pr.body;
+
+            const issueMatch = body.match(/(?:Fixes|Closes|Resolves) #(\d+)/i);
+            if (!issueMatch) return;
+
+            const issueNumber = parseInt(issueMatch[1], 10);
+            const issue = await github.rest.issues.get({
+              ...context.repo,
+              issue_number: issueNumber,
+            });
+
+            if (issue.data.milestone) {
+              await github.rest.issues.update({
+                ...context.repo,
+                issue_number: pr.number,
+                milestone: issue.data.milestone.number,
+              });
+            }
