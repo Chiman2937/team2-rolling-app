@@ -23,15 +23,3 @@ jobs:
             if (!issueMatch) return;
 
             const issueNumber = parseInt(issueMatch[1], 10);
-            const issue = await github.rest.issues.get({
-              ...context.repo,
-              issue_number: issueNumber,
-            });
-
-            if (issue.data.milestone) {
-              # await github.rest.issues.update({
-              #   ...context.repo,
-              #   issue_number: pr.number,
-              #   milestone: issue.data.milestone.number,
-              # });
-            }
