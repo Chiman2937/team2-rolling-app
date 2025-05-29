@@ -29,9 +29,9 @@ jobs:
             });
 
             if (issue.data.milestone) {
-              await github.rest.issues.update({
-                ...context.repo,
-                issue_number: pr.number,
-                milestone: issue.data.milestone.number,
-              });
+              # await github.rest.issues.update({
+              #   ...context.repo,
+              #   issue_number: pr.number,
+              #   milestone: issue.data.milestone.number,
+              # });
             }
