@@ -1,6 +1,6 @@
 ---
-name: 간단한 작업 템플릿
-about: 짧고 단순한 작업용 템플릿입니다.
+name: 2팀 ISSUE 템플릿
+about: 작업용 템플릿입니다.
 title: ''
 labels: []
 assignees: []
