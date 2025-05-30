@@ -14,4 +14,14 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),
     },
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `
+          @use "@/assets/styles/variables" as *;
+          @use "@/assets/styles/mixins" as *;
+        `,
+      },
+    },
+  },
 });
