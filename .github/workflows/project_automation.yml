@@ -24,48 +24,54 @@ jobs:
             const issueNodeId = issue.node_id;
             const issueNumber = issue.number;
             const body = issue.body || "";
-            const targetMatch = body.match(/Target:\s*(\d{4}-\d{2}-\d{2})/);
-            const targetDate = targetMatch ? targetMatch[1] : null;
+
+            // ⏰ Target 날짜 추출 (yml 템플릿에 대응)
+            const targetMatch = body.match(/Target[^\n]*\n+(\d{4}-\d{2}-\d{2})/);
+            let targetDate = targetMatch ? targetMatch[1] : null;
+
+            if (!targetDate) {
+              const today = new Date();
+              targetDate = today.toISOString().slice(0, 10); // yyyy-mm-dd
+              console.log(`⚠️ Target 날짜가 본문에 없어서 오늘 날짜(${targetDate})로 설정합니다.`);
+            }
 
             const username = "Chiman2937";
             const projectNumber = 6;
 
-            const { user } = await github.graphql(`
-              query($login: String!, $number: Int!) {
-                user(login: $login) {
-                  projectV2(number: $number) {
-                    id
-                    fields(first: 20) {
-                      nodes {
-                        ... on ProjectV2SingleSelectField {
+            const { user } = await github.graphql(`query($login: String!, $number: Int!) {
+              user(login: $login) {
+                projectV2(number: $number) {
+                  id
+                  fields(first: 20) {
+                    nodes {
+                      ... on ProjectV2SingleSelectField {
+                        id
+                        name
+                        options {
                           id
                           name
-                          options {
-                            id
-                            name
-                          }
-                        }
-                        ... on ProjectV2Field {
-                          id
-                          name
-                          dataType
                         }
                       }
-                    }
-                    items(first: 100) {
-                      nodes {
+                      ... on ProjectV2Field {
                         id
-                        content {
-                          ... on Issue {
-                            id
-                          }
+                        name
+                        dataType
+                      }
+                    }
+                  }
+                  items(first: 100) {
+                    nodes {
+                      id
+                      content {
+                        ... on Issue {
+                          id
                         }
                       }
                     }
                   }
                 }
               }
-            `, { login: username, number: projectNumber });
+            }`, { login: username, number: projectNumber });
 
             const project = user.projectV2;
             const statusField = project.fields.nodes.find(f => f.name === "Status");
@@ -74,52 +80,44 @@ jobs:
 
             let item = project.items.nodes.find(i => i.content?.id === issueNodeId);
             if (!item) {
-              const addResult = await github.graphql(`
-                mutation {
-                  addProjectV2ItemById(input: {
-                    projectId: "${project.id}",
-                    contentId: "${issueNodeId}"
-                  }) {
-                    item { id }
-                  }
+              const addResult = await github.graphql(`mutation {
+                addProjectV2ItemById(input: {
+                  projectId: "${project.id}",
+                  contentId: "${issueNodeId}"
+                }) {
+                  item { id }
                 }
-              `);
+              }`);
               item = { id: addResult.addProjectV2ItemById.item.id };
               console.log("✅ Project에 이슈가 추가되었습니다.");
             }
 
             if (statusField && todoOption) {
-              await github.graphql(`
-                mutation {
-                  updateProjectV2ItemFieldValue(input: {
-                    projectId: "${project.id}",
-                    itemId: "${item.id}",
-                    fieldId: "${statusField.id}",
-                    value: { singleSelectOptionId: "${todoOption.id}" }
-                  }) {
-                    projectV2Item { id }
-                  }
+              await github.graphql(`mutation {
+                updateProjectV2ItemFieldValue(input: {
+                  projectId: "${project.id}",
+                  itemId: "${item.id}",
+                  fieldId: "${statusField.id}",
+                  value: { singleSelectOptionId: "${todoOption.id}" }
+                }) {
+                  projectV2Item { id }
                 }
-              `);
+              }`);
               console.log("✅ Status 필드를 Todo로 설정했습니다.");
             }
 
             if (targetField && targetDate) {
-              await github.graphql(`
-                mutation {
-                  updateProjectV2ItemFieldValue(input: {
-                    projectId: "${project.id}",
-                    itemId: "${item.id}",
-                    fieldId: "${targetField.id}",
-                    value: { date: "${targetDate}" }
-                  }) {
-                    projectV2Item { id }
-                  }
+              await github.graphql(`mutation {
+                updateProjectV2ItemFieldValue(input: {
+                  projectId: "${project.id}",
+                  itemId: "${item.id}",
+                  fieldId: "${targetField.id}",
+                  value: { date: "${targetDate}" }
+                }) {
+                  projectV2Item { id }
                 }
-              `);
+              }`);
               console.log(`✅ Target 필드에 날짜 ${targetDate} 반영 완료.`);
-            } else if (!targetDate && context.payload.action === 'edited') {
-              console.log("ℹ️ Target 날짜가 본문에 없거나 변경되지 않았습니다.");
             }
 
   handle-closed-pr:
@@ -138,27 +136,25 @@ jobs:
             const prBody = context.payload.pull_request.body || "";
             const issueNumbers = [...prBody.matchAll(/fixes\s+#(\d+)/gi)].map(m => m[1]);
 
-            const { user } = await github.graphql(`
-              query($login: String!, $number: Int!) {
-                user(login: $login) {
-                  projectV2(number: $number) {
-                    id
-                    fields(first: 20) {
-                      nodes {
-                        ... on ProjectV2SingleSelectField {
+            const { user } = await github.graphql(`query($login: String!, $number: Int!) {
+              user(login: $login) {
+                projectV2(number: $number) {
+                  id
+                  fields(first: 20) {
+                    nodes {
+                      ... on ProjectV2SingleSelectField {
+                        id
+                        name
+                        options {
                           id
                           name
-                          options {
-                            id
-                            name
-                          }
                         }
                       }
                     }
                   }
                 }
               }
-            `, { login: username, number: projectNumber });
+            }`, { login: username, number: projectNumber });
 
             const project = user.projectV2;
             const statusField = project.fields.nodes.find(f => f.name === "Status");
@@ -175,32 +171,27 @@ jobs:
 
               let itemId;
               try {
-                const result = await github.graphql(`
-                  mutation {
-                    addProjectV2ItemById(input: {
-                      projectId: "${project.id}",
-                      contentId: "${issueNodeId}"
-                    }) {
-                      item { id }
-                    }
+                const result = await github.graphql(`mutation {
+                  addProjectV2ItemById(input: {
+                    projectId: "${project.id}",
+                    contentId: "${issueNodeId}"
+                  }) {
+                    item { id }
                   }
-                `);
+                }`);
                 itemId = result.addProjectV2ItemById.item.id;
               } catch {
-                // 이미 추가되어 있을 수 있음
                 console.log(`ℹ️ Issue #${number} 이미 추가되었을 수 있음. 필드만 업데이트.`);
               }
 
-              await github.graphql(`
-                mutation {
-                  updateProjectV2ItemFieldValue(input: {
-                    projectId: "${project.id}",
-                    itemId: "${itemId}",
-                    fieldId: "${statusField.id}",
-                    value: { singleSelectOptionId: "${doneOption.id}" }
-                  }) {
-                    projectV2Item { id }
-                  }
+              await github.graphql(`mutation {
+                updateProjectV2ItemFieldValue(input: {
+                  projectId: "${project.id}",
+                  itemId: "${itemId}",
+                  fieldId: "${statusField.id}",
+                  value: { singleSelectOptionId: "${doneOption.id}" }
+                }) {
+                  projectV2Item { id }
                 }
-              `);
+              }`);
               console.log(`✅ Issue #${number}의 Status를 Done으로 변경했습니다.`);
