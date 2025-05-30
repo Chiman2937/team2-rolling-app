@@ -2,7 +2,7 @@ name: Project V2 Automation
 
 on:
   issues:
-    types: [opened, edited]
+    types: [opened, edited, closed]  # 👈 closed 이벤트 추가
   pull_request:
     types: [closed]
 
@@ -76,6 +76,7 @@ jobs:
             const project = user.projectV2;
             const statusField = project.fields.nodes.find(f => f.name === "Status");
             const todoOption = statusField.options.find(o => o.name === "Todo");
+            const doneOption = statusField.options.find(o => o.name === "Done");
             const targetField = project.fields.nodes.find(f => f.name === "Target" && f.dataType === "DATE");
 
             let item = project.items.nodes.find(i => i.content?.id === issueNodeId);
@@ -92,7 +93,23 @@ jobs:
               console.log("✅ Project에 이슈가 추가되었습니다.");
             }
 
-            if (statusField && todoOption) {
+            // 이슈가 닫힌 경우 → Status를 Done으로 설정
+            if (context.payload.action === 'closed' && statusField && doneOption) {
+              await github.graphql(`mutation {
+                updateProjectV2ItemFieldValue(input: {
+                  projectId: "${project.id}",
+                  itemId: "${item.id}",
+                  fieldId: "${statusField.id}",
+                  value: { singleSelectOptionId: "${doneOption.id}" }
+                }) {
+                  projectV2Item { id }
+                }
+              }`);
+              console.log("✅ 이슈가 닫혀서 Status를 Done으로 설정했습니다.");
+            }
+
+            // 이슈가 열린 경우 or 편집된 경우 → Status를 Todo로 설정
+            if ((context.payload.action === 'opened' || context.payload.action === 'edited') && statusField && todoOption) {
               await github.graphql(`mutation {
                 updateProjectV2ItemFieldValue(input: {
                   projectId: "${project.id}",
@@ -106,6 +123,7 @@ jobs:
               console.log("✅ Status 필드를 Todo로 설정했습니다.");
             }
 
+            // Target 날짜 설정 (모든 경우)
             if (targetField && targetDate) {
               await github.graphql(`mutation {
                 updateProjectV2ItemFieldValue(input: {
