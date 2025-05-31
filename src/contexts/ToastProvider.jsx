@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Toast from '../components/Toast';
 import styles from './ToastProvider.module.scss';
@@ -7,18 +7,23 @@ export const ToastContext = createContext();
 
 export const ToastProvider = ({ children }) => {
   const [toasts, setToasts] = useState([]);
+  const timeoutMap = useRef({});
 
   const closeToast = (id) => {
     setToasts((prev) => prev.filter((t) => t.id !== id));
+    clearTimeout(timeoutMap.current[id]);
+    delete timeoutMap.current[id];
   };
 
-  const showToast = ({ type, message }) => {
+  const showToast = ({ type, message, timer }) => {
     const toastId = crypto.randomUUID();
-    setToasts((prev) => [...prev, { id: toastId, type, message }]);
+    setToasts((prev) => [...prev, { id: toastId, type, message, timer }]);
 
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       closeToast(toastId);
-    }, 5000);
+    }, timer);
+
+    timeoutMap.current[toastId] = timeoutId;
   };
 
   return (
@@ -32,6 +37,7 @@ export const ToastProvider = ({ children }) => {
                 key={t.id}
                 message={t.message}
                 type={t.type}
+                timer={t.timer}
                 onClose={() => closeToast(t.id)}
               />
             ))}

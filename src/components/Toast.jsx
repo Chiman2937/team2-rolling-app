@@ -14,7 +14,7 @@ const TOAST_CLOSING_STYLE = {
   true: 'isClosing',
 };
 
-const Toast = ({ type, message, onClose }) => {
+const Toast = ({ type, message, onClose, timer }) => {
   const [isClosing, setIsClosing] = useState(false);
 
   const handleManualClick = () => {
@@ -22,18 +22,22 @@ const Toast = ({ type, message, onClose }) => {
   };
 
   useEffect(() => {
-    const timeout = setTimeout(() => setIsClosing(true), 4500); // 5s - 0.5s
-    return () => clearTimeout(timeout);
-  }, []);
+    const autoCloseTimer = setTimeout(() => {
+      setIsClosing(true);
+    }, timer - 400);
+
+    return () => clearTimeout(autoCloseTimer);
+  }, [timer]);
 
   useEffect(() => {
-    if (isClosing) {
-      // 0.5초 후 onClose 호출 (애니메이션 끝나고)
-      const closeTimeout = setTimeout(() => {
-        onClose();
-      }, 400); // 애니메이션 길이와 일치
-      return () => clearTimeout(closeTimeout);
-    }
+    if (!isClosing) return;
+    // 0.5초 후 onClose 호출 (애니메이션 끝나고)
+
+    const closeTimeout = setTimeout(() => {
+      onClose();
+    }, 400); // 애니메이션 길이와 일치
+
+    return () => clearTimeout(closeTimeout);
   }, [isClosing]);
 
   return (
