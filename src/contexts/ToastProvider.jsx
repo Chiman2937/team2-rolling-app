@@ -8,26 +8,36 @@ export const ToastContext = createContext();
 export const ToastProvider = ({ children }) => {
   const [toasts, setToasts] = useState([]);
 
+  const closeToast = (id) => {
+    setToasts((prev) => prev.filter((t) => t.id !== id));
+  };
+
   const showToast = ({ type, message }) => {
-    const id = crypto.randomUUID();
-    setToasts((prev) => [...prev, { id, type, message }]);
+    const toastId = crypto.randomUUID();
+    setToasts((prev) => [...prev, { id: toastId, type, message }]);
 
     setTimeout(() => {
-      setToasts((prev) => prev.filter((t) => t.id !== id));
+      closeToast(toastId);
     }, 5000);
   };
 
   return (
     <ToastContext.Provider value={{ showToast }}>
       {children}
-      {createPortal(
-        <div className={styles['toast-wrapper']}>
-          {toasts.map((t) => (
-            <Toast key={t.id} message={t.message} type={t.type} />
-          ))}
-        </div>,
-        document.getElementById('toast-root'),
-      )}
+      {toasts.length > 0 &&
+        createPortal(
+          <div className={styles['toast-wrapper']}>
+            {toasts.map((t) => (
+              <Toast
+                key={t.id}
+                message={t.message}
+                type={t.type}
+                onClose={() => closeToast(t.id)}
+              />
+            ))}
+          </div>,
+          document.getElementById('toast-root'),
+        )}
     </ToastContext.Provider>
   );
 };

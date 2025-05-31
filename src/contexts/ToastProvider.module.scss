@@ -1,6 +1,22 @@
 .toast-wrapper {
 	position: fixed;
+	width: var(--wrapper-width);
+	height: 64px;
+	bottom: 70px;
 	left: 50%;
-	transform: translate(-50%,-50%);
-	z-index: 999;
+	transform: translateX(-50%);
+	> * {
+		position: absolute;
+	}
+}
+
+:root {
+	--wrapper-width: calc(100vw - 40px);
+}
+
+/* Tablet, PC */
+@media (min-width: 768px) {
+  :root {
+		--wrapper-width: 524px;
+  }
 }
