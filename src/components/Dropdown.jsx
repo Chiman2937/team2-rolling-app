@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from '@/components/Dropdown/Dropdown.module.scss';
+import styles from '@/components/Dropdown.module.scss';
 import arrowIcon from '@/assets/icons/arrow-down.svg';
 import arrowIconDisabled from '@/assets/icons/arrow-down-disabled.svg';
 /*

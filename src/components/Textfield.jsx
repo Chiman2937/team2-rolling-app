@@ -1,4 +1,4 @@
-import styles from '@/components/Textfield/Textfield.module.scss';
+import styles from '@/components/Textfield.module.scss';
 /*
   [Textfield 속성]
   value: 텍스트필드 값
