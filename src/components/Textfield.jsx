@@ -2,7 +2,7 @@ import styles from '@/components/Textfield.module.scss';
 /*
   [Textfield 속성]
   value: 텍스트필드 값
-  onChangeVal: 컴포넌트 밖에서 텍스트필드 값을 변경하는 메소드 전달 필요
+  onChange: 컴포넌트 밖에서 텍스트필드 값을 변경하는 메소드 전달 필요
   disabled: 비활성화 상태
   error: 에러 상태
   success: 성공 상태
