@@ -1,0 +1,27 @@
+// fadeIn
+@mixin fade-in-up($distance: 20px, $opacity-start: 0, $opacity-end: 0.8) {
+  @keyframes fade-in-up {
+    0% {
+      transform: translateY($distance);
+      opacity: $opacity-start;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: $opacity-end;
+    }
+  }
+}
+
+// fadeOut
+@mixin fade-out-up($distance: 20px, $opacity-start: 0.8, $opacity-end: 0) {
+  @keyframes fade-out-up {
+    0% {
+      transform: translateY(0);
+      opacity: $opacity-start;
+    }
+    100% {
+      transform: translateY(-$distance);
+      opacity: $opacity-end;
+    }
+  }
+}
