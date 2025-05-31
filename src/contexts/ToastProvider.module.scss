@@ -1,6 +1,9 @@
+$wrapper-width-mobile: calc(100vw - 40px);
+$wrapper-width-tablet: 524px;
+$wrapper-width-desktop: 524px;
+
 .toast-wrapper {
 	position: fixed;
-	width: var(--wrapper-width);
 	height: 64px;
 	bottom: 70px;
 	left: 50%;
@@ -8,15 +11,9 @@
 	> * {
 		position: absolute;
 	}
-}
-
-:root {
-	--wrapper-width: calc(100vw - 40px);
-}
-
-/* Tablet, PC */
-@media (min-width: 768px) {
-  :root {
-		--wrapper-width: 524px;
-  }
+	@include responsive-width(
+    $wrapper-width-mobile,
+    $wrapper-width-tablet,
+    $wrapper-width-desktop
+  );
 }
