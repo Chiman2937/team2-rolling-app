@@ -1,0 +1,39 @@
+.container {
+	display: flex;
+	flex-direction: row;
+	gap: 16px;
+	align-items: center;
+	justify-content: center;
+}
+
+.image {
+	aspect-ratio: 1 / 1;
+}
+
+.from-container {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	justify-content: center;
+	gap: 6px;
+	flex-grow: 1;
+}
+
+.from {
+	font-weight: 400;
+	font-size: 20px;
+	line-height: 24px;
+}
+
+.name {
+	font-weight: 700;
+	font-size: 20px;
+	line-height: 24px;
+}
+
+.createdAt {
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 20px;
+	color: var(--color-gray-400);
+}
