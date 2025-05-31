@@ -1,0 +1,63 @@
+.textfield {
+  width: 100%;
+  min-width: 320px;
+  height: 50px;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #555555;
+
+  &:focus {
+    border: 2px solid #555555;
+    color: #181818;
+  }
+
+  &:active {
+    border: 2px solid #555555;
+    color: #181818;
+  }
+
+  &:hover {
+    border: 1px solid #555555;
+    color: #555555;
+  }
+
+  &:disabled {
+    background-color: #f6f6f6;
+    border: 1px solid #cccccc;
+    color: #999999;
+  }
+
+  &.error {
+    border: 1px solid #dc3a3a;
+    color: #181818;
+
+    &:focus {
+      border: 1px solid #dc3a3a;
+    }
+  }
+
+  &.success {
+    border: 1px solid #2ba600;
+    color: #181818;
+
+    &:focus {
+      border: 1px solid #2ba600;
+    }
+  }
+}
+
+.message {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.error-message {
+  color: #dc3a3a;
+}
+
+.success-message {
+  color: #2ba600;
+}
