@@ -1,0 +1,19 @@
+.header {
+  display: flex;
+  justify-content: center;
+  background-color: var(--color-white);
+
+  &__container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    height: 60px;
+  }
+
+  &__logo {
+    height: 32px;
+  }
+}
