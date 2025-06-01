@@ -6,8 +6,10 @@ import { ToastProvider } from './contexts/ToastProvider.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ToastProvider>
-      <App />
-    </ToastProvider>
+    <BrowserRouter>
+      <AppProvider>
+        <App />
+      </AppProvider>
+    </BrowserRouter>
   </StrictMode>,
 );
