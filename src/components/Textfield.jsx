@@ -13,7 +13,7 @@ function Textfield({ value, onChange, error, success, message, disabled }) {
     <>
       <input
         value={value}
-        className={`${styles['textfield']} ${error ? styles['error'] : ''} ${success ? styles['success'] : ''} `}
+        className={`${styles['textfield']} ${styles[error ? 'error' : success ? 'success' : '']} `}
         disabled={disabled}
         onChange={(e) => onChange(e.target.value)}
       />
