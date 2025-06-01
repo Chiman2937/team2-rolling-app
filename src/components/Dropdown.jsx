@@ -3,22 +3,17 @@ import styles from '@/components/Dropdown.module.scss';
 import arrowIcon from '@/assets/icons/arrow-down.svg';
 import arrowIconDisabled from '@/assets/icons/arrow-down-disabled.svg';
 /*
-  [Dropdown 속성]
-
-  value: 텍스트필드 값
-
-  dropdownItems: 배열
+  [Dropdown 필수 속성]
+  - value: 텍스트필드 값
+  - dropdownItems: 배열
   ex) [친구, 지인, 동료, 가족]
+  - onClickDropdownItem: 컴포넌트 밖에서 드롭다운 값을 변경하는 메소드 전달 필요
 
-  onClickDropdownItem: 컴포넌트 밖에서 드롭다운 값을 변경하는 메소드 전달 필요
-
-  disabled: 비활성화 상태
-
-  error: 에러 상태
-  
-  success: 성공 상태
-  
-  message: 에러/성공 상태 시 메세지 출력
+  [Dropdown 상태 속성]
+  - disabled: 비활성화 상태
+  - error: 에러 상태
+  - success: 성공 상태
+  - message: 에러/성공 상태 시 메세지 출력
 */
 function Dropdown({
   value,
