@@ -1,12 +1,13 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import LOGO from '@/assets/logo/Logo-Rolling.png';
 import Style from './GlobalHeader.module.scss';
+import useShowComponent from '@/hooks/useShowComponent';
 // GNB 컴포넌트
 function GlobalHeader() {
   // TODO: 커스텀 훅으로 변경해야할수도 있음
-  const location = useLocation();
   const navigate = useNavigate();
-  const showButton = location.pathname === '/' || location.pathname === '/list';
+  const VISIBLE_PATHS = ['/', '/list']; // 버튼을 보여줄 경로들
+  const showButton = useShowComponent(VISIBLE_PATHS);
 
   const handleButtonClick = () => {
     navigate('/post');
