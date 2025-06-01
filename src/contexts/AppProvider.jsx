@@ -2,6 +2,6 @@
 // 이 컴포넌트에 필요한 프로바이더를 추가하세요..
 import { ToastProvider } from './ToastProvider';
 
-export function AppProvider({ children }) {
+export default function AppProvider({ children }) {
   return <ToastProvider>{children}</ToastProvider>;
 }
