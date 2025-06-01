@@ -1,31 +1,24 @@
-import { createPortal } from 'react-dom';
 import styles from './CardModal.module.scss';
+import Modal from './Modal';
+import SenderProfile from './SenderProfile';
 
-const CardModal = ({ children }) => {
-  return createPortal(
-    <div className={styles['modal-wrapper']}>{children}</div>,
-    document.getElementById('modal-root'),
+const CardModal = ({ modalItems, onClose }) => {
+  const { sender, imageUrl, createdAt, content } = modalItems;
+
+  return (
+    <Modal>
+      <Modal.headerArea>
+        <SenderProfile sender={sender} imageUrl={imageUrl} createdAt={createdAt} />
+      </Modal.headerArea>
+      <Modal.divider />
+      <Modal.contentArea>
+        <span className={styles['content']}>{content}</span>
+      </Modal.contentArea>
+      <Modal.buttonArea>
+        <button onClick={onClose}>확인</button>
+      </Modal.buttonArea>
+    </Modal>
   );
 };
-
-const HeaderArea = ({ children }) => {
-  return <div className={styles['header']}>{children}</div>;
-};
-
-const Divider = () => {
-  return <div className={styles['divider']} />;
-};
-
-const ContentArea = ({ children }) => {
-  return <span className={styles['content-area']}>{children}</span>;
-};
-
-const ButtonArea = ({ children }) => {
-  return <div className={styles['button-area']}>{children}</div>;
-};
-CardModal.headerArea = HeaderArea;
-CardModal.divider = Divider;
-CardModal.contentArea = ContentArea;
-CardModal.buttonArea = ButtonArea;
 
 export default CardModal;

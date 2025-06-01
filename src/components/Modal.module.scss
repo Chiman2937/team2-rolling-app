@@ -1,0 +1,32 @@
+$shadow-color: rgb(0, 0, 0, 0.08);
+
+.container {
+	background-color: #FFFFFF;
+	box-shadow: 0 2px 12px $shadow-color;
+	padding: 40px;
+	border-radius: 16px;
+	width: 100%;
+}
+
+.header-area {
+	width: 100%;
+}
+
+.divider {
+	width: 100%;
+	border-bottom: 1px solid var(--color-gray-200);
+	margin-top: 19px;
+}
+
+.content-area {
+	width: 100%;
+	margin-top: 16px;
+	margin-bottom: 24px;
+}
+
+.button-area{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	gap: 20px;
+}
