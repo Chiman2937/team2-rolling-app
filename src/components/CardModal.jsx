@@ -1,6 +1,6 @@
 import styles from './CardModal.module.scss';
-import Modal from './Modal';
-import SenderProfile from './SenderProfile';
+import Modal from '@/components/Modal';
+import SenderProfile from '@/components/SenderProfile';
 
 const CardModal = ({ modalItems, onClose }) => {
   const { sender, imageUrl, createdAt, content } = modalItems;
