@@ -5,28 +5,43 @@
 	border-radius: 6px;
 	height: 40px;
 	width: fit-content;
+	position: relative;
 }
 
 .button {
 	width: 122px;
 	background: none;
 	border: none;
-	font-weight: 400;
-	font-size: 16px;
-	line-height: 26px;
-	color: var(--color-gray-900);
 	border-radius: 6px;
 	cursor: pointer;
+	position: relative;
+}
 
-	&.selected {
-		border: 2px solid var(--color-purple-600);
-		border-radius: 6px;
-		font-weight: 700;
-		color: var(--color-purple-700);
-		background-color: var(--color-white);
-	}
+.button-label {
+	font-weight: 400;
+	font-size: 16px;
+	color: var(--color-gray-900);
+	position: absolute;
+	z-index: 1;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
+	transition: color 0.3s ease;
+	transition: font-weight 0.3s ease;
+}
 
-	&:hover {
-		background-color: var(--color-gray-200);
-	}
+.selected {
+	color: var(--color-purple-700);
+	font-weight: 700;
+}
+
+.indicator {
+	border: 2px solid var(--color-purple-600);
+	border-radius: 6px;
+	background-color: var(--color-white);
+	width: 122px;
+	height: 40px;
+	position: absolute;
+	top: 0;
+	transition: transform 0.3s ease, width 0.3s ease;
 }
