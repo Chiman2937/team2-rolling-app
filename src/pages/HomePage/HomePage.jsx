@@ -1,12 +1,12 @@
 import styles from './HomePage.module.scss';
-import Card from './Card';
 
 import imgPaperLg from '../../assets/images/home_makepaper_lg.svg';
 import imgPaperSm from '../../assets/images/home_makepaper_sm.svg';
 import imgImojiLg from '../../assets/images/home_addimoji_lg.png';
 import imgImojiSm from '../../assets/images/home_addimoji_sm.png';
+import PointsContainer from './PointsContainer';
 
-const cardData = [
+const landingData = [
   {
     point: 'Point. 01',
     title: '누구나 손쉽게, 온라인 롤링 페이퍼를 만들 수 있어요',
@@ -29,9 +29,9 @@ const cardData = [
 const HomePage = () => {
   return (
     <main>
-      <section className={styles['page-cards']}>
-        {cardData.map((card, index) => (
-          <Card key={index} {...card} />
+      <section className={styles['page-points']}>
+        {landingData.map((card, index) => (
+          <PointsContainer key={`${landingData.point}-${index}`} {...card} />
         ))}
       </section>
     </main>
