@@ -15,8 +15,8 @@ export default function AppRouter() {
     <Suspense fallback={<Loading />}>
       <Routes>
         {/* {라우터 배열에서 경로를 탐색함} */}
-        {routes.map(({ path, element: Component }) => (
-          <Route key={path} path={path} element={Component} />
+        {routes.map(({ path, element: Page }) => (
+          <Route key={path} path={path} element={<Page />} />
         ))}
 
         {/* 매칭되는 경로가 없다면 notFound 페이지로 이동 */}
