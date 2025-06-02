@@ -2,7 +2,7 @@ import httpClient from './httpClient';
 
 /**
  * 기본 프로필 이미지 URL 리스트 조회
- * @returns {Promise<string[]>}
+ * @returns {Promise<string[]>} // 프로필 이미지 URL 리스트
  */
 export const getProfileImages = () => httpClient.get('/profile-images/');
 
