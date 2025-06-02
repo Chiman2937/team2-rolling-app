@@ -8,6 +8,8 @@ const OptionToggle = ({ children, onChange }) => {
   const [indicatorPosition, setIndicatorPosition] = useState(0);
 
   useEffect(() => {
+    if (selected !== null) return;
+
     const firstChild = Array.isArray(children) ? children[0] : children;
     const defaultType = firstChild?.props?.type;
     setSelected(defaultType);
