@@ -37,7 +37,7 @@ export const listRecipientMessages = ({ recipientId, limit = 20, offset = 0 }) =
 /**
  * Recipient(롤링페이퍼)에 새 메시지 작성
  *
- * @param {Object} payload
+ * @param {Object} payload - POST 요청의 Body
  * @param {number|string} payload.recipientId      - **Recipient ID** (필수)
  * @param {string}        payload.sender           - 작성자 이름 (최대 40자)
  * @param {string}        payload.profileImageURL  - 프로필 이미지 URL
