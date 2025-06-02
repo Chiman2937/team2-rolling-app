@@ -1,0 +1,32 @@
+.container {
+	display: flex;
+	flex-direction: row;
+	background-color: var(--color-gray-100);
+	border-radius: 6px;
+	height: 40px;
+	width: fit-content;
+}
+
+.button {
+	width: 122px;
+	background: none;
+	border: none;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 26px;
+	color: var(--color-gray-900);
+	border-radius: 6px;
+	cursor: pointer;
+
+	&.selected {
+		border: 2px solid var(--color-purple-600);
+		border-radius: 6px;
+		font-weight: 700;
+		color: var(--color-purple-700);
+		background-color: var(--color-white);
+	}
+
+	&:hover {
+		background-color: var(--color-gray-200);
+	}
+}
