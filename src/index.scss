@@ -1,5 +1,11 @@
 @use '@/assets/styles/reset';
 @use '@/assets/styles/font';
+@use '@/assets/styles/variables';
+
+/* 글로벌 기본 스타일 */
+* {
+  box-sizing: border-box;
+}
 
 body {
   font-family: var(--font-family-base);
