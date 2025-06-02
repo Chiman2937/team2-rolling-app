@@ -1,0 +1,33 @@
+@use '../../assets/styles/variables.scss' as *;
+
+.toggle-group {
+  display: flex;
+  border-radius: 5px;
+  padding: 8px;
+  gap: 0px;
+  width: fit-content;
+}
+
+.toggle-button {
+  width: 122px;
+  padding: 7px 16px;
+  border-radius: 8px;
+  border: none;
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-regular);
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-500);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--color-gray-200);
+  }
+}
+
+.toggle-button.active {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-purple-600);
+  color: var(--color-purple-600);
+  font-weight: var(--font-weight-bold);
+}

@@ -1,0 +1,38 @@
+.base {
+  width: 56px;
+  height: 56px;
+  border-radius: 100px;
+  border: none;
+  background-color: #555;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.base:hover {
+  background-color: #4a4a4a;
+}
+
+.base:active {
+  background-color: #3a3a3a;
+}
+
+.base:focus {
+  border: 1px solid #2b2b2b;
+  background-color: #3a3a3a;
+}
+
+.disabled {
+  background-color: #ccc;
+  color: #ccc;
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100px;
+  width: 56px;
+  height: 56px;
+}

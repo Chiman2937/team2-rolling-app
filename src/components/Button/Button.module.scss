@@ -1,0 +1,410 @@
+@use '../../assets/styles/variables.scss' as *;
+
+.enabled {
+  background-color: #9935ff;
+  color: white;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: Pretendard;
+  letter-spacing: -0.18px;
+  line-height: 28px;
+  min-width: 208px;
+  max-width: 208px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+}
+
+.enabled:hover {
+  background-color: #861dee;
+}
+
+.enabled:active {
+  background-color: #6e0ad1;
+}
+
+.enabled:focus {
+  border: 2px solid #5603a7;
+}
+
+.disabled {
+  background-color: #ccc;
+  color: white;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: Pretendard;
+  line-height: 28px;
+  letter-spacing: -0.18px;
+  min-width: 208px;
+  max-width: 208px;
+  cursor: not-allowed;
+}
+
+/** 작은버전 Primary Button **/
+
+.enabled-small {
+  background-color: #9935ff;
+  color: white;
+  padding: 7px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: Pretendard;
+  letter-spacing: -0.16px;
+  line-height: 26px;
+  min-width: 122px;
+  max-width: 122px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+}
+
+.enabled-small:hover {
+  background-color: #861dee;
+}
+
+.enabled-small:active {
+  background-color: #6e0ad1;
+}
+
+.enabled-small:focus {
+  border: 2px solid #5603a7;
+}
+
+.disabled-small {
+  background-color: #ccc;
+  color: white;
+  padding: 7px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: Pretendard;
+  line-height: 26px;
+  letter-spacing: -0.16px;
+  min-width: 122px;
+  max-width: 122px;
+  cursor: not-allowed;
+}
+
+/**  Secondary Button **/
+
+.secondary-small {
+  background-color: white;
+  color: #9935ff;
+  border: 1px solid #9935ff;
+  padding: 7px 16px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: Pretendard;
+  line-height: 26px;
+  letter-spacing: -0.16px;
+  min-width: 122px;
+  max-width: 122px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.secondary-small:hover {
+  border: 1px solid #861dee;
+  background-color: #f8f0ff;
+}
+
+.secondary-small:active {
+  border: 1px solid #6e0ad1;
+  background-color: #f8f0ff;
+}
+
+.secondary-small:focus {
+  border: 1px solid #6e0ad1;
+  background-color: #fff;
+}
+
+.secondary-small-disabled {
+  background-color: #ccc;
+  color: white;
+  border: 1px solid #d9d9d9;
+  cursor: not-allowed;
+  padding: 7px 16px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: Pretendard;
+  line-height: 26px;
+  letter-spacing: -0.16px;
+  min-width: 122px;
+  max-width: 122px;
+}
+
+/**  OutLined **/
+
+.outlined-56 {
+  background-color: #fff;
+  color: #181818;
+  border: 1px solid #ccc;
+  padding: 14px 24px; /* 위아래 14px → 총 높이 약 56px */
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 400;
+  font-family: Pretendard;
+  line-height: 28px;
+  letter-spacing: -0.18px;
+  min-width: 208px;
+  max-width: 208px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.outlined-56:hover {
+  background-color: #f5f5f5;
+}
+
+.outlined-56:active {
+  background-color: #eaeaea;
+}
+
+.outlined-56:focus {
+  outline: 1px solid #555;
+}
+
+.outlined-56-disabled {
+  background-color: #ccc;
+  color: #fff;
+  border: 1px solid #ccc;
+  cursor: not-allowed;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 400;
+  font-family: Pretendard;
+  line-height: 28px;
+  letter-spacing: -0.18px;
+  min-width: 208px;
+  max-width: 208px;
+  text-align: center;
+}
+/** 40 OutLined **/
+
+.outlined-40 {
+  background-color: #fff;
+  color: #333333;
+  border: 1px solid #ccc;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: Pretendard;
+  height: 40px;
+  line-height: 20px;
+  letter-spacing: -0.16px;
+  min-width: 120px;
+  max-width: 120px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.outlined-40:hover {
+  background-color: #f6f6f6;
+}
+
+.outlined-40:active {
+  background-color: #f6f6f6;
+}
+
+.outlined-40:focus {
+  border: 1px solid #555;
+}
+
+.outlined-40-disabled {
+  background-color: #ccc;
+  color: white;
+  border: 1px solid #ccc;
+  cursor: not-allowed;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: Pretendard;
+  line-height: 20px;
+  letter-spacing: -0.16px;
+  min-width: 120px;
+  max-width: 120px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+button:disabled img {
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
+}
+
+/** 36 OutLined **/
+
+.outlined-36 {
+  background-color: white;
+  color: #333333;
+  border: 1px solid #cccccc;
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 400;
+  font-family: Pretendard;
+  line-height: 18px;
+  height: 36px;
+  letter-spacing: -0.15px;
+  min-width: 108px;
+  max-width: 108px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.outlined-36:hover {
+  background-color: #f6f6f6;
+}
+
+.outlined-36:active {
+  background-color: #f6f6f6;
+}
+
+.outlined-36:focus {
+  border: 1px solid #555;
+}
+
+.outlined-36-disabled {
+  background-color: #ccc;
+  color: white;
+  border: 1px solid #ccc;
+  cursor: not-allowed;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 400;
+  font-family: Pretendard;
+  line-height: 18px;
+  letter-spacing: -0.15px;
+  min-width: 108px;
+  max-width: 108px;
+  text-align: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/** 28 OutLined **/
+
+.outlined-28 {
+  background-color: white;
+  color: #333333;
+  border: 1px solid #cccccc;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 400;
+  font-family: Pretendard;
+  line-height: 16px;
+  letter-spacing: -0.15px;
+  min-width: 96px;
+  max-width: 96px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.outlined-28:hover {
+  background-color: #f5f5f5;
+}
+
+.outlined-28:active {
+  background-color: #eaeaea;
+}
+
+.outlined-28:focus {
+  border: 1px solid #555;
+}
+
+.outlined-28-disabled {
+  background-color: #ccc;
+  color: white;
+  border: 1px solid #ccc;
+  cursor: not-allowed;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 400;
+  font-family: Pretendard;
+  line-height: 16px;
+  letter-spacing: -0.15px;
+  min-width: 96px;
+  max-width: 96px;
+  text-align: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/** 36 Outlined trash icon **/
+
+.outlined-icon-36 {
+  width: 36px;
+  height: 36px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--color-gray-100);
+  }
+
+  &:active {
+    background-color: var(--color-gray-200);
+  }
+
+  &:focus {
+    border: 1px solid var(--color-gray-500);
+  }
+
+  &:disabled {
+    color: var(--color-white);
+    background-color: var(--color-gray-300);
+    border-color: var(--color-gray-300);
+    cursor: not-allowed;
+
+    img {
+      filter: brightness(0) invert(1);
+      opacity: 0.6;
+    }
+  }
+}
