@@ -2,7 +2,9 @@ import styles from './PointsContainer.module.scss';
 
 const PointsContainer = ({ point, title, desc, imgLg, imgSm, alt, reverse }) => {
   return (
-    <article className={`${styles['points-container']} ${reverse ? styles['reverse'] : ''}`}>
+    <article
+      className={`${styles['points-container']} ${reverse ? styles['points-container--reverse'] : ''}`}
+    >
       <div className={styles['points-container__context']}>
         <span>{point}</span>
         <h1>{title}</h1>
