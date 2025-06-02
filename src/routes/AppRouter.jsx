@@ -13,26 +13,14 @@ function Loading() {
   return <div>Loading…</div>;
 }
 
-function ExplodeDemo() {
-  const [explode, setExplode] = React.useState(false);
-
-  if (explode) {
-    throw new Error('💣 버튼으로 강제 오류');
-  }
-
-  return <button onClick={() => setExplode(true)}>💣 Click to explode</button>;
-}
 export default function AppRouter() {
   const location = useLocation();
   return (
+    // ErrorBoundary를 사용하여 에러가 발생했을 때 대체 UI를 보여줌
     <ErrorBoundary FallbackComponent={ErrorPage} resetKeys={[location.pathname]}>
       <Suspense fallback={<Loading />}>
         <Routes>
-          {/* 테스트용 컴포넌트 */}
-          <Route path='/explode' element={<ExplodeDemo />} />
-
           {/* 라우터 배열에서 경로를 탐색함 */}
-
           {routes.map(({ path, element: Page }) => (
             <Route key={path} path={path} element={<Page />} />
           ))}
