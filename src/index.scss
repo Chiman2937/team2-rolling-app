@@ -10,3 +10,8 @@
 body {
   font-family: var(--font-family-base);
 }
+
+input,
+button {
+  font-family: inherit;
+}
