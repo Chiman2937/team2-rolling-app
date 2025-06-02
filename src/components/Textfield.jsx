@@ -19,6 +19,7 @@ function Textfield({ value, onChange, error, success, message, disabled }) {
   return (
     <>
       <input
+        type='text'
         value={value}
         className={`${styles['textfield']} ${statusClass} `}
         disabled={disabled}

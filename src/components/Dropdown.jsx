@@ -23,7 +23,7 @@ function Dropdown({ value, dropdownItems = [], onChange, error, success, message
       : '';
   const dropdownVal = value || dropdownItems?.[0] || '';
   const [showDropdown, setShowDropdown] = useState(false);
-  const dropdownRef = useRef('');
+  const dropdownRef = useRef(null);
 
   const onClickDropdown = () => {
     setShowDropdown(!showDropdown);
@@ -52,6 +52,7 @@ function Dropdown({ value, dropdownItems = [], onChange, error, success, message
     <>
       <div ref={dropdownRef} className={styles['dropdown']}>
         <button
+          type='button'
           onClick={onClickDropdown}
           disabled={disabled}
           className={`${styles['dropdown__button']} ${statusClass}`}
