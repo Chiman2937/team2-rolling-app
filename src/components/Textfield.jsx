@@ -11,16 +11,23 @@ import styles from '@/components/Textfield.module.scss';
   - message: 에러/성공 상태 시 메세지 출력
 */
 function Textfield({ value, onChange, error, success, message, disabled }) {
+  const statusClass = error
+    ? styles['textfield--error']
+    : success
+      ? styles['textfield--success']
+      : '';
   return (
     <>
       <input
         value={value}
-        className={`${styles['textfield']} ${styles[error ? 'error' : success ? 'success' : '']} `}
+        className={`${styles['textfield']} ${statusClass} `}
         disabled={disabled}
         onChange={(e) => onChange(e.target.value)}
       />
       {!disabled && (error || success) && (
-        <div className={`${styles.message} ${styles[error ? 'error-message' : 'success-message']}`}>
+        <div
+          className={`${styles['textfield__message']} ${styles[error ? 'textfield__message--error' : 'textfield__message--success']}`}
+        >
           {message}
         </div>
       )}
