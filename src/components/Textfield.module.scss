@@ -24,19 +24,19 @@
     background-color: var(--color-gray-100);
     border: 1px solid var(--color-gray-300);
     color: var(--color-gray-400);
-
-    &--error,
-    &--success {
-      border: 1px solid var(--color-gray-300);
-      color: var(--color-gray-400);
-    }
   }
 
   &--error {
     border: 1px solid var(--color-error);
     color: var(--color-gray-900);
 
-    &:focus {
+    &:disabled {
+      border: 1px solid var(--color-gray-300);
+      color: var(--color-gray-400);
+    }
+
+    &:focus,
+    &:hover {
       border: 1px solid var(--color-error);
     }
   }
@@ -44,22 +44,27 @@
   &--success {
     border: 1px solid var(--color-green-500);
     color: var(--color-gray-900);
+    &:disabled {
+      border: 1px solid var(--color-gray-300);
+      color: var(--color-gray-400);
+    }
 
-    &:focus {
-      border: 1px solid var(--color-green-500);
+    &:focus,
+    &:hover {
+      border: 1px solid var(--color-error);
     }
   }
+}
 
-  &__message {
-    font-size: var(--font-size-12);
-    margin-top: 4px;
+.textfield__message {
+  font-size: var(--font-size-12);
+  margin-top: 4px;
 
-    &--error {
-      color: var(--color-error);
-    }
+  &--error {
+    color: var(--color-error);
+  }
 
-    &--success {
-      color: var(--color-green-500);
-    }
+  &--success {
+    color: var(--color-green-500);
   }
 }
