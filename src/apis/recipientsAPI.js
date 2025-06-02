@@ -4,7 +4,7 @@ import httpClient from './httpClient';
 export const TEAM = '2';
 
 /* ------------------------------------------------------------------ */
-/* Recipient(수신자) API – Arrow Function 버전                         */
+/* Recipient(수신자) API                        */
 /* ------------------------------------------------------------------ */
 
 /**
