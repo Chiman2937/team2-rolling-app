@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import styles from './TestPage.module.scss';
 import { useApi } from '@/hooks/useApi';
@@ -16,6 +17,10 @@ import { getMessage, updateMessage, patchMessage, deleteMessage } from '@/apis/m
 
 /* ---------- 페이지 ---------- */
 export default function TestPage() {
+
+function TestPage() {
+  //백엔드 테스트
+
   return (
     <main className={styles['play']}>
       <h1 className={styles['play__title']}>API Playground</h1>
