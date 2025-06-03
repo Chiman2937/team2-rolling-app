@@ -25,6 +25,17 @@ import { useToast } from '@/hooks/useToast';
 export const useApi = (apiFn, params = {}, { errorMessage, immediate = true, retry = 0 } = {}) => {
   const { showToast } = useToast();
 
+  if (typeof apiFn !== 'function') {
+    throw new Error('useApi 첫 번째 인자는 함수여야 합니다.');
+  }
+  if (apiFn.length > 1) {
+    // 함수 선언 시 이미 매개변수가 존재한다면 오류를 던집니다.
+    throw new Error(
+      'useApi에 전달된 apiFn 함수는 매개변수를 2개 이상 선언할 수 없습니다. ' +
+        '“객체 하나”만 받아야 하며, 그 객체는 useApi 두 번째 인자로만 넘겨주세요.',
+    );
+  }
+
   /** 고정 참조 보존 */
   const apiRef = useRef(apiFn);
   const paramsRef = useRef(params);

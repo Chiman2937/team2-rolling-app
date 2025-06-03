@@ -66,31 +66,34 @@ export const createRecipient = ({ name, backgroundColor, backgroundImageURL }) =
 /**
  * Recipient 상세 조회
  *
- * @param {number|string} id - **Recipient(롤링페이퍼) ID**
+ * @param {Object} params
+ * @param {number|string} params.id   - Recipient(롤링페이퍼) ID
  *
  * @returns {Promise<{
- *   id: number,                            // 고유 ID
- *   team?: string,                         // 팀 슬러그 (서버가 포함할 수도 있음)
- *   name: string,                          // 수신자 이름 / 롤링페이퍼 제목
+ *   id: number,
+ *   team?: string,
+ *   name: string,
  *   backgroundColor: 'beige'|'purple'|'blue'|'green',
- *                                          // 선택한 배경 색상
- *   backgroundImageURL: string|null,       // 배경 이미지 URL (nullable)
- *   createdAt: string,                     // 생성 시각 (ISO 8601)
- *   messageCount: number|string,           // 등록된 메시지 수
- *   recentMessages: string|Array,          // 최근 메시지(서버 형식)
- *   reactionCount: number,                 // 리액션 총합
- *   topReactions: string|Array             // 상위 리액션(서버 형식)
+ *   backgroundImageURL: string|null,
+ *   createdAt: string,
+ *   messageCount: number|string,
+ *   recentMessages: string|Array,
+ *   reactionCount: number,
+ *   topReactions: string|Array
  * }>}
- *   📌 Swagger `Recipient` 스키마를 그대로 반환합니다.
  */
-export const getRecipient = (id) => httpClient.get(`/${TEAM}/recipients/${id}/`);
+export const getRecipient = ({ id }) => {
+  return httpClient.get(`/${TEAM}/recipients/${id}/`);
+};
 
 /**
  * Recipient 삭제
  *
- * @param {number|string} id - **Recipient(롤링페이퍼) ID**
+ * @param {Object} params
+ * @param {number|string} params.id   - Recipient(롤링페이퍼) ID
  *
- * @returns {Promise<void>}  성공 시 **HTTP 204 No Content** 를 반환하며,
- *   응답 본문이 없습니다.
+ * @returns {Promise<void>}  성공 시 HTTP 204 No Content (응답 본문 없음)
  */
-export const deleteRecipient = (id) => httpClient.delete(`/${TEAM}/recipients/${id}/`);
+export const deleteRecipient = ({ id }) => {
+  return httpClient.delete(`/${TEAM}/recipients/${id}/`);
+};

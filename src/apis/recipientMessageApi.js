@@ -20,8 +20,8 @@ export const TEAM = '2';
  *   next: string|null,                 // 다음 페이지 URL
  *   previous: string|null,             // 이전 페이지 URL
  *   results: Array<{
- *     id: number,
- *     recipientId: number,
+ *     id: number,                      // 메시지 ID
+ *     recipientId: number,             // 수신자 ID
  *     sender: string,                  // 작성자 이름
  *     profileImageURL: string,         // 프로필 이미지 URL
  *     relationship: '친구'|'지인'|'동료'|'가족',
