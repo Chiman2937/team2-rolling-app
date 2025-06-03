@@ -1,0 +1,11 @@
+.list {
+  min-height: 100dvh;
+  display: flex;
+  // align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+
+  &__card {
+    max-width: 320px;
+  }
+}

@@ -1,10 +1,9 @@
 .dropdown {
-  width: 320px;
   position: relative;
 
   /* 드롭다운 버튼 */
   &__button {
-    width: 100%;
+    width: 320px;
     height: 50px;
     border: 1px solid var(--color-gray-300);
     border-radius: 8px;
@@ -29,33 +28,10 @@
       background-color: var(--color-gray-100);
       border: 1px solid var(--color-gray-300);
       color: var(--color-gray-400);
-    }
 
-    &--error {
-      border: 1px solid var(--color-error);
-      color: var(--color-gray-900);
-
-      &:disabled {
-        border: 1px solid var(--color-gray-300);
-        color: var(--color-gray-400);
-      }
-
-      &:focus {
-        border: 1px solid var(--color-error);
-      }
-    }
-
-    &--success {
-      border: 1px solid var(--color-green-500);
-      color: var(--color-gray-900);
-
-      &:disabled {
-        border: 1px solid var(--color-gray-300);
-        color: var(--color-gray-400);
-      }
-
-      &:focus {
-        border: 1px solid var(--color-green-500);
+      /* 드롭다운 버튼 아이콘 컬러 변경 */
+      &-icon {
+        color: #999999;
       }
     }
   }
@@ -104,20 +80,6 @@
 
     &:hover {
       background-color: var(--color-gray-100);
-    }
-  }
-
-  /* 드롭다운 하단 에러/성공 메시지 */
-  &__message {
-    font-size: var(--font-size-12);
-    margin-top: 4px;
-
-    &--error {
-      color: var(--color-error);
-    }
-
-    &--success {
-      color: var(--color-green-500);
     }
   }
 }
