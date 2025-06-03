@@ -1,0 +1,70 @@
+.textfield {
+  width: 100%;
+  min-width: 320px;
+  height: 50px;
+  border: 1px solid var(--color-gray-300);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-gray-500);
+
+  &:hover {
+    border: 1px solid var(--color-gray-500);
+    color: var(--color-gray-500);
+  }
+
+  &:focus,
+  &:active {
+    border: 2px solid var(--color-gray-500);
+    color: var(--color-gray-900);
+  }
+
+  &:disabled {
+    background-color: var(--color-gray-100);
+    border: 1px solid var(--color-gray-300);
+    color: var(--color-gray-400);
+  }
+
+  &--error {
+    border: 1px solid var(--color-error);
+    color: var(--color-gray-900);
+
+    &:disabled {
+      border: 1px solid var(--color-gray-300);
+      color: var(--color-gray-400);
+    }
+
+    &:focus,
+    &:hover {
+      border: 1px solid var(--color-error);
+    }
+  }
+
+  &--success {
+    border: 1px solid var(--color-green-500);
+    color: var(--color-gray-900);
+    &:disabled {
+      border: 1px solid var(--color-gray-300);
+      color: var(--color-gray-400);
+    }
+
+    &:focus,
+    &:hover {
+      border: 1px solid var(--color-error);
+    }
+  }
+}
+
+.textfield__message {
+  font-size: var(--font-size-12);
+  margin-top: 4px;
+
+  &--error {
+    color: var(--color-error);
+  }
+
+  &--success {
+    color: var(--color-green-500);
+  }
+}
