@@ -3,7 +3,11 @@ import { lazy } from 'react';
 // lazy를 사용하면, 컴포넌트가 필요할 때만 불러와서 초기 로딩 속도를 개선할 수 있습니다.
 
 const TestPage = lazy(() => import('@/pages/TestPage.jsx'));
+import CreateRollingPaperPage from '@/pages/CreateRollingPaperPage/CreateRollingPaperPage';
+
+//ex): const PostPage = lazy(() => import('@/pages/PostPage/PostPage.jsx'));
 export const routes = [
+  { path: '/post', element: CreateRollingPaperPage },
   // ex: { path: '/post', element: PostPage }, // 게시글 작성 페이지
   //ex2: { path: '/list', element: ListPage },
   { path: '/', element: TestPage },
