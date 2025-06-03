@@ -9,7 +9,7 @@
     padding: 92px 24px;
   }
 
-  @media screen and (min-width: 1200px) {
+  @media screen and (min-width: 1024px) {
     padding: 113px 24px;
   }
 
@@ -23,19 +23,19 @@
     max-width: 1200px;
   }
 
-  &__card {
+  &__grid {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr;
     gap: 16px;
-    max-width: 1200px;
+    max-width: 100%;
     justify-items: center;
 
     @media screen and (min-width: 768px) {
       grid-template-columns: repeat(2, 1fr);
     }
 
-    @media screen and (min-width: 1200px) {
+    @media screen and (min-width: 1024px) {
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
     }
@@ -65,7 +65,7 @@
     bottom: 24px;
   }
 
-  @media screen and (min-width: 1200px) {
+  @media screen and (min-width: 1024px) {
     border-radius: 6px;
     width: 92px;
     height: 39px;
