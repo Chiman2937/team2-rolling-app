@@ -20,7 +20,10 @@
 ![Notion](https://img.shields.io/badge/-Notion-000000?logo=notion&logoColor=white&labelColor=20232a)
 
 ---
+## 🚀 배포 사이트
+- [🧷 [배포 사이트]](https://team2-rolling-app.vercel.app/)
 
+---
 ### 💌 주제
 **[롤링]** - 롤링페이퍼 문화를 웹으로 구현한 커뮤니티형 플랫폼
 - [🧷 [가이드 문서]](https://codeit.notion.site/_-1d56fd228e8d8166953fc518d8a2f708)
@@ -35,6 +38,13 @@
 ### 🎨 디자인 시안
 - [🧷 [Figma - 원본]](https://www.figma.com/design/cbZ9PNKSFg4mS7Lf1roZlp/-AAA-%E1%84%85%E1%85%A9%E1%86%AF%E1%84%85%E1%85%B5%E1%86%BC?node-id=0-1&p=f&t=ReUqQRbqJOTJmGco-0)  
 - [🧷 [Figma - 복제]](https://www.figma.com/design/oqjpgLMCsvg5l4xoKPruFj/-AAA-%E1%84%85%E1%85%A9%E1%86%AF%E1%84%85%E1%85%B5%E1%86%BC--Copy-?node-id=0-1&p=f&t=n9FtuZe3s2ohiykj-0)
+
+---
+
+### 🔌 API 정보
+- [🧷 [SWAGGER 문서]](https://rolling-api.vercel.app/docs/)
+- [🧷 [API 명세]](https://codeit.notion.site/API-d9eecacf2dbd4f268baf33cd11190a78#097b9f5ac8cd483e9d9b4f9c414a1e49)
+- [🧷 [기타 정리자료](Rolling API 엔드포인트 및 사용 가이드).pdf](https://github.com/user-attachments/files/20574483/Rolling.API.1.pdf)
 
 ---
 
