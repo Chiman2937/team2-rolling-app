@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import styles from '@/components/Dropdown.module.scss';
-import arrowIcon from '@/assets/icons/arrow-down.svg';
-import arrowIconDisabled from '@/assets/icons/arrow-down-disabled.svg';
+import DropdownIcon from '@/components/DropdownIcon.jsx';
 /*
   [Dropdown 필수 속성]
   - value: 텍스트필드 값
@@ -11,22 +10,15 @@ import arrowIconDisabled from '@/assets/icons/arrow-down-disabled.svg';
 
   [Dropdown 상태 속성]
   - disabled: 비활성화 상태
-  - error: 에러 상태
-  - success: 성공 상태
-  - message: 에러/성공 상태 시 메세지 출력
 */
-function Dropdown({ value, dropdownItems = [], onChange, error, success, message, disabled }) {
-  const statusClass = error
-    ? styles['dropdown__button--error']
-    : success
-      ? styles['dropdown__button--success']
-      : '';
+
+const Dropdown = ({ value, dropdownItems = [], onChange, disabled }) => {
   const dropdownVal = value || dropdownItems?.[0] || '';
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
 
   const onClickDropdown = () => {
-    setShowDropdown(!showDropdown);
+    setShowDropdown((prev) => !prev);
   };
 
   const onClickDropdownItem = (item) => {
@@ -53,14 +45,13 @@ function Dropdown({ value, dropdownItems = [], onChange, error, success, message
       <div ref={dropdownRef} className={styles['dropdown']}>
         <button
           type='button'
-          onClick={onClickDropdown}
           disabled={disabled}
-          className={`${styles['dropdown__button']} ${statusClass}`}
+          onClick={onClickDropdown}
+          className={`${styles['dropdown__button']}`}
         >
           <div className={styles['dropdown__button-content']}>
             <div>{dropdownVal}</div>
-            <img
-              src={disabled ? arrowIconDisabled : arrowIcon}
+            <DropdownIcon
               className={`${styles['dropdown__button-icon']} ${showDropdown ? styles['dropdown__button-icon--open'] : ''}`}
             />
           </div>
@@ -79,16 +70,8 @@ function Dropdown({ value, dropdownItems = [], onChange, error, success, message
           </ul>
         )}
       </div>
-
-      {!disabled && (error || success) && (
-        <div
-          className={`${styles['dropdown__message']} ${styles[error ? 'dropdown__message--error' : 'dropdown__message--success']}`}
-        >
-          {message}
-        </div>
-      )}
     </>
   );
-}
+};
 
 export default Dropdown;

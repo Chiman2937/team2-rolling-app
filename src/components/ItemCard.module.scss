@@ -1,0 +1,75 @@
+.card {
+  width: 100%;
+  min-width: 384px;
+  height: 280px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0px 2px 12px 0px #00000014;
+  transform: scale(1);
+  transition: transform 0.5s;
+  will-change: transform;
+  transform: translateZ(0); /* GPU 렌더링 유도 */
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.card__main {
+  display: flex;
+  flex-direction: column;
+}
+
+.card__author {
+  display: flex;
+  gap: 14px;
+
+  &-image {
+    width: 56px;
+    height: 56px;
+  }
+
+  &-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &-text {
+    display: flex;
+    gap: 6px;
+    font-size: 20px;
+  }
+
+  &-name {
+    font-weight: 700;
+  }
+}
+
+.card__divider {
+  margin: 15px 0;
+  border: 1px solid #eeeeee;
+}
+
+.card__content {
+  max-width: 100%;
+  font-size: 18px;
+  color: #4a4a4a;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; // 원하는 라인수
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  line-height: 28px;
+}
+
+.card__date {
+  font-size: 12px;
+  color: #999999;
+}
