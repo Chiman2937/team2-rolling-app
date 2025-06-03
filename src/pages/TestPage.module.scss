@@ -1,0 +1,134 @@
+/* == Block: play (전체) ================================= */
+.play {
+  padding: 24px;
+
+  &__title {
+    margin-bottom: 32px;
+    font-size: 28px;
+    font-weight: 700;
+  }
+}
+
+/* == Block: sec (각 API 섹션) =========================== */
+.sec {
+  margin-bottom: 56px;
+
+  &__title {
+    font-size: 20px;
+    margin-bottom: 12px;
+    color: #34495e;
+  }
+}
+
+/* 상태 뱃지 */
+.status {
+  margin-left: 8px;
+  font-weight: 600;
+}
+
+/* 공통 버튼 */
+.btn {
+  padding: 4px 12px;
+  border: 1px solid #888;
+  background: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+
+  &:hover:not(:disabled) {
+    background: #f1f1f1;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+/* 인풋 / 폼 */
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+
+  input,
+  select {
+    padding: 4px 8px;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+  }
+}
+
+/* 카드 그리드 */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 12px 0;
+}
+
+/* 카드 */
+.card {
+  width: 190px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+
+  &__thumb {
+    height: 80px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  &__body {
+    padding: 8px;
+    flex: 0 0 auto;
+
+    p {
+      margin: 0 0 4px;
+    }
+    small {
+      font-size: 11px;
+      color: #666;
+    }
+  }
+}
+.card--active {
+  outline: 2px solid #4f77ff; /* 예시 하이라이트 */
+}
+
+/* 이미지 썸네일 */
+.thumb {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+
+  &--circle {
+    border-radius: 50%;
+  }
+}
+
+/* JSON 출력 */
+.json {
+  max-height: 220px;
+  overflow: auto;
+  background: #f4f4f4;
+  padding: 8px;
+  font-size: 11px;
+  margin-top: 6px;
+  border-radius: 4px;
+}
+
+/* 리액션 뱃지 */
+.badge {
+  padding: 4px 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fafafa;
+  font-size: 14px;
+}
