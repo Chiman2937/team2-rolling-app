@@ -6,16 +6,16 @@ import styles from './TestPage.module.scss';
 import { useApi } from '@/hooks/useApi';
 
 /* ---------- API 모듈 ---------- */
-import { getBackgroundImages } from '@/apis/backgroundImagesApi';
-import { getProfileImages } from '@/apis/profileImagesApi';
+import { getBackgroundImages } from '@/apis/backgroundImagesApi.js';
+import { getProfileImages } from '@/apis/profileImagesApi.js';
 
-import { listRecipients, createRecipient, deleteRecipient } from '@/apis/recipientsApi';
+import { listRecipients, createRecipient, deleteRecipient } from '@/apis/recipientsApi.js';
 
-import { listRecipientMessages, createRecipientMessage } from '@/apis/recipientMessageApi';
+import { listRecipientMessages, createRecipientMessage } from '@/apis/recipientMessageApi.js';
 
-import { listRecipientReactions, createRecipientReaction } from '@/apis/recipientReactionsApi';
+import { listRecipientReactions, createRecipientReaction } from '@/apis/recipientReactionsApi.js';
 
-import { getMessage, updateMessage, patchMessage, deleteMessage } from '@/apis/messagesApi';
+import { getMessage, updateMessage, patchMessage, deleteMessage } from '@/apis/messagesApi.js';
 
 /* ---------- 페이지 ---------- */
 
