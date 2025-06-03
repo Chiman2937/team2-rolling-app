@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useToast } from '@/hooks/useToast';
 
 /**
@@ -6,11 +6,13 @@ import { useToast } from '@/hooks/useToast';
  *  - loading / data / error 상태를 관리하고
  *  - 실패 시 Toast 를 띄우는 범용 훅
  *
- * @template T
- * @param {() => Promise<T>} fetcher        실제 API 함수(src/apis/... 를 호출)
- * @param {Object}           options 확장성을 위한 옵션 객체 retry 등
- * @param {string}           options.errorMessage  실패 토스트에 노출할 메시지
- * @param {boolean}          [options.immediate=true]  마운트 시 자동 호출 여부
+ *@template T
+ * @param {(p?: any) => Promise<T>} apiFn         실제 API 함수 (고정 참조)
+ * @param {any}                     [params={}]   API 파라미터 (없으면 빈 객체)
+ * @param {Object}                  [options]   추가 옵션들
+ * @param {string}                  [options.errorMessage]  실패 토스트 문구
+ * @param {number}                  [options.retry=0]       실패 자동 재시도 횟수
+ * @param {boolean}                 [options.immediate=true] 마운트 시 자동 호출 여부
  *       true면 컴포넌트 마운트 시 자동으로 API를 호출하고, 이후에 refetch 함수를 수동으로 호출해야 함(예: 재시도)
  *      false면 첫 요청부터 refetch 함수를 수동으로 호출해야 함(예: 버튼 클릭,  입력 값 변경 등)
  * @returns {{
@@ -20,33 +22,61 @@ import { useToast } from '@/hooks/useToast';
  *   refetch: () => Promise<void> // API 재호출 함수
  * }}
  */
-export function useApi(fetcher, { errorMessage, immediate = true } = {}) {
+export const useApi = (apiFn, params = {}, { errorMessage, immediate = true, retry = 0 } = {}) => {
   const { showToast } = useToast();
 
+  /** 고정 참조 보존 */
+  const apiRef = useRef(apiFn);
+  const paramsRef = useRef(params);
+  const execRef = useRef(() => {});
+
+  /** state */
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(immediate);
   const [error, setError] = useState(null);
 
-  /** API 재호출 함수 */
-  const refetch = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const result = await fetcher();
-      setData(result);
-    } catch (err) {
-      setError(err);
-      // 실패 토스트
-      showToast({ type: 'fail', message: errorMessage ?? err.message, timer: 1000 });
-    } finally {
-      setLoading(false);
-    }
-  }, [fetcher, showToast, errorMessage]);
+  /** 실행 로직 */
+  const execute = useCallback(
+    async (attempt = 0) => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await apiRef.current(paramsRef.current);
+        setData(res);
+      } catch (err) {
+        if (attempt < retry) {
+          execute(attempt + 1); // 재귀 재시도
+          return;
+        }
+        setError(err);
+        showToast({
+          type: 'fail',
+          message: errorMessage ?? err.message,
+          timer: 2000,
+        });
+      } finally {
+        setLoading(false);
+      }
+    },
+    [errorMessage, retry, showToast],
+  );
 
-  // immediate 옵션이 true면 마운트 시 한 번 호출
+  /* --- 최신 execute 를 ref 에 보존 --- */
+  execRef.current = execute;
+
+  /**
+   *  외부에서 호출하는 refetch
+   *  이 함수는 API를 재호출하는 역할을 합니다.(파라미터 변경 가능)
+   */
+  const refetch = useCallback(async (nextParams = paramsRef.current) => {
+    paramsRef.current = nextParams;
+    await execRef.current();
+  }, []);
+
+  /** 처음 한 번만 실행 */
   useEffect(() => {
-    if (immediate) refetch();
-  }, [immediate, refetch]);
+    if (immediate) execRef.current();
+  }, [immediate]);
 
   return { data, loading, error, refetch };
-}
+};
