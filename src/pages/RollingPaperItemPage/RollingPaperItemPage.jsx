@@ -1,6 +1,8 @@
 import styles from '@/pages/RollingPaperItemPage/RollingPaperItemPage.module.scss';
 import ItemCard from '../../components/ItemCard';
 
+const isEditMode = false;
+
 /* 테스트 데이터 */
 const itemList = [
   {
@@ -74,10 +76,10 @@ function RollingPaperItemPage({ bgColor = 'skyblue', bgImage }) {
       <section style={containerStyle} className={styles['list']}>
         <div className={styles['list__container']}>
           <button className={styles['list__button']}>삭제하기</button>
-          <div className={styles['list__card']}>
-            <ItemCard isAddCard />
+          <div className={styles['list__grid']}>
+            {!isEditMode && <ItemCard isAddCard />}
             {itemList.map((item) => (
-              <ItemCard key={item.id} cardData={item} />
+              <ItemCard key={item.id} cardData={item} isEditMode={isEditMode} />
             ))}
           </div>
         </div>
