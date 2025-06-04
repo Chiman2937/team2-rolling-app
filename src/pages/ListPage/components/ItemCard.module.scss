@@ -1,29 +1,35 @@
-/* src/components/ItemCard/ItemCard.module.scss */
+/* Link가 기본 밑줄이나 색상 없이 동작하도록 */
+.item-card__link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
 
 .item-card {
   position: relative;
   width: 275px;
   height: 260px;
   overflow: hidden;
-  box-shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   border-radius: 16px;
   border: 1px solid rgba(0, 0, 0, 0.1);
 
   &__content {
     display: flex;
-    margin: 0 auto;
-    padding: 30px 24px;
-    gap: 10px;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    gap: 10px;
     height: 100%;
-    color: var(--color-gray-900); // 기본 텍스트 색상
+    padding: 30px 24px;
+    color: var(--color-gray-900);
   }
+
+  /* 배경에 이미지가 있을 때 텍스트를 흰색으로 덮어쓰는 클래스 */
   &__content--image {
     color: var(--color-white);
     background: linear-gradient(180deg, rgba(0, 0, 0, 0.54) 0%, rgba(0, 0, 0, 0.54) 100%);
   }
+
   &__title {
     margin: 0;
     font-size: var(--font-size-24);
@@ -35,37 +41,14 @@
     font-size: var(--font-size-16);
   }
 
-  &__top-reactions {
-    display: flex;
-    gap: 8px;
-    margin-top: 8px;
-    color: var(--color-white);
-  }
-
-  &__myDiv {
-    width: 100%;
-    margin: 1% 0;
-    border: 0.5px solid rgba(0, 0, 0, 0.12);
-  }
-
-  &__reaction {
-    background-color: rgba(0, 0, 0, 0.54);
-    border-radius: 12px;
-    padding: 4px 8px;
-    font-size: 13px;
-  }
-
-  /* 작성자 프로필 아바타 전체 컨테이너 */
   &__avatars {
     display: flex;
     align-items: center;
     position: relative;
-    left: 10px;
     height: 32px;
-    margin-top: 8px; /* 콘텐츠와 약간 간격 주기 */
+    margin-top: 8px;
   }
 
-  /* 각 아바타(이미지 또는 +n) */
   &__avatar {
     width: 32px;
     height: 32px;
@@ -74,18 +57,43 @@
     background-color: var(--color-white);
     overflow: hidden;
     position: relative;
-    margin-left: -12px; /* 겹치도록 위치 조정 */
+    margin-left: -12px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: var(--font-size-14);
-    color: var(--color--gray-500);
+    color: var(--color-gray-500);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 
-  /* 아바타 이미지가 들어갈 경우 내부 img 처리 */
-  &__avatar img {
+  /* +n 텍스트 */
+  &__more {
+    font-size: var(--font-size-14);
+    font-weight: var(--font-weight-medium);
+  }
+
+  &__top-reactions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  &__reaction {
+    background-color: rgba(0, 0, 0, 0.54);
+    border-radius: 12px;
+    padding: 4px 8px;
+    font-size: 13px;
+    color: var(--color-white);
+  }
+
+  &__myDiv {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    margin: 1% 0;
+    border: 0.5px solid rgba(0, 0, 0, 0.12);
   }
 }
