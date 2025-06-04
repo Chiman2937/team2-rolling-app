@@ -1,4 +1,3 @@
-// src/pages/ListPage.jsx
 import { useEffect, useState } from 'react';
 import Slider from './components/Slider';
 import styles from './ListPage.module.scss';
