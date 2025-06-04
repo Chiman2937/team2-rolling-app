@@ -18,57 +18,60 @@
   --font-weight-bold: 700;
 
   /* Color - Purple */
-  --color-purple-100: #F8F0FF;
-  --color-purple-200: #ECD9FF;
-  --color-purple-300: #DCB9FF;
-  --color-purple-400: #C894FD;
-  --color-purple-500: #AB57FF;
-  --color-purple-600: #9935FF;
-  --color-purple-700: #861DEE;
-  --color-purple-800: #6E0AD1;
-  --color-purple-900: #5603A7;
+  --color-purple-100: #f8f0ff;
+  --color-purple-200: #ecd9ff;
+  --color-purple-300: #dcb9ff;
+  --color-purple-400: #c894fd;
+  --color-purple-500: #ab57ff;
+  --color-purple-600: #9935ff;
+  --color-purple-700: #861dee;
+  --color-purple-800: #6e0ad1;
+  --color-purple-900: #5603a7;
 
   /* Color - Beige */
-  --color-beige-100: #FFF0D6;
-  --color-beige-200: #FFE2AD;
-  --color-beige-300: #FFC583;
-  --color-beige-400: #FFAE65;
-  --color-beige-500: #FF8832;
+  --color-beige-100: #fff0d6;
+  --color-beige-200: #ffe2ad;
+  --color-beige-300: #ffc583;
+  --color-beige-400: #ffae65;
+  --color-beige-500: #ff8832;
 
   /* Color - Blue */
-  --color-blue-100: #E2F5FF;
-  --color-blue-200: #B1E4FF;
-  --color-blue-300: #7CD2FF;
-  --color-blue-400: #34B9FF;
-  --color-blue-500: #00A2FE;
+  --color-blue-100: #e2f5ff;
+  --color-blue-200: #b1e4ff;
+  --color-blue-300: #7cd2ff;
+  --color-blue-400: #34b9ff;
+  --color-blue-500: #00a2fe;
 
   /* Color - Green */
-  --color-green-100: #E4FBDC;
-  --color-green-200: #D0F5C3;
-  --color-green-300: #9BE282;
-  --color-green-400: #60CF37;
-  --color-green-500: #2BA600;
+  --color-green-100: #e4fbdc;
+  --color-green-200: #d0f5c3;
+  --color-green-300: #9be282;
+  --color-green-400: #60cf37;
+  --color-green-500: #2ba600;
 
   /* Color - Grayscale */
-  --color-gray-100: #F6F6F6;
-  --color-gray-200: #EEEEEE;
-  --color-gray-300: #CCCCCC;
+  --color-gray-100: #f6f6f6;
+  --color-gray-200: #eeeeee;
+  --color-gray-300: #cccccc;
   --color-gray-400: #999999;
   --color-gray-500: #555555;
-  --color-gray-600: #4A4A4A;
-  --color-gray-700: #3A3A3A;
-  --color-gray-800: #2B2B2B;
+  --color-gray-600: #4a4a4a;
+  --color-gray-700: #3a3a3a;
+  --color-gray-800: #2b2b2b;
   --color-gray-900: #181818;
 
   /* Color - White */
-  --color-white: #FFFFFF;
+  --color-white: #ffffff;
 
   /* Color - Black */
   --color-black: #000000;
 
   /* Color - Error */
-  --color-error: #DC3A3A;
+  --color-error: #dc3a3a;
 
   /* Color - Surface */
-  --color-surface: #F6F8FF;
+  --color-surface: #f6f8ff;
+
+  /* Wrapper 너비 변수 */
+  --wrapper-width: 1200px;
 }
