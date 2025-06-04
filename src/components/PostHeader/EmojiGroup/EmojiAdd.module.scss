@@ -7,7 +7,7 @@
   /* 드롭다운 메뉴가 펼쳐질 때 적용할 스타일 */
   &__menu {
     /* DropdownButton 내부의 .dropdown__menu 과 함께 사용됨 */
-    width: 250px; /* EmojiPicker 가로 크기와 일치시키기 */
+    max-width: 350px; /* EmojiPicker 가로 크기와 일치시키기 */
     height: 350px; /* EmojiPicker 세로 크기와 일치시키기 */
     background: #ffffff;
     border-radius: 8px;

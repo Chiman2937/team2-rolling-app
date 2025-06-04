@@ -1,6 +1,5 @@
 // src/components/EmojiAdd/EmojiAdd.jsx
 
-import { useState, useCallback } from 'react';
 import { useApi } from '@/hooks/useApi';
 import DropdownButton from '@/components/DropdownButton/DropdownButton';
 //import IconButton from '@/components/Button/IconButton';
@@ -8,6 +7,7 @@ import AddImojiIcon from '@/assets/icons/add-20.svg';
 import EmojiPicker from 'emoji-picker-react';
 import Style from './EmojiAdd.module.scss';
 import { createRecipientReaction } from '@/apis/recipientReactionsApi';
+import { useToast } from '@/hooks/useToast';
 
 /**
  * EmojiAdd 컴포넌트
@@ -23,9 +23,7 @@ import { createRecipientReaction } from '@/apis/recipientReactionsApi';
  *        - 이모지 추가 API 호출이 성공했을 때 실행할 콜백 (예: 반응 목록을 다시 불러오기)
  */
 export default function EmojiAdd({ id, onSuccess }) {
-  // 드롭다운 열림/닫힘 상태
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
+  const { showToast } = useToast();
   /**
    * useApi 훅을 통해 createRecipientReaction API 호출을 관리합니다.
    * - immediate: false 로 설정하여 컴포넌트 마운트 시 자동 호출을 방지
@@ -41,16 +39,6 @@ export default function EmojiAdd({ id, onSuccess }) {
   );
 
   /**
-   * 드롭다운 열림/닫힘 상태를 업데이트하는 콜백
-   *
-   * @param {boolean} nextOpen
-   *        - 새로운 드롭다운 열림 상태 (true면 열림, false면 닫힘)
-   */
-  const handleToggle = useCallback((nextOpen) => {
-    setIsDropdownOpen(nextOpen);
-  }, []);
-
-  /**
    * 이모지를 클릭했을 때 실행되는 핸들러
    *
    * @param {{ emoji: string }} emojiData
@@ -61,8 +49,12 @@ export default function EmojiAdd({ id, onSuccess }) {
     refetch({ recipientId: id, emoji: emojiData.emoji, type: 'increase' })
       .then(() => {
         // 성공 시 드롭다운 닫고, 상위 콜백(onSuccess) 호출
-        setIsDropdownOpen(false);
 
+        showToast({
+          type: 'success',
+          message: emojiData.emoji + ' 이모지 추가 성공!',
+          timer: 1000,
+        });
         onSuccess && onSuccess();
       })
       .catch(() => {
@@ -85,14 +77,12 @@ export default function EmojiAdd({ id, onSuccess }) {
   );
 
   /**
-   * 드롭다운 내부에 렌더링할 EmojiPicker 영역 JSX
+   * 드롭다운 내부에 렌더링할 EmojiPicker 영역
    */
   const emojiList = (
     <div className={Style['emoji-add__menu-container']}>
       <EmojiPicker
         onEmojiClick={handleEmojiClick}
-        width={250}
-        height={350}
         lazyLoadEmojis={true}
         emojiStyle='apple'
         theme='light'
@@ -109,9 +99,6 @@ export default function EmojiAdd({ id, onSuccess }) {
         layout='column'
         ButtonClassName={Style['emoji-add__toggle']}
         MenuClassName={Style['emoji-add__menu']}
-        onToggle={handleToggle}
-        openOnHover={false}
-        isOpen={isDropdownOpen}
       />
 
       {/* API 에러가 있다면 화면에 간단히 보여줌 */}

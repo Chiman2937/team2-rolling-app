@@ -5,6 +5,7 @@ import DropdownButton from '@/components/DropdownButton/DropdownButton';
 import ToggleEmoji from './ToggleEmoji';
 import EmojiList from './EmojiList';
 import Style from './EmojiGroup.module.scss';
+import { useEffect } from 'react';
 
 /**
  * EmojiGroup 컴포넌트
@@ -13,8 +14,8 @@ import Style from './EmojiGroup.module.scss';
  * @param {number|string} props.id
  *       - 수신자(롤링페이퍼) ID
  */
-export default function EmojiGroup({ id }) {
-  const { data, loading, error } = useApi(
+export default function EmojiGroup({ id, refreshKey }) {
+  const { data, loading, error, refetch } = useApi(
     listRecipientReactions,
     { recipientId: id, limit: 8, offset: 0 },
     { errorMessage: '이모지 반응을 불러오는 데 실패했습니다.' },
@@ -22,7 +23,12 @@ export default function EmojiGroup({ id }) {
 
   const topEmojis = data?.results || []; // 최대 8개 이모지 반응 리스트
 
-  // 3) 로딩 / 에러 / 빈 상태 처리
+  // 이모지 반응 목록을 새로고침하기 위한 useEffect
+  useEffect(() => {
+    refetch();
+  }, [refreshKey, refetch]);
+
+  //  로딩 / 에러 / 빈 상태 처리
   if (loading) {
     return <div className={Style['emoji-group--loading']}>이모지 로딩 중...</div>;
   }
@@ -33,7 +39,7 @@ export default function EmojiGroup({ id }) {
     return <div className={Style['emoji-group--empty']}>반응을 추가해보세요!</div>;
   }
 
-  // 4) 드롭다운 버튼에 ToggleComponent, ListComponent 넘김
+  //  드롭다운 버튼에 ToggleComponent, ListComponent 넘김
   return (
     <div className={Style['emoji-group']}>
       <DropdownButton
