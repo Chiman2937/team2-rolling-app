@@ -21,8 +21,9 @@ export const getRecipientsMessages = async (id, params = {}) => {
   return body;
 };
 
-export const getRecipientsReactions = async (id) => {
-  const response = await fetch(`${BASEURL}/2/recipients/${id}/reactions`);
+export const getRecipientsReactions = async (id, params = {}) => {
+  const queryParams = new URLSearchParams(params).toString();
+  const response = await fetch(`${BASEURL}/2/recipients/${id}/reactions/?${queryParams}`);
 
   if (!response.ok) {
     throw new Error('롤링페이퍼 리액션 목록을 불러오는데 오류가 발생했습니다');
