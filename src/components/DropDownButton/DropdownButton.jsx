@@ -1,5 +1,6 @@
 // src/components/DropdownButton/DropdownButton.jsx
 import React, { useState, useRef, useEffect } from 'react';
+import { useDropdownPosition } from '@/hooks/useDropdownPosition';
 import styles from './DropdownButton.module.scss';
 
 /**
@@ -31,16 +32,23 @@ function DropdownButton({
   openOnHover = false,
 }) {
   const [isOpen, setIsOpen] = useState(false);
+
   // 밖을 클릭했을 때 닫기 위한 ref
   const containerRef = useRef(null);
+  const menuRef = useRef(null);
+  // 드롭다운 위치 보정 훅
+  //커스텀 훅 호출: isOpen이 true일 때마다 위치 보정값(adjustX)을 계산
+  const adjustXValue = useDropdownPosition(containerRef, menuRef, isOpen);
 
   const openDropdown = () => {
     setIsOpen(true);
+
     onToggle && onToggle(true);
   };
 
   const closeDropdown = () => {
     setIsOpen(false);
+
     onToggle && onToggle(false);
   };
 
@@ -99,7 +107,17 @@ function DropdownButton({
       <div className={toggleClass} onClick={handleToggleClick}>
         {ToggleComponent}
       </div>
-      <div className={menuClass}>{ListComponent}</div>
+      <div
+        ref={menuRef}
+        className={menuClass}
+        style={{
+          transform: isOpen
+            ? `scaleY(1) translateX(calc(-50% + ${adjustXValue}px))`
+            : `scaleY(0) translateX(calc(-50% + ${adjustXValue}px))`,
+        }}
+      >
+        {ListComponent}
+      </div>
     </div>
   );
 }
