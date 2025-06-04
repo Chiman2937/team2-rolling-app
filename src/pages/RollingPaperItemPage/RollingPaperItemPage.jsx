@@ -1,37 +1,27 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useApi } from '@/hooks/useApi.jsx';
 import { useModal } from '@/hooks/useModal';
 import styles from '@/pages/RollingPaperItemPage/RollingPaperItemPage.module.scss';
 import ItemCard from '@/components/ItemCard';
-import { listRecipientMessages } from '../../apis/recipientMessageApi';
-import { getRecipient } from '../../apis/recipientsApi';
-import { deleteMessage } from '../../apis/messagesApi';
-import { deleteRecipient } from '../../apis/recipientsApi';
+import { getRecipient } from '@/apis/recipientsApi';
+import { deleteMessage } from '@/apis/messagesApi';
+import { deleteRecipient } from '@/apis/recipientsApi';
+import { useMessageItemsList } from '@/hooks/useMessageItemsList';
+import { useInfinityScroll } from '@/hooks/useInfinityScroll';
 
-function RollingPaperItemPage() {
+const RollingPaperItemPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { showModal } = useModal();
-  const observerRef = useRef(null);
-
   const [isEditMode, setIsEditMode] = useState(false);
 
   const { data: getRecipientData } = useApi(getRecipient, { id }, { immediate: true });
-
-  const { data: getMessageListData, refetch: getMessageListRefetch } = useApi(
-    listRecipientMessages,
-    { recipientId: id, limit: 8, offset: 0 },
-    { immediate: true },
-  );
-
   const { refetch: deleteMessageRefetch } = useApi(deleteMessage, { id }, { immediate: false });
-
   const { refetch: deleteRecipientRefetch } = useApi(deleteRecipient, { id }, { immediate: false });
 
-  const [offset, setOffset] = useState(0);
-  const [hasNext, setHasNext] = useState(null);
-  const [itemList, setItemList] = useState([]);
+  const { itemList, hasNext, loadMore, initializeList } = useMessageItemsList(id);
+  const { observerRef } = useInfinityScroll({ hasNext, callback: loadMore });
 
   const COLOR_STYLES = {
     beige: {
@@ -88,8 +78,7 @@ function RollingPaperItemPage() {
   const handleMessageDelete = async (messageId) => {
     try {
       await deleteMessageRefetch({ id: messageId });
-      await getMessageListRefetch({ recipientId: id, limit: 8, offset: 0 });
-      setOffset(0);
+      initializeList();
     } catch (error) {
       console.error('삭제 시 오류 발생:', error);
     }
@@ -103,41 +92,6 @@ function RollingPaperItemPage() {
       console.error('삭제 후 재요청 중 오류 발생:', error);
     }
   };
-
-  useEffect(() => {
-    if (!getMessageListData) return;
-    const { results, next, previous } = getMessageListData;
-    setItemList((prevList) => (!previous ? results : [...prevList, ...results]));
-    setHasNext(!!next);
-  }, [getMessageListData]);
-
-  useEffect(() => {
-    if (offset === 0) return;
-    getMessageListRefetch({ recipientId: id, limit: 6, offset });
-  }, [offset, id, getMessageListRefetch]);
-
-  useEffect(() => {
-    const onScroll = (entries) => {
-      const firstEntry = entries[0];
-
-      if (firstEntry.isIntersecting && hasNext) {
-        setOffset((prevOffset) => (prevOffset === 0 ? prevOffset + 8 : prevOffset + 6));
-      }
-    };
-
-    const observer = new IntersectionObserver(onScroll);
-    const currentRef = observerRef.current;
-
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, [hasNext]);
 
   return (
     <>
@@ -156,7 +110,7 @@ function RollingPaperItemPage() {
           )}
           <div className={styles['list__grid']}>
             {!isEditMode && <ItemCard isAddCard onAdd={handleOnClickAdd} />}
-            {itemList.map((item) => (
+            {itemList?.map((item) => (
               <ItemCard
                 key={item.id}
                 cardData={item}
@@ -167,11 +121,11 @@ function RollingPaperItemPage() {
             ))}
           </div>
           {/* 무한 스크롤 감지하는 영역*/}
-          <div ref={observerRef} />
+          <div ref={observerRef} className={styles['list__observer']} />
         </div>
       </section>
     </>
   );
-}
+};
 
 export default RollingPaperItemPage;
