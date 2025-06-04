@@ -40,8 +40,7 @@
   }
 
   &__reaction {
-    background: var(--color-black);
-    opacity: 54%;
+    background-color: rgba(0, 0, 0, 0.54);
     border-radius: 12px;
     padding: 4px 8px;
     font-size: 13px;
@@ -60,7 +59,7 @@
   &__avatar {
     width: 32px;
     height: 32px;
-    border: 2px solid #fff;
+    border: 2px solid var(--color-white);
     border-radius: 50%;
     background-color: var(--color-white);
     overflow: hidden;
@@ -69,7 +68,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
+    font-size: var(--font-size-14);
     color: var(--color--gray-500);
   }
 

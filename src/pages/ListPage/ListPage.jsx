@@ -67,7 +67,7 @@ const ListPage = () => {
         <Slider cards={recentCards} />
       </section>
 
-      <Link to='/post' style={{ textDecoration: 'none' }}>
+      <Link to='/post' style={{ textDecoration: 'none', textAlign: 'center' }}>
         <Button>나도 만들어보기</Button>
       </Link>
     </div>
