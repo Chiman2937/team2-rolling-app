@@ -15,6 +15,7 @@
 
   /* Font weights */
   --font-weight-regular: 400;
+  --font-weight-medium: 500;
   --font-weight-bold: 700;
 
   /* Color - Purple */
@@ -72,6 +73,13 @@
   /* Color - Surface */
   --color-surface: #f6f8ff;
 
+
   /* Wrapper 너비 변수 */
   --wrapper-width: 1200px;
+
+  /* Button Size */
+  --button-size-28: 28px;
+  --button-size-36: 36px;
+  --button-size-40: 40px;
+  --button-size-56: 56px;
 }
