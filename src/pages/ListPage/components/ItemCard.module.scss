@@ -1,3 +1,5 @@
+/* src/components/ItemCard/ItemCard.module.scss */
+
 .item-card {
   position: relative;
   width: 275px;
@@ -43,5 +45,38 @@
     border-radius: 12px;
     padding: 4px 8px;
     font-size: 13px;
+  }
+
+  /* 작성자 프로필 아바타 전체 컨테이너 */
+  &__avatars {
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 32px;
+    margin-top: 8px; /* 콘텐츠와 약간 간격 주기 */
+  }
+
+  /* 각 아바타(이미지 또는 +n) */
+  &__avatar {
+    width: 32px;
+    height: 32px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    background-color: var(--color-white);
+    overflow: hidden;
+    position: relative;
+    margin-left: -12px; /* 겹치도록 위치 조정 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--color--gray-500);
+  }
+
+  /* 아바타 이미지가 들어갈 경우 내부 img 처리 */
+  &__avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }
