@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useApi } from '@/hooks/useApi.jsx';
 import { useModal } from '@/hooks/useModal';
 import styles from '@/pages/RollingPaperItemPage/RollingPaperItemPage.module.scss';
-import ItemCard from '@/components/ItemCard';
+import ListCard from '@/components/ListCard';
 import { getRecipient } from '@/apis/recipientsApi';
 import { deleteMessage } from '@/apis/messagesApi';
 import { deleteRecipient } from '@/apis/recipientsApi';
@@ -109,9 +109,9 @@ const RollingPaperItemPage = () => {
             </button>
           )}
           <div className={styles['list__grid']}>
-            {!isEditMode && <ItemCard isAddCard onAdd={handleOnClickAdd} />}
+            {!isEditMode && <ListCard isAddCard onAdd={handleOnClickAdd} />}
             {itemList?.map((item) => (
-              <ItemCard
+              <ListCard
                 key={item.id}
                 cardData={item}
                 isEditMode={isEditMode}

@@ -1,9 +1,9 @@
-import styles from '@/components/ItemCard.module.scss';
+import styles from '@/components/ListCard.module.scss';
 import DeleteIcon from './DeleteIcon';
 import plusImg from '@/assets/icons/icon_plus.svg';
 import SenderProfile from './SenderProfile';
 
-const ItemCard = ({ cardData, isAddCard, isEditMode, onClick, onDelete, onAdd }) => {
+const ListCard = ({ cardData, isAddCard, isEditMode, onClick, onDelete, onAdd }) => {
   if (isAddCard)
     return (
       <article className={styles['card']} onClick={onAdd}>
@@ -59,4 +59,4 @@ const ItemCard = ({ cardData, isAddCard, isEditMode, onClick, onDelete, onAdd })
   );
 };
 
-export default ItemCard;
+export default ListCard;
