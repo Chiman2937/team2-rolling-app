@@ -1,5 +1,5 @@
-@include fade-in(0, 0.8);
-@include fade-out(0.8, 0);
+@include fade-in(0, 1);
+@include fade-out(1, 0);
 @include fade-in-up(20px, 0, 1);
 @include fade-out-up(20px, 1, 0);
 
@@ -27,6 +27,7 @@ $wrapper-width-desktop: 600px;
   animation: fade-in 0.4s ease forwards;
   &.isClosing {
     animation: fade-out 0.4s ease forwards;
+		pointer-events: none;
   }
 }
 
@@ -37,5 +38,6 @@ $wrapper-width-desktop: 600px;
 
   &.isClosing {
     animation: fade-out-up 0.4s ease forwards;
+		pointer-events: none;
   }
 }
