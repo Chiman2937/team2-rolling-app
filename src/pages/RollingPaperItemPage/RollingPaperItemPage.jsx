@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 import styles from '@/pages/RollingPaperItemPage/RollingPaperItemPage.module.scss';
 import ItemCard from '@/components/ItemCard';
-import {
-  getRecipientsDetail,
-  getRecipientsMessages,
-  getRecipientsReactions,
-} from '@/apis/ItemsApi';
+import { listRecipientMessages } from '../../apis/recipientMessageApi';
+import { getRecipient } from '../../apis/recipientsApi';
+import { listRecipientReactions } from '../../apis/recipientReactionsApi';
 
 function RollingPaperItemPage() {
   const [isEditMode, setIsEditMode] = useState(false);
@@ -36,7 +34,7 @@ function RollingPaperItemPage() {
 
   const getItemDetail = async () => {
     try {
-      const data = await getRecipientsDetail('11727');
+      const data = await getRecipient({ id: '11727' });
       const { backgroundColor, backgroundImageURL, reactionCount, topReactions } = data;
       setItemData({ backgroundColor, backgroundImageURL, reactionCount, topReactions });
     } catch (error) {
@@ -46,7 +44,7 @@ function RollingPaperItemPage() {
 
   const getMessageList = async (params = {}) => {
     try {
-      const data = await getRecipientsMessages('11727', params);
+      const data = await listRecipientMessages({ recipientId: '11727', ...params });
       const { results } = data;
       setItemList(results);
     } catch (error) {
@@ -54,9 +52,9 @@ function RollingPaperItemPage() {
     }
   };
 
-  const getReactions = async () => {
+  const getReactions = async (params = {}) => {
     try {
-      const data = await getRecipientsReactions('11727');
+      const data = await listRecipientReactions({ recipientId: '11727', ...params });
       console.log(data);
     } catch (error) {
       console.error('에러 발생:', error);
