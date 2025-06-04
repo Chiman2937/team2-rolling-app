@@ -14,13 +14,7 @@ export default function EmojiList({ emojis }) {
   return (
     <div className={Style['emoji-list']}>
       {emojis.map((item) => (
-        <EmojiBadge
-          key={item.id}
-          emoji={item.emoji}
-          count={item.count}
-          size='medium'
-          className={Style['emoji-list__badge']}
-        />
+        <EmojiBadge key={item.id} emoji={item.emoji} count={item.count} />
       ))}
     </div>
   );

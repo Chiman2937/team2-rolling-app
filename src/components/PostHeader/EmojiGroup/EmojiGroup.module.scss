@@ -13,11 +13,9 @@
 
 /* 드롭다운 메뉴 컨테이너 (최대 8개 이모지를 그리드로) */
 .emoji-group__menu {
-  width: 280px; /* 적절히 조절 가능 */
-  max-height: 240px; /*  최대 높이 지정 후 스크롤 처리 */
-  overflow-y: auto; /* 내부 아이템이 많으면 스크롤 */
-  background: #ffffff;
-  border-radius: 8px;
+  width: 320px; /* 적절히 조절 가능 */
+  margin-top: 8px;
+  background: var(--color-white);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 8px;
   z-index: 1000;

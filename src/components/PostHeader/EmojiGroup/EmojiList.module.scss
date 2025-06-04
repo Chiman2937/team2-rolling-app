@@ -6,6 +6,6 @@
      - 한 줄에 4개씩 배치
      - 총 8개라면 자동으로 두 번째 행으로 넘어감 */
   grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  padding: 8px; /* 위/아래 여백 */
+  gap: 10px;
+  padding: 24px;
 }

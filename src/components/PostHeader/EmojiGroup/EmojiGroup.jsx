@@ -39,7 +39,7 @@ export default function EmojiGroup({ id }) {
       <DropdownButton
         // ToggleComponent: 상위 3개 이모지
         ToggleComponent={<ToggleEmoji emojis={topEmojis} />}
-        // ListComponent: 상위 8개 이모지를 그리드로 나열
+        // ListComponent: 상위 8개 이모지를 나열
         ListComponent={<EmojiList emojis={topEmojis} />}
         layout='row'
         ButtonClassName={Style['emoji-group__toggle']}
