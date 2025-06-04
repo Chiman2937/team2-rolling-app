@@ -16,12 +16,19 @@ function RollingPaperItemPage() {
   const observerRef = useRef(null);
 
   const [isEditMode, setIsEditMode] = useState(false);
-  const [itemData, setItemData] = useState({
-    backgroundColor: '',
-    backgroundImageURL: '',
-    reactionCount: 0,
-    topReactions: [],
-  });
+
+  const { data: getRecipientData } = useApi(getRecipient, { id }, { immediate: true });
+
+  const { data: getMessageListData, refetch: getMessageListRefetch } = useApi(
+    listRecipientMessages,
+    { recipientId: id, limit: 8, offset: 0 },
+    { immediate: true },
+  );
+
+  const { refetch: deleteMessageRefetch } = useApi(deleteMessage, { id }, { immediate: false });
+
+  const { refetch: deleteRecipientRefetch } = useApi(deleteRecipient, { id }, { immediate: false });
+
   const [offset, setOffset] = useState(0);
   const [hasNext, setHasNext] = useState(null);
   const [itemList, setItemList] = useState([]);
@@ -49,9 +56,18 @@ function RollingPaperItemPage() {
     },
   };
 
+  // const reactionData = {
+  //   reactionCount: getRecipientData?.reactionCount,
+  //   topReactions: getRecipientData?.topReactions,
+  // };
+
   const containerStyle = {
-    backgroundColor: itemData.backgroundColor,
-    backgroundImage: itemData.backgroundImageURL ? `url(${itemData.backgroundImageURL})` : 'none',
+    backgroundColor: !getRecipientData?.backgroundImageURL
+      ? COLOR_STYLES[getRecipientData?.backgroundColor]?.primary
+      : '',
+    backgroundImage: getRecipientData?.backgroundImageURL
+      ? `url(${getRecipientData?.backgroundImageURL})`
+      : 'none',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
     backgroundSize: 'cover',
@@ -87,30 +103,6 @@ function RollingPaperItemPage() {
       console.error('삭제 후 재요청 중 오류 발생:', error);
     }
   };
-
-  const { data: getItemDetailData } = useApi(getRecipient, { id }, { immediate: true });
-
-  const { data: getMessageListData, refetch: getMessageListRefetch } = useApi(
-    listRecipientMessages,
-    { recipientId: id, limit: 8, offset: 0 },
-    { immediate: true },
-  );
-
-  const { refetch: deleteMessageRefetch } = useApi(deleteMessage, { id }, { immediate: false });
-
-  const { refetch: deleteRecipientRefetch } = useApi(deleteRecipient, { id }, { immediate: false });
-
-  useEffect(() => {
-    if (!getItemDetailData) return;
-    const { backgroundColor, backgroundImageURL, reactionCount, topReactions } = getItemDetailData;
-
-    setItemData({
-      backgroundColor: !backgroundImageURL ? COLOR_STYLES[backgroundColor]['primary'] : '',
-      backgroundImageURL,
-      reactionCount,
-      topReactions,
-    });
-  }, [getItemDetailData]);
 
   useEffect(() => {
     if (!getMessageListData) return;
