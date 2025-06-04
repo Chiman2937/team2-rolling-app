@@ -1,6 +1,7 @@
 // src/components/ProfileGroup/ProfileList.jsx
 import React from 'react';
 import Style from './ProfileList.module.scss';
+import { getDaysAgo } from '@/utils/getDaysAgo.js';
 
 /**
  * ProfileList 컴포넌트
@@ -25,14 +26,19 @@ export default function ProfileList({ profiles, loading, error }) {
         const displayName =
           profile.sender.length > 10 ? profile.sender.slice(0, 10) + '...' : profile.sender;
 
+        // getDaysAgo 유틸 함수로 “n일 전” 또는 “오늘” 계산
+        const timeLabel = getDaysAgo(profile.createdAt);
         return (
           <li key={profile.id} className={Style['profile-list__item']}>
-            <img
-              src={profile.profileImageURL}
-              alt={profile.sender}
-              className={Style['profile-list__avatar']}
-            />
-            <span className={Style['profile-list__name']}>{displayName}</span>
+            <div className={Style['profile-list__item-container']}>
+              <img
+                src={profile.profileImageURL}
+                alt={profile.sender}
+                className={Style['profile-list__avatar']}
+              />
+              <span className={Style['profile-list__name']}>{displayName}</span>
+            </div>
+            <span className={Style['profile-list__time']}>{timeLabel}</span>
           </li>
         );
       })}
