@@ -15,15 +15,20 @@ const ItemCard = ({ cardData, isAddCard, isEditMode, onClick, onDelete, onAdd })
 
   /* 폰트 확인 후 해당 폰트로 보여줘야 함 */
   const { id, sender, profileImageURL, content, createdAt, relationship } = cardData;
-  const formatDate = (date) => {
-    return date.slice(0, 10);
+
+  const formatDateKRW = (isoString) => {
+    const date = new Date(isoString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, 0);
+    const day = String(date.getDate()).padStart(2, 0);
+    return `${year}. ${month}. ${day}`;
   };
 
   const onClickItemCard = () => {
     onClick({
       sender,
       imageUrl: profileImageURL,
-      createdAt: formatDate(createdAt),
+      createdAt: formatDateKRW(createdAt),
       content: content,
     });
   };
@@ -48,7 +53,7 @@ const ItemCard = ({ cardData, isAddCard, isEditMode, onClick, onDelete, onAdd })
           <hr className={styles['card__divider']} />
           <section className={styles['card__content']}>{content}</section>
         </div>
-        <footer className={styles['card__date']}>{formatDate(createdAt)}</footer>
+        <footer className={styles['card__date']}>{formatDateKRW(createdAt)}</footer>
       </div>
     </article>
   );
