@@ -1,0 +1,38 @@
+.base {
+  width: var(--button-size-56);
+  height: var(--button-size-56);
+  border-radius: 100px;
+  border: none;
+  background-color: var(--color-gray-500);
+  color: var(--color-white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.base:hover {
+  background-color: var(--color-gray-600);
+}
+
+.base:active {
+  background-color: var(--color-gray-700);
+}
+
+.base:focus {
+  border: 1px solid var(--color-gray-800);
+  background-color: var(--color-gray-700);
+}
+
+.disabled {
+  background-color: var(--color-gray-300);
+  color: var(--color-gray-300);
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100px;
+  width: var(--button-size-56);
+  height: var(--button-size-56);
+}
