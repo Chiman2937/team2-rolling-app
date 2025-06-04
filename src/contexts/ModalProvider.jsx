@@ -20,7 +20,7 @@ export const ModalProvider = ({ children }) => {
     setTimeout(() => {
       setIsOpen(false);
       setIsClosing(false);
-    }, 500);
+    }, 200);
   };
 
   return (
