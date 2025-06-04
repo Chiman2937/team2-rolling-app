@@ -8,7 +8,7 @@ import {
 } from '@/apis/ItemsApi';
 
 function RollingPaperItemPage() {
-  const isEditMode = false;
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const [itemData, setItemData] = useState({
     backgroundColor: '',
@@ -28,6 +28,10 @@ function RollingPaperItemPage() {
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
     backgroundSize: 'cover',
+  };
+
+  const handleOnClickEdit = () => {
+    setIsEditMode(true);
   };
 
   const getItemDetail = async () => {
@@ -50,22 +54,35 @@ function RollingPaperItemPage() {
     }
   };
 
+  const getReactions = async () => {
+    try {
+      const data = await getRecipientsReactions('11727');
+      console.log(data);
+    } catch (error) {
+      console.error('에러 발생:', error);
+    }
+  };
+
   useEffect(() => {
     getItemDetail();
-    getRecipientsReactions();
+    getReactions({ limit: 8, offset: 0 });
   }, []);
 
   useEffect(() => {
-    getMessageList({ limit: 10, offset: 0 });
+    getMessageList({ limit: 8, offset: 0 });
   }, []);
 
   return (
     <>
       {/* 헤더 영역 */}
-      {/* <ModalProvider> */}
       <section style={containerStyle} className={styles['list']}>
         <div className={styles['list__container']}>
-          <button className={styles['list__button']}>삭제하기</button>
+          {!isEditMode && (
+            <button className={styles['list__button']} onClick={handleOnClickEdit}>
+              수정하기
+            </button>
+          )}
+          {isEditMode && <button className={styles['list__button']}>삭제하기</button>}
           <div className={styles['list__grid']}>
             {!isEditMode && <ItemCard isAddCard />}
             {itemList.map((item) => (
@@ -74,7 +91,6 @@ function RollingPaperItemPage() {
           </div>
         </div>
       </section>
-      {/* </ModalProvider> */}
     </>
   );
 }
