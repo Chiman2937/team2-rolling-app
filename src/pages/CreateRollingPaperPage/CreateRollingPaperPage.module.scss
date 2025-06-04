@@ -26,14 +26,17 @@
 	width: 720px;
 	margin: 57px auto;
 
-	&__receiver-label {
+	&__receiver-field {
 		display: flex;
 		flex-direction: column;
+		gap: 12px;
+		margin-bottom: 50px;
+	}
+
+	&__receiver-label {
 		font-weight: 700;
 		font-size: var(--font-size-24);
 		line-height: 42px;
-		gap: 12px;
-		margin-bottom: 50px;
 	}
 	&__receiver-input {
 		width: 100%;

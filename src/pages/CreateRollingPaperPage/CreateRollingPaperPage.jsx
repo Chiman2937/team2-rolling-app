@@ -8,18 +8,23 @@ import { useNavigate } from 'react-router-dom';
 import { useApi } from '../../hooks/useApi';
 import { getBackgroundImages } from '../../apis/backgroundImagesAPI';
 import { createRecipient } from '../../apis/recipientsApi';
+import Textfield from '../../components/Textfield';
 
 const COLOR_KEYS = ['beige', 'purple', 'blue', 'green'];
 
 const CreateRollingPaperPage = () => {
   const [receiver, setReceiver] = useState('');
+  const [isEditingReceiver, setIsEditingReceiver] = useState(false);
   const [backgroundType, setBackgroundType] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
   const navigate = useNavigate();
 
   // input change event
-  const handleInputChange = (e) => setReceiver(e.target.value);
+  const handleInputChange = (e) => {
+    setIsEditingReceiver(true);
+    setReceiver(e.target.value);
+  };
 
   // Api 호출
   const {
@@ -96,14 +101,16 @@ const CreateRollingPaperPage = () => {
 
   return (
     <section className={styles['post-section']}>
-      <label className={styles['post-section__receiver-label']}>
-        To.
-        <input
-          className={styles['post-section__receiver-input']}
+      <div className={styles['post-section__receiver-field']}>
+        <label className={styles['post-section__receiver-label']}>To.</label>
+        <Textfield
           value={receiver}
+          placeholder='받는 사람 이름을 입력해주세요'
           onChange={handleInputChange}
-        ></input>
-      </label>
+          isError={isEditingReceiver ? receiver === '' : null}
+          message='이름이 입력되지 않았습니다'
+        />
+      </div>
 
       <label className={styles['post-section__background-label']}>배경화면을 선택해주세요.</label>
       <span className={styles['post-section__background-label-int']}>
