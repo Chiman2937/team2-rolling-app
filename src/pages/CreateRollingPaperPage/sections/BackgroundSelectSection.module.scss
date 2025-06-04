@@ -46,7 +46,7 @@
 		display: grid;
 		margin-top: 45px;
 		margin-bottom: 69px;
-		gap: 1.8rem;
+		gap: 20px;
 
 		& {
 			grid-template-columns: repeat(2,1fr);
@@ -83,10 +83,9 @@
 		background-size: cover;            /* 이미지가 div 전체를 채우도록 */
 		background-position: center;       /* 가운데 정렬 */
 		background-repeat: no-repeat;      /* 반복 방지 */
-		border-radius: 16px;
+		border-radius: 13%;
 		cursor: pointer;
 		transition: transform 0.3s ease;
-
 		&:hover {
 			transform: scale(1.1);
 		}
