@@ -1,0 +1,28 @@
+$wrapper-mobile-width: 100%;
+$wrapper-tablet-width: 100%;
+$wrapper-desktop-width: 720px;
+
+.post-section {
+	
+	@include responsive-width (
+		$wrapper-mobile-width,$wrapper-tablet-width,$wrapper-desktop-width
+	);
+	padding: 0 24px;
+	margin: 57px auto;
+
+	&__submit {
+		width: 100%;
+		padding: 14px 0;
+		background-color: var(--color-purple-600);
+		border: none;
+		border-radius: 12px;
+		font-weight: 700;
+		font-size: 18px;
+		line-height: 28px;
+		color: var(--color-white);
+
+		&:disabled {
+			background-color: var(--color-gray-300);
+		}
+	}
+}
