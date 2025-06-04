@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './CreateRollingPaperPage.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useApi } from '@/hooks/useApi';
-import { getBackgroundImages } from '@/apis/backgroundImagesAPI';
+import { getBackgroundImages } from '@/apis/backgroundImagesApi';
 import { createRecipient } from '@/apis/recipientsApi';
 import ImagePreloader from '@/components/ImagePreloader';
 import BackgroundSelectSection from './components/BackgroundSelectSection';
