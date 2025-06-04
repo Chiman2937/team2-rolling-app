@@ -20,5 +20,9 @@ $wrapper-desktop-width: 720px;
 		font-size: 18px;
 		line-height: 28px;
 		color: var(--color-white);
+
+		&:disabled {
+			background-color: var(--color-gray-300);
+		}
 	}
 }
