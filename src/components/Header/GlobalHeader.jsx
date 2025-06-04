@@ -22,7 +22,6 @@ function GlobalHeader() {
     <header className={Style['header']}>
       <div className={Style['header__container']}>
         <img src={LOGO} alt='Logo' className={Style['header__logo']} />
-
         {showButton && (
           <button
             size='36'
