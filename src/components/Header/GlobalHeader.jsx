@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import LOGO from '@/assets/logo/Logo-Rolling.png';
 import Style from './GlobalHeader.module.scss';
 import useShowComponent from '@/hooks/useShowComponent';
+import Button from '@/components/Button/Button';
 /**
  * GlobalHeader 컴포넌트
  * @description - 애플리케이션의 상단 헤더 컴포넌트로, 로고와 버튼을 포함합니다.
@@ -22,11 +23,10 @@ function GlobalHeader() {
       <div className={Style['header__container']}>
         <img src={LOGO} alt='Logo' className={Style['header__logo']} />
 
-        {/* @todo : 디자인시스템에 기반한 버튼 컴포넌트로 변경 */}
-
         {showButton && (
           <button
-            type='button'
+            size='36'
+            variant='outlined'
             onClick={handleButtonClick}
             aria-label='롤링 페이퍼 만들기'
             className={Style['header__button']}
