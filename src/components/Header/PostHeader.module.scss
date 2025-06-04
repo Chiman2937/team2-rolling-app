@@ -1,0 +1,25 @@
+.post-header {
+  display: flex;
+  height: 68px;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-white);
+  &__container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    max-width: var(--wrapper-width);
+    padding: 0 24px;
+  }
+  &__title {
+    font-size: var(--font-size-28);
+    font-weight: var(--font-weight-bold);
+  }
+
+  &__menu-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+}

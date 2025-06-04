@@ -22,6 +22,7 @@ function GlobalHeader() {
     <header className={Style['header']}>
       <div className={Style['header__container']}>
         <img src={LOGO} alt='Logo' className={Style['header__logo']} />
+        {/* todo: 디자인시스템 버튼으로 교체 */}
         {showButton && (
           <button
             size='36'
