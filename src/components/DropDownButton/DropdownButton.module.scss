@@ -67,13 +67,12 @@
   /* 메뉴 아이템 기본 스타일 */
   &__menu-item {
     padding: 8px 12px;
-    border-radius: 6px;
     cursor: pointer;
     white-space: nowrap;
     transition: background-color 0.2s ease;
 
     &:hover {
-      background-color: rgba(0, 0, 0, 0.05);
+      background-color: var(--color-gray-100);
     }
   }
 }

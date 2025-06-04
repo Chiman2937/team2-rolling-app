@@ -1,10 +1,7 @@
 /* src/components/ProfileGroup/ProfileList.module.scss */
 
 .profile-list {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  &--spinner {
+  &--loading {
     padding: 16px;
     text-align: center;
     font-size: 14px;
@@ -29,6 +26,9 @@
     list-style: none;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   &__item {

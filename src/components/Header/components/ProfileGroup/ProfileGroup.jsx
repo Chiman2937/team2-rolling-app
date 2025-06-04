@@ -11,7 +11,7 @@ import Style from './ProfileGroup.module.scss';
  * ProfileGroup 컴포넌트
  */
 export default function ProfileGroup({ id }) {
-  const { data, loading, error, refetch } = useApi(
+  const { data, loading, error } = useApi(
     listRecipientMessages,
     { recipientId: id, limit: 100, offset: 0 },
     { errorMessage: '프로필 이미지 리스트를 불러오는 데 실패했습니다.' },
@@ -25,11 +25,11 @@ export default function ProfileGroup({ id }) {
   }, [data]);
 
   // 프로필 이미지 업데이트(..굳이인가?)
-  const handleToggle = (open) => {
-    if (open) {
-      refetch();
-    }
-  };
+  // const handleToggle = (open) => {
+  //   if (open) {
+  //     refetch();
+  //   }
+  // };
 
   return (
     <div className={Style['profile-group']}>
@@ -44,9 +44,10 @@ export default function ProfileGroup({ id }) {
         }
         ListComponent={<ProfileList profiles={sortedProfiles} loading={loading} error={error} />}
         layout='column'
+        openOnHover={true}
         ButtonClassName={Style['profile-group__toggle-button']}
         MenuClassName={Style['profile-group__menu-container']}
-        onToggle={handleToggle}
+        //onToggle={handleToggle}
       />
     </div>
   );

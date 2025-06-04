@@ -7,7 +7,7 @@ import Style from './ProfileList.module.scss';
  */
 export default function ProfileList({ profiles, loading, error }) {
   if (loading) {
-    return <div className={Style['profile-list--spinner']}>isLoading</div>;
+    return <div className={Style['profile-list--loading']}>로딩중...</div>;
   }
   if (error) {
     return <div className={Style['profile-list--error']}>에러 발생: {error.message}</div>;
