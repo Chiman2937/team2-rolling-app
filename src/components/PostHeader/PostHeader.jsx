@@ -1,7 +1,7 @@
 import DropdownButton from '@/Components/DropDownButton/DropdownButton';
 import Style from './PostHeader.module.scss';
-import ProfileGroup from './components/ProfileGroup/ProfileGroup';
-
+import ProfileGroup from '@/components/PostHeader/ProfileGroup/ProfileGroup';
+import EmojiGroup from '@/components/PostHeader/EmojiGroup/EmojiGroup';
 function PostHeader({ id, name }) {
   return (
     <div className={Style['post-header']}>
@@ -9,6 +9,8 @@ function PostHeader({ id, name }) {
         <h3 className={Style['post-header__title']}>TO. {name}</h3>
         <div className={Style['post-header__menu-container']}>
           <ProfileGroup id={id} />
+          <div className={Style['post-header__divider']} />
+          <EmojiGroup id={id} />
         </div>
       </div>
     </div>

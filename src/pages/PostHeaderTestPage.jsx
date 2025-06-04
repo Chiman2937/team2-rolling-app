@@ -1,6 +1,6 @@
 import { useApi } from '@/hooks/useApi';
 import { getRecipient } from '@/apis/recipientsApi';
-import PostHeader from '../components/Header/PostHeader';
+import PostHeader from '@/components/PostHeader/PostHeader';
 function PostHeaderTestPage() {
   const TEST_ID = 11787;
   const { data, loading } = useApi(

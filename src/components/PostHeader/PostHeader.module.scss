@@ -20,6 +20,11 @@
   &__menu-container {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 28px;
+  }
+  &__divider {
+    width: 1px;
+    height: 24px;
+    background-color: var(--color-gray-300);
   }
 }
