@@ -1,7 +1,7 @@
 import { COLOR_STYLES } from '@/constants/colorThemeStyle';
 import styles from './BackgroundSelectSection.module.scss';
 import iconChecked from '@/assets/icons/icon_selected.svg';
-import OptionToggle from '../../../components/OptionToggle';
+import OptionToggle from '@/components/OptionToggle';
 
 const COLOR_KEYS = ['beige', 'purple', 'blue', 'green'];
 

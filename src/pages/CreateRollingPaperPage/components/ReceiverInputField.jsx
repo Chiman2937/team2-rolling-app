@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './ReceiverInputField.module.scss';
-import Textfield from '../../../components/Textfield';
+import Textfield from '@/components/Textfield';
 
 const ReceiverInputField = ({ receiver, setReceiver }) => {
   const [isValid, setIsValid] = useState(null);

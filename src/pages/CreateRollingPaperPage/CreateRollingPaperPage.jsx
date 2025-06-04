@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import styles from './CreateRollingPaperPage.module.scss';
 import { useNavigate } from 'react-router-dom';
-import { useApi } from '../../hooks/useApi';
-import { getBackgroundImages } from '../../apis/backgroundImagesAPI';
-import { createRecipient } from '../../apis/recipientsApi';
-import ImagePreloader from '../../components/ImagePreloader';
-import BackgroundSelectSection from './sections/BackgroundSelectSection';
-import { COLOR_STYLES } from '../../constants/colorThemeStyle';
-import ReceiverInputField from './sections/ReceiverinputField';
+import { useApi } from '@/hooks/useApi';
+import { getBackgroundImages } from '@/apis/backgroundImagesAPI';
+import { createRecipient } from '@/apis/recipientsApi';
+import ImagePreloader from '@/components/ImagePreloader';
+import BackgroundSelectSection from './components/BackgroundSelectSection';
+import { COLOR_STYLES } from '@/constants/colorThemeStyle';
+import ReceiverInputField from './components/ReceiverinputField';
 
 const COLOR_KEYS = Object.keys(COLOR_STYLES);
 
