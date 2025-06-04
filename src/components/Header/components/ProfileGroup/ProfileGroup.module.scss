@@ -1,0 +1,18 @@
+.profile-group {
+  position: relative;
+  display: inline-block;
+
+  &__toggle-button {
+    cursor: pointer;
+  }
+
+  &__menu-container {
+    width: 240px;
+    max-height: 300px;
+    overflow-y: auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 8px 0;
+  }
+}
