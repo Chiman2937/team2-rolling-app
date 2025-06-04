@@ -35,19 +35,21 @@ const Textfield = ({
 
   return (
     <>
-      <input
-        type='text'
-        placeholder={placeholder}
-        disabled={disabled}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className={`${styles['textfield']} ${styles[statusClass[isError]]} `}
-      />
-      {showMessage && (
-        <div className={`${styles['textfield__message']} ${styles[statusMessageClass[isError]]}`}>
-          {message}
-        </div>
-      )}
+      <div>
+        <input
+          type='text'
+          placeholder={placeholder}
+          disabled={disabled}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className={`${styles['textfield']} ${styles[statusClass[isError]]} `}
+        />
+        {showMessage && (
+          <div className={`${styles['textfield__message']} ${styles[statusMessageClass[isError]]}`}>
+            {message}
+          </div>
+        )}
+      </div>
     </>
   );
 };

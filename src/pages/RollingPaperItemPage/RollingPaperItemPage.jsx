@@ -1,30 +1,56 @@
 import { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useApi } from '@/hooks/useApi.jsx';
+import { useModal } from '@/hooks/useModal';
 import styles from '@/pages/RollingPaperItemPage/RollingPaperItemPage.module.scss';
 import ItemCard from '@/components/ItemCard';
 import { listRecipientMessages } from '../../apis/recipientMessageApi';
 import { getRecipient } from '../../apis/recipientsApi';
-import { listRecipientReactions } from '../../apis/recipientReactionsApi';
-// import { createRecipientReaction } from '../../apis/recipientReactionsApi';
+import { deleteMessage } from '../../apis/messagesApi';
+import { deleteRecipient } from '../../apis/recipientsApi';
 
 function RollingPaperItemPage() {
+  const navigate = useNavigate();
   const { id } = useParams();
-  const [isEditMode, setIsEditMode] = useState(false);
+  const { showModal } = useModal();
+  const observerRef = useRef(null);
 
+  const [isEditMode, setIsEditMode] = useState(false);
   const [itemData, setItemData] = useState({
     backgroundColor: '',
     backgroundImageURL: '',
     reactionCount: 0,
     topReactions: [],
   });
-
   const [offset, setOffset] = useState(0);
   const [hasNext, setHasNext] = useState(null);
   const [itemList, setItemList] = useState([]);
-  const observerRef = useRef(null);
+
+  const COLOR_STYLES = {
+    beige: {
+      primary: 'var(--color-beige-200)',
+      accent: 'var(--color-beige-300)',
+      border: 'rgb(0,0,0,0.08)',
+    },
+    purple: {
+      primary: 'var(--color-purple-200)',
+      accent: 'var(--color-purple-300)',
+      border: 'rgb(0,0,0,0.08)',
+    },
+    blue: {
+      primary: 'var(--color-blue-200)',
+      accent: 'var(--color-blue-300)',
+      border: 'rgb(0,0,0,0.08)',
+    },
+    green: {
+      primary: 'var(--color-green-200)',
+      accent: 'var(--color-blue-300)',
+      border: 'rgb(0,0,0,0.08)',
+    },
+  };
 
   const containerStyle = {
-    backgroundColor: itemData.backgroundColor ? '' : itemData.backgroundColor,
+    backgroundColor: itemData.backgroundColor,
     backgroundImage: itemData.backgroundImageURL ? `url(${itemData.backgroundImageURL})` : 'none',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
@@ -35,72 +61,88 @@ function RollingPaperItemPage() {
     setIsEditMode(true);
   };
 
-  const getItemDetail = async () => {
+  const handleOnClickCard = (modalData) => {
+    showModal(modalData);
+  };
+
+  const handleOnClickAdd = () => {
+    navigate('message');
+  };
+
+  const handleMessageDelete = async (messageId) => {
     try {
-      const data = await getRecipient({ id });
-      const { backgroundColor, backgroundImageURL, reactionCount, topReactions } = data;
-      setItemData({ backgroundColor, backgroundImageURL, reactionCount, topReactions });
+      await deleteMessageRefetch({ id: messageId });
+      await getMessageListRefetch({ recipientId: id, limit: 8, offset: 0 });
+      setOffset(0);
     } catch (error) {
-      console.error('에러 발생:', error);
+      console.error('삭제 시 오류 발생:', error);
     }
   };
 
-  const getMessageList = async (params = {}) => {
+  const handleRecipientsDelete = async () => {
     try {
-      const data = await listRecipientMessages({ recipientId: id, ...params });
-      const { results, next } = data;
-      setItemList([...itemList, ...results]);
-      setHasNext(!!next);
-      setOffset((prev) => prev + 8);
+      await deleteRecipientRefetch({ id });
+      navigate('/post/');
     } catch (error) {
-      console.error('에러 발생:', error);
+      console.error('삭제 후 재요청 중 오류 발생:', error);
     }
   };
 
-  const getReactions = async (params = {}) => {
-    try {
-      const data = await listRecipientReactions({ recipientId: id, ...params });
-      console.log(data);
-    } catch (error) {
-      console.error('에러 발생:', error);
-    }
-  };
+  const { data: getItemDetailData } = useApi(getRecipient, { id }, { immediate: true });
 
-  // const createReaction = async (params = {}) => {
-  //   try {
-  //     await createRecipientReaction({ recipientId: '11727', ...params });
-  //   } catch (error) {
-  //     console.error('에러 발생:', error);
-  //   }
-  // };
+  const { data: getMessageListData, refetch: getMessageListRefetch } = useApi(
+    listRecipientMessages,
+    { recipientId: id, limit: 8, offset: 0 },
+    { immediate: true },
+  );
+
+  const { refetch: deleteMessageRefetch } = useApi(deleteMessage, { id }, { immediate: false });
+
+  const { refetch: deleteRecipientRefetch } = useApi(deleteRecipient, { id }, { immediate: false });
 
   useEffect(() => {
-    getItemDetail();
-    getReactions({ limit: 8, offset: 0 });
-  }, []);
+    if (!getItemDetailData) return;
+    const { backgroundColor, backgroundImageURL, reactionCount, topReactions } = getItemDetailData;
+
+    setItemData({
+      backgroundColor: !backgroundImageURL ? COLOR_STYLES[backgroundColor]['primary'] : '',
+      backgroundImageURL,
+      reactionCount,
+      topReactions,
+    });
+  }, [getItemDetailData]);
 
   useEffect(() => {
-    getMessageList({ limit: 8, offset: 0 });
-  }, []);
+    if (!getMessageListData) return;
+    const { results, next, previous } = getMessageListData;
+    setItemList((prevList) => (!previous ? results : [...prevList, ...results]));
+    setHasNext(!!next);
+  }, [getMessageListData]);
+
+  useEffect(() => {
+    if (offset === 0) return;
+    getMessageListRefetch({ recipientId: id, limit: 6, offset });
+  }, [offset, id, getMessageListRefetch]);
 
   useEffect(() => {
     const onScroll = (entries) => {
       const firstEntry = entries[0];
 
       if (firstEntry.isIntersecting && hasNext) {
-        getMessageList({ limit: 6, offset });
+        setOffset((prevOffset) => (prevOffset === 0 ? prevOffset + 8 : prevOffset + 6));
       }
     };
 
     const observer = new IntersectionObserver(onScroll);
+    const currentRef = observerRef.current;
 
-    if (observerRef.current) {
-      observer.observe(observerRef.current);
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (observerRef.current) {
-        observer.unobserve(observerRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, [hasNext]);
@@ -115,11 +157,21 @@ function RollingPaperItemPage() {
               수정하기
             </button>
           )}
-          {isEditMode && <button className={styles['list__button']}>삭제하기</button>}
+          {isEditMode && (
+            <button className={styles['list__button']} onClick={handleRecipientsDelete}>
+              페이지 삭제
+            </button>
+          )}
           <div className={styles['list__grid']}>
-            {!isEditMode && <ItemCard isAddCard />}
+            {!isEditMode && <ItemCard isAddCard onAdd={handleOnClickAdd} />}
             {itemList.map((item) => (
-              <ItemCard key={item.id} cardData={item} isEditMode={isEditMode} />
+              <ItemCard
+                key={item.id}
+                cardData={item}
+                isEditMode={isEditMode}
+                onClick={handleOnClickCard}
+                onDelete={handleMessageDelete}
+              />
             ))}
           </div>
           {/* 무한 스크롤 감지하는 영역*/}

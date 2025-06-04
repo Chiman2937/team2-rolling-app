@@ -2,13 +2,11 @@ import styles from '@/components/ItemCard.module.scss';
 import DeleteIcon from './DeleteIcon';
 import plusImg from '@/assets/icons/icon_plus.svg';
 import SenderProfile from './SenderProfile';
-import { useModal } from '@/hooks/useModal';
 
-const ItemCard = ({ cardData, isAddCard, isEditMode }) => {
-  const { showModal } = useModal(); // showModal 함수 받아옴
+const ItemCard = ({ cardData, isAddCard, isEditMode, onClick, onDelete, onAdd }) => {
   if (isAddCard)
     return (
-      <article className={styles['card']}>
+      <article className={styles['card']} onClick={onAdd}>
         <button className={`${styles['card__button--add']}`}>
           <img src={plusImg} alt='플러스 아이콘' />
         </button>
@@ -16,18 +14,23 @@ const ItemCard = ({ cardData, isAddCard, isEditMode }) => {
     );
 
   /* 폰트 확인 후 해당 폰트로 보여줘야 함 */
-  const { sender, profileImageURL, content, createdAt, relationship } = cardData;
+  const { id, sender, profileImageURL, content, createdAt, relationship } = cardData;
   const formatDate = (date) => {
     return date.slice(0, 10);
   };
 
   const onClickItemCard = () => {
-    showModal({
+    onClick({
       sender,
       imageUrl: profileImageURL,
       createdAt: formatDate(createdAt),
       content: content,
     });
+  };
+
+  const onClickDeleteBtn = (e) => {
+    e.stopPropagation(); // 카드 클릭 방지
+    onDelete(id);
   };
 
   return (
@@ -37,7 +40,7 @@ const ItemCard = ({ cardData, isAddCard, isEditMode }) => {
           <header className={styles['card__sender']}>
             <SenderProfile sender={sender} imageUrl={profileImageURL} relationship={relationship} />
             {isEditMode && (
-              <button className={styles['card__button--delete']}>
+              <button className={styles['card__button--delete']} onClick={onClickDeleteBtn}>
                 <DeleteIcon />
               </button>
             )}
