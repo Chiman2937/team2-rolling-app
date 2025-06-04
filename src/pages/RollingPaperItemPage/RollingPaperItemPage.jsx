@@ -1,11 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import styles from '@/pages/RollingPaperItemPage/RollingPaperItemPage.module.scss';
 import ItemCard from '@/components/ItemCard';
 import { listRecipientMessages } from '../../apis/recipientMessageApi';
 import { getRecipient } from '../../apis/recipientsApi';
 import { listRecipientReactions } from '../../apis/recipientReactionsApi';
+// import { createRecipientReaction } from '../../apis/recipientReactionsApi';
 
 function RollingPaperItemPage() {
+  const { id } = useParams();
   const [isEditMode, setIsEditMode] = useState(false);
 
   const [itemData, setItemData] = useState({
@@ -15,10 +18,10 @@ function RollingPaperItemPage() {
     topReactions: [],
   });
 
-  // const [offset, setOffset] = useState(0);
-  // const [limit, setLimit] = useState(6);
-  // const [hasNext, setHasNext] = useState(null);
+  const [offset, setOffset] = useState(0);
+  const [hasNext, setHasNext] = useState(null);
   const [itemList, setItemList] = useState([]);
+  const observerRef = useRef(null);
 
   const containerStyle = {
     backgroundColor: itemData.backgroundColor ? '' : itemData.backgroundColor,
@@ -34,7 +37,7 @@ function RollingPaperItemPage() {
 
   const getItemDetail = async () => {
     try {
-      const data = await getRecipient({ id: '11727' });
+      const data = await getRecipient({ id });
       const { backgroundColor, backgroundImageURL, reactionCount, topReactions } = data;
       setItemData({ backgroundColor, backgroundImageURL, reactionCount, topReactions });
     } catch (error) {
@@ -44,9 +47,11 @@ function RollingPaperItemPage() {
 
   const getMessageList = async (params = {}) => {
     try {
-      const data = await listRecipientMessages({ recipientId: '11727', ...params });
-      const { results } = data;
-      setItemList(results);
+      const data = await listRecipientMessages({ recipientId: id, ...params });
+      const { results, next } = data;
+      setItemList([...itemList, ...results]);
+      setHasNext(!!next);
+      setOffset((prev) => prev + 8);
     } catch (error) {
       console.error('에러 발생:', error);
     }
@@ -54,12 +59,20 @@ function RollingPaperItemPage() {
 
   const getReactions = async (params = {}) => {
     try {
-      const data = await listRecipientReactions({ recipientId: '11727', ...params });
+      const data = await listRecipientReactions({ recipientId: id, ...params });
       console.log(data);
     } catch (error) {
       console.error('에러 발생:', error);
     }
   };
+
+  // const createReaction = async (params = {}) => {
+  //   try {
+  //     await createRecipientReaction({ recipientId: '11727', ...params });
+  //   } catch (error) {
+  //     console.error('에러 발생:', error);
+  //   }
+  // };
 
   useEffect(() => {
     getItemDetail();
@@ -69,6 +82,28 @@ function RollingPaperItemPage() {
   useEffect(() => {
     getMessageList({ limit: 8, offset: 0 });
   }, []);
+
+  useEffect(() => {
+    const onScroll = (entries) => {
+      const firstEntry = entries[0];
+
+      if (firstEntry.isIntersecting && hasNext) {
+        getMessageList({ limit: 6, offset });
+      }
+    };
+
+    const observer = new IntersectionObserver(onScroll);
+
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
+    }
+
+    return () => {
+      if (observerRef.current) {
+        observer.unobserve(observerRef.current);
+      }
+    };
+  }, [hasNext]);
 
   return (
     <>
@@ -87,6 +122,8 @@ function RollingPaperItemPage() {
               <ItemCard key={item.id} cardData={item} isEditMode={isEditMode} />
             ))}
           </div>
+          {/* 무한 스크롤 감지하는 영역*/}
+          <div ref={observerRef} />
         </div>
       </section>
     </>
