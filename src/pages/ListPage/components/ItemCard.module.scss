@@ -18,9 +18,12 @@
     justify-content: center;
     align-items: flex-start;
     height: 100%;
-    color: var(--color-gray-900);
+    color: var(--color-gray-900); // 기본 텍스트 색상
   }
-
+  &__content--image {
+    color: var(--color-white);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.54) 0%, rgba(0, 0, 0, 0.54) 100%);
+  }
   &__title {
     margin: 0;
     font-size: var(--font-size-24);
@@ -39,6 +42,12 @@
     color: var(--color-white);
   }
 
+  &__myDiv {
+    width: 100%;
+    margin: 1% 0;
+    border: 0.5px solid rgba(0, 0, 0, 0.12);
+  }
+
   &__reaction {
     background-color: rgba(0, 0, 0, 0.54);
     border-radius: 12px;
@@ -51,6 +60,7 @@
     display: flex;
     align-items: center;
     position: relative;
+    left: 10px;
     height: 32px;
     margin-top: 8px; /* 콘텐츠와 약간 간격 주기 */
   }
