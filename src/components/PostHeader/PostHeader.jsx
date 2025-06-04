@@ -3,6 +3,7 @@ import Style from './PostHeader.module.scss';
 import ProfileGroup from '@/components/PostHeader/ProfileGroup/ProfileGroup';
 import EmojiGroup from '@/components/PostHeader/EmojiGroup/EmojiGroup';
 import EmojiAdd from '@/components/PostHeader/EmojiGroup/EmojiAdd';
+import ShareMenu from '@/components/PostHeader/ShareMenu/ShareMenu';
 import { useState } from 'react';
 
 function PostHeader({ id, name }) {
@@ -21,8 +22,16 @@ function PostHeader({ id, name }) {
         <div className={Style['post-header__menu-container']}>
           <ProfileGroup id={id} />
           <div className={Style['post-header__divider']} />
-          <EmojiGroup id={id} refreshKey={refreshKey} />
-          <EmojiAdd id={id} onSuccess={handleAddSuccess} />
+          <div className={Style['post-header__emoji-container']}>
+            <EmojiGroup id={id} refreshKey={refreshKey} />
+            <EmojiAdd id={id} onSuccess={handleAddSuccess} />
+            <div className={Style['post-header__divider']} />
+            <ShareMenu
+              onKakaoClick={() => {
+                /* 카카오톡 공유 로직 */
+              }}
+            />
+          </div>
         </div>
       </div>
     </div>

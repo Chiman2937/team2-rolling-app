@@ -1,0 +1,70 @@
+/* src/components/ShareMenu/ShareMenu.module.scss */
+
+.share-menu {
+  position: relative;
+  display: inline-block;
+
+  /* 토글 버튼(wrapper) */
+  &__toggle {
+    /* DropdownButton 내부의 `.dropdown__toggle` + 이 클래스가 합쳐져서 최종 토글 영역이 됩니다. */
+    /* 예: hover 시 배경색 변경, border-radius 조정 등 */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 토글 button 자체 (아이콘을 담은 버튼) */
+  &__toggle-btn {
+    background: none;
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  /* 드롭다운 메뉴(wrapper) */
+  &__menu {
+    /* DropdownButton 내부의 `.dropdown__menu` + 이 클래스가 합쳐져서 최종 메뉴 wrapper가 됩니다. */
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 8px 0;
+    min-width: 140px; /* 원하는 너비 지정 */
+  }
+
+  /* 드롭다운 메뉴 리스트(<ul>) */
+  &__menu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* 메뉴 항목(<li>) */
+  &__menu-item {
+    padding: 10px 16px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    /* 메뉴 항목 사이 경계선이 필요하다면 아래와 같이 추가 */
+    &:not(:last-child) {
+      border-bottom: 1px solid #eee;
+    }
+  }
+}
