@@ -1,35 +1,85 @@
+// src/components/PostHeader/PostHeader.module.scss
+
+$postheader-height: 68px;
+$breakpoint-tablet: 1024px; // ≤1024 → tablet
+$breakpoint-phone: 640px; // ≤640 → phone
+
 .post-header {
-  display: flex;
-  height: 68px;
-  justify-content: center;
-  align-items: center;
   background-color: var(--color-white);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+
+  /* 공통: Desktop, Tablet 용 컨테이너 */
   &__container {
     display: flex;
-    width: 100%;
-    align-items: center;
     justify-content: space-between;
-    max-width: var(--wrapper-width);
+    align-items: center;
+    height: $postheader-height;
     padding: 0 24px;
+    max-width: var(--wrapper-width);
+    margin: 0 auto;
   }
+
   &__title {
     font-size: var(--font-size-28);
     font-weight: var(--font-weight-bold);
+    margin: 0;
   }
 
   &__menu-container {
     display: flex;
     align-items: center;
     gap: 28px;
+
+    & > .post-header__divider {
+      width: 1px;
+      height: 24px;
+      background-color: var(--color-gray-300);
+    }
   }
+
   &__emoji-container {
     display: flex;
     align-items: center;
     gap: 8px;
   }
+
   &__divider {
     width: 1px;
     height: 24px;
     background-color: var(--color-gray-300);
+  }
+
+  /* 모바일 전용 레이아웃 (≤640px) */
+  &__mobile {
+    display: none; // 기본에는 숨김
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 16px;
+    background-color: var(--color-white);
+
+    & > .post-header__title {
+      font-size: var(--font-size-24);
+      margin-bottom: 8px;
+    }
+
+    & > .post-header__menu-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      & > .post-header__divider {
+        display: none; // 모바일에서는 구분선 숨김
+      }
+    }
+  }
+
+  @media (max-width: $breakpoint-phone) {
+    &__container {
+      display: none;
+    }
+    &__mobile {
+      display: flex;
+      width: 100%;
+    }
   }
 }
