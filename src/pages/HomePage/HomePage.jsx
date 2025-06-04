@@ -6,6 +6,18 @@ import imgImojiLg from '../../assets/images/home_addimoji_lg.png';
 import imgImojiSm from '../../assets/images/home_addimoji_sm.png';
 import PointsContainer from './PointsContainer';
 
+const HomePage = () => {
+  return (
+    <main>
+      <section className={styles['page-points']}>
+        {landingData.map((card, index) => (
+          <PointsContainer key={`${landingData.point}-${index}`} {...card} />
+        ))}
+      </section>
+    </main>
+  );
+};
+
 const landingData = [
   {
     point: 'Point. 01',
@@ -25,17 +37,5 @@ const landingData = [
     reverse: true,
   },
 ];
-
-const HomePage = () => {
-  return (
-    <main>
-      <section className={styles['page-points']}>
-        {landingData.map((card, index) => (
-          <PointsContainer key={`${landingData.point}-${index}`} {...card} />
-        ))}
-      </section>
-    </main>
-  );
-};
 
 export default HomePage;

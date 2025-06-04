@@ -1,0 +1,66 @@
+/* src/components/Slider/Slider.module.scss */
+
+/* block: slider */
+.slider {
+  position: relative;
+  width: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+
+  &__arrow--left,
+  &__arrow--right {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+
+  &__arrow--left {
+    position: absolute;
+    left: 0;
+  }
+
+  &__arrow--right {
+    position: absolute;
+    right: 0;
+  }
+
+  &__container {
+    overflow: hidden; /* PC 슬라이드: 숨김 */
+    width: 1200px; /* PC에서 고정 너비 1200px */
+  }
+
+  &__track {
+    display: flex;
+    gap: 16px;
+    transition: transform 0.3s ease;
+  }
+
+  /* Tablet/Mobile: 너비 < 1200px */
+  @media (max-width: 1199px) {
+    &__container {
+      overflow-x: auto; /* 터치 스크롤 허용 */
+      -webkit-overflow-scrolling: touch;
+    }
+
+    &__arrow--left,
+    &__arrow--right {
+      display: none; /* 화살표 숨김 */
+    }
+
+    &__track {
+      gap: 12px;
+      padding: 8px;
+    }
+  }
+}

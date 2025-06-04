@@ -1,0 +1,28 @@
+.list-page {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  width: 1200px;
+  gap: 48px;
+  margin: 0 auto;
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+  }
+
+  &__status {
+    padding: 24px;
+    font-size: 18px;
+    text-align: center;
+    color: #666;
+  }
+}
