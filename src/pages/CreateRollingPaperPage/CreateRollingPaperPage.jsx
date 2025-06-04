@@ -7,7 +7,7 @@ import { createRecipient } from '@/apis/recipientsApi';
 import ImagePreloader from '@/components/ImagePreloader';
 import BackgroundSelectSection from './components/BackgroundSelectSection';
 import { COLOR_STYLES } from '@/constants/colorThemeStyle';
-import ReceiverInputField from './components/ReceiverinputField';
+import ReceiverInputField from './components/ReceiverInputField';
 
 const COLOR_KEYS = Object.keys(COLOR_STYLES);
 
