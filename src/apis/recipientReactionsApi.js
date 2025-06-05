@@ -26,7 +26,7 @@ export const TEAM = '2';
  *   }>
  * }>}
  */
-export const listRecipientReactions = ({ recipientId, limit = 20, offset = 0 }) =>
+export const listRecipientReactions = ({ recipientId, limit = 8, offset = 0 }) =>
   httpClient.get(`/${TEAM}/recipients/${recipientId}/reactions/`, { params: { limit, offset } });
 
 /**

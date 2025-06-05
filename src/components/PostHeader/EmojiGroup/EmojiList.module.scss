@@ -1,0 +1,11 @@
+/* src/components/EmojiGroup/EmojiList.module.scss */
+
+.emoji-list {
+  display: grid;
+  /* 4열짜리 그리드 정의: 
+     - 한 줄에 4개씩 배치
+     - 총 8개라면 자동으로 두 번째 행으로 넘어감 */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding: 24px;
+}
