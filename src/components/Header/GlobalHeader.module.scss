@@ -12,7 +12,16 @@
     justify-content: space-between;
     padding: 0 24px;
   }
+  &__logo-link {
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease-in-out;
+    cursor: pointer;
 
+    &:hover {
+      background-color: var(--color-gray-100);
+    }
+  }
   &__logo {
     height: 30px;
   }
