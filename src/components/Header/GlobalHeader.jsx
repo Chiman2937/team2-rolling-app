@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LOGO from '@/assets/logo/Logo-Rolling.png';
 import Style from './GlobalHeader.module.scss';
 import useShowComponent from '@/hooks/useShowComponent';
@@ -27,7 +27,10 @@ function GlobalHeader() {
   return (
     <header className={Style['header']}>
       <div className={Style['header__container']}>
-        <img src={LOGO} alt='Logo' className={Style['header__logo']} />
+        {/*  루트로 이동*/}
+        <Link to='/' className={Style['header__logo-link']}>
+          <img src={LOGO} alt='Logo' className={Style['header__logo']} />
+        </Link>
         {/* todo: 디자인시스템 버튼으로 교체 */}
         {showButton && (
           <button
