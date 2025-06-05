@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './ModalProvider.module.scss';
 import CardModal from '../components/CardModal';
@@ -10,17 +10,26 @@ export const ModalProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
+  const closeTimeoutRef = useRef(null);
+
   const showModal = (modalItems) => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+      setIsClosing(false);
+      setIsOpen(false);
+    }
     setModal(modalItems);
     setIsOpen(true);
   };
 
   const closeModal = () => {
     setIsClosing(true);
-    setTimeout(() => {
+    closeTimeoutRef.current = setTimeout(() => {
       setIsOpen(false);
       setIsClosing(false);
-    }, 500);
+      closeTimeoutRef.current = null;
+    }, 300);
   };
 
   return (
