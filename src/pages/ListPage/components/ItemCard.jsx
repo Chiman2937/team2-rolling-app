@@ -25,12 +25,9 @@ const ItemCard = ({ data }) => {
       };
 
   // 이미지 배경인 경우 텍스트를 흰색으로 바꾸는 클래스
-  const contentClass = [
-    styles['item-card__content'],
-    backgroundImageURL && styles['item-card__content--image'],
-  ]
-    .filter(Boolean)
-    .join(' ');
+  const contentClass = backgroundImageURL
+    ? `${styles['item-card__content']} ${styles['item-card__content--image']}`
+    : styles['item-card__content'];
 
   // 최근 메시지 중 상위 3개만 가져오기
   const topThree = recentMessages.slice(0, 3);
