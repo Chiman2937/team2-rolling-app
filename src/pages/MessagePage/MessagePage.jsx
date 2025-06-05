@@ -1,29 +1,28 @@
-// src/pages/MessagePage.jsx
+// src/pages/MessagePage/MessagePage.jsx
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Textfield from '@/components/Textfield';
-import Editor from '@/components/Editor'; // 리치 텍스트 에디터 컴포넌트
+import ImagePreloader from '@/components/ImagePreloader';
 import styles from './MessagePage.module.scss';
 import { useApi } from '@/hooks/useApi';
-import { getProfileImages } from '@/api/profileImagesApi';
-import { createRecipientMessage } from '@/api/recipientMessageApi';
+import { getProfileImages } from '@/apis/profileImagesApi';
+import { createRecipientMessage } from '@/apis/recipientMessageApi';
 import { useToast } from '@/hooks/useToast';
 
 const RELATIONSHIP_OPTIONS = ['친구', '지인', '동료', '가족'];
 const FONT_OPTIONS = ['Noto Sans', 'Pretendard', '나눔명조', '나눔손글씨 손편지체'];
 
-export default function MessagePage() {
+function MessagePage({ id }) {
   const { showToast } = useToast();
   const navigate = useNavigate();
-  // URL에 recipientId가 포함되어 있다고 가정 (예: /recipients/:recipientId/message)
-  const { recipientId } = useParams();
+  const recipientId = id;
 
-  // --- 각 입력값 상태관리 ---
+  // --- 입력값 상태 ---
   const [senderName, setSenderName] = useState('');
-  const [profileImages, setProfileImages] = useState([]); // API 에서 받아올 이미지 URL 배열
-  const [selectedImage, setSelectedImage] = useState(''); // 선택된 프로필 이미지 URL
+  const [profileImages, setProfileImages] = useState([]);
+  const [selectedImage, setSelectedImage] = useState('');
   const [relationship, setRelationship] = useState(RELATIONSHIP_OPTIONS[0]);
-  const [content, setContent] = useState(''); // 에디터(본문) 내용
+  const [content, setContent] = useState(''); // 이제 이 setContent 를 <textarea> 에 연결
   const [font, setFont] = useState(FONT_OPTIONS[0]);
 
   // --- 프로필 이미지 목록 가져오기 (API 호출) ---
@@ -32,7 +31,6 @@ export default function MessagePage() {
   useEffect(() => {
     if (imageData && Array.isArray(imageData.imageUrls)) {
       setProfileImages(imageData.imageUrls);
-      // 초기 선택은 첫 번째 이미지로 (원한다면 빈 문자열로 둘 수도 있음)
       setSelectedImage(imageData.imageUrls[0] || '');
     }
   }, [imageData]);
@@ -46,7 +44,6 @@ export default function MessagePage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // 유효성 검사 (필수값 체크) — 필요에 따라 더 촘촘히 검증
     if (!senderName.trim()) {
       showToast({ type: 'fail', message: '이름을 입력해주세요.', timer: 2000 });
       return;
@@ -71,9 +68,7 @@ export default function MessagePage() {
       });
 
       showToast({ type: 'success', message: '메시지가 성공적으로 전송되었습니다!', timer: 2000 });
-
-      // 전송 후 다른 페이지로 이동하거나 초기화
-      navigate(`/recipients/${recipientId}`); // 예: 수신자 상세 페이지로 돌아가기
+      navigate(`/recipients/${recipientId}`);
     } catch (err) {
       showToast({ type: 'fail', message: err.message, timer: 2000 });
     }
@@ -82,6 +77,11 @@ export default function MessagePage() {
   return (
     <div className={styles['message-page']}>
       <h1 className={styles['message-page__title']}>메시지 작성</h1>
+
+      {/* 프로필 이미지 배열이 준비되면 미리 로딩 */}
+      {Array.isArray(profileImages) && profileImages.length > 0 && (
+        <ImagePreloader imageUrls={profileImages} />
+      )}
 
       <form className={styles['message-page__form']} onSubmit={handleSubmit}>
         {/* 1) From. (이름 입력) */}
@@ -110,7 +110,6 @@ export default function MessagePage() {
           )}
 
           <div className={styles['message-page__image-list']}>
-            {/* 원형 썸네일 형태로 렌더링 */}
             {profileImages.map((url) => (
               <button
                 type='button'
@@ -145,11 +144,16 @@ export default function MessagePage() {
           </select>
         </div>
 
-        {/* 4) 내용 (Editor) */}
+        {/* 4) 내용 (textarea로 대체) */}
         <div className={styles['message-page__field']}>
           <label className={styles['message-page__label']}>내용을 입력해 주세요</label>
           <div className={styles['message-page__editor-wrapper']}>
-            <Editor value={content} onChange={setContent} placeholder='내용을 입력하세요.' />
+            <textarea
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              placeholder='내용을 입력하세요.'
+              className={styles['message-page__textarea']}
+            />
           </div>
         </div>
 
@@ -182,3 +186,5 @@ export default function MessagePage() {
     </div>
   );
 }
+
+export default MessagePage;
