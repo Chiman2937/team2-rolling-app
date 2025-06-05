@@ -3,22 +3,26 @@ import styles from './Button.module.scss';
 
 function Button({
   children,
-  state = 'enabled',
+  enabled = true,
   size = 'large',
   variant = 'primary',
   iconOnly = false,
+  onClick,
 }) {
-  const isDisabled = state === 'disabled';
+  const isDisabled = !enabled;
 
   let className = '';
 
-  //  1. 유효한 사이즈 검사 (Outlined에서만 필요)
-  const allowedSizes = ['56', '40', '36', '28', 'small', 'large'];
+  //  1. 유효한 사이즈 검사
+  const allowedSizes = ['56', '40', '36', '28', 'small', 'large', 'stretch'];
   if (!allowedSizes.includes(size)) {
     throw new Error(` 지원하지 않는 size: ${size}`);
   }
 
-  if (variant === 'secondary') {
+  //  stretch 사이즈 처리 추가
+  if (size === 'stretch') {
+    className = isDisabled ? styles['stretch-disabled'] : styles['stretch'];
+  } else if (variant === 'secondary') {
     className = isDisabled ? styles['secondary-small-disabled'] : styles['secondary-small'];
   } else if (variant === 'outlined') {
     // 아이콘 전용 (예외 케이스)
@@ -32,12 +36,12 @@ function Button({
     // primary 버튼
     className =
       size === 'small'
-        ? styles[`${state}-small`] // enabled-small 등
-        : styles[state]; // enabled, disabled
+        ? styles[`${enabled ? 'enabled' : 'disabled'}-small`]
+        : styles[enabled ? 'enabled' : 'disabled'];
   }
 
   return (
-    <button className={className} disabled={isDisabled}>
+    <button className={className} disabled={isDisabled} onClick={onClick}>
       {children}
     </button>
   );

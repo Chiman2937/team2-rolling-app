@@ -1,11 +1,13 @@
 import React from 'react';
 import styles from './IconButton.module.scss';
 
-function IconButton({ icon, disabled = false, onClick }) {
+function IconButton({ icon, enabled = true, onClick }) {
+  const isDisabled = !enabled;
+
   return (
     <button
-      className={disabled ? styles.disabled : styles.base}
-      disabled={disabled}
+      className={isDisabled ? styles.disabled : styles.base}
+      disabled={isDisabled}
       onClick={onClick}
     >
       {icon}
