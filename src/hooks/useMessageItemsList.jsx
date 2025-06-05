@@ -3,6 +3,7 @@ import { useApi } from '@/hooks/useApi.jsx';
 import { listRecipientMessages } from '@/apis/recipientMessageApi';
 
 export const useMessageItemsList = (id) => {
+  /* useApi 사용하여 메시지 리스트 호출 */
   const {
     data: getMessageListData,
     loading,
@@ -23,7 +24,6 @@ export const useMessageItemsList = (id) => {
   /* 스크롤 시 데이터 다시 불러옴  */
   const loadMore = useCallback(() => {
     if (loading || !hasNext) return;
-
     const newOffset = offset === 0 ? offset + 8 : offset + 6;
     getMessageListRefetch({ recipientId: id, limit: 6, offset: newOffset });
     setOffset(newOffset);

@@ -16,12 +16,14 @@ const RollingPaperItemPage = () => {
   const { showModal } = useModal();
   const [isEditMode, setIsEditMode] = useState(false);
 
+  /* useApi 사용하여 API 불러오는 영역  */
   const { data: getRecipientData } = useApi(getRecipient, { id }, { immediate: true });
   const { refetch: deleteMessageRefetch } = useApi(deleteMessage, { id }, { immediate: false });
   const { refetch: deleteRecipientRefetch } = useApi(deleteRecipient, { id }, { immediate: false });
 
-  const { itemList, hasNext, loadMore, initializeList } = useMessageItemsList(id);
-  const { observerRef } = useInfinityScroll({ hasNext, callback: loadMore });
+  /* 커스텀훅 영역 */
+  const { itemList, hasNext, loadMore, initializeList } = useMessageItemsList(id); // 리스트 데이터 API 및 동작
+  const { observerRef } = useInfinityScroll({ hasNext, callback: loadMore }); // 무한 스크롤 동작
 
   const COLOR_STYLES = {
     beige: {
@@ -46,11 +48,7 @@ const RollingPaperItemPage = () => {
     },
   };
 
-  // const reactionData = {
-  //   reactionCount: getRecipientData?.reactionCount,
-  //   topReactions: getRecipientData?.topReactions,
-  // };
-
+  /* 전체 배경 스타일 적용 */
   const containerStyle = {
     backgroundColor: !getRecipientData?.backgroundImageURL
       ? COLOR_STYLES[getRecipientData?.backgroundColor]?.primary
@@ -63,6 +61,7 @@ const RollingPaperItemPage = () => {
     backgroundSize: 'cover',
   };
 
+  /* 버튼, 카드 클릭 시 동작  */
   const handleOnClickEdit = () => {
     setIsEditMode(true);
   };
