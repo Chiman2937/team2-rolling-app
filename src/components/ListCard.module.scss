@@ -3,7 +3,7 @@
   width: 100%;
   max-width: 384px;
   aspect-ratio: 320 / 230;
-  background-color: #ffffff;
+  background-color: var(--color-white);
   border-radius: 16px;
   padding: 24px;
   display: flex;
@@ -44,12 +44,12 @@
 
 .card__divider {
   margin: 15px 0;
-  border: 1px solid #eeeeee;
+  border: 1px solid var(--color-gray-200);
 }
 
 .card__content {
-  font-size: 18px;
-  color: #4a4a4a;
+  font-size: var(--font-size-18);
+  color: var(--color-gray-600);
   text-overflow: ellipsis;
   overflow: hidden;
   word-break: break-word;
@@ -66,8 +66,8 @@
 }
 
 .card__date {
-  font-size: 12px;
-  color: #999999;
+  font-size: var(--font-size-12);
+  color: var(-color-gray-400);
 }
 
 .card__button--delete {
@@ -75,15 +75,15 @@
   height: 36px;
   flex-shrink: 0;
   border-radius: 6px;
-  border: 1px solid #cccccc;
-  color: #555555;
-  background-color: #ffffff;
+  border: 1px solid var(--color-gray-300);
+  color: var(--color-gray-500);
+  background-color: var(--color-white);
   display: flex;
   justify-content: center;
   align-items: center;
 
   &:hover {
-    background-color: #f6f6f6;
+    background-color: var(--color-gray-100);
   }
 }
 
@@ -91,7 +91,7 @@
   width: 56px;
   height: 56px;
   border-radius: 100px;
-  background-color: #555555;
+  background-color: var(--color-gray-500);
   display: flex;
   justify-content: center;
   align-items: center;
