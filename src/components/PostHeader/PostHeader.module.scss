@@ -1,27 +1,25 @@
 // src/components/PostHeader/PostHeader.module.scss
 
-$postheader-height: 68px;
-$breakpoint-tablet: 1024px; // ≤1024 → tablet
-$breakpoint-phone: 640px; // ≤640 → phone
-
 .post-header {
   background-color: var(--color-white);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 4px var(--color-gray-200);
 
-  /* 공통: Desktop, Tablet 용 컨테이너 */
   &__container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: $postheader-height;
+    height: 68px;
     padding: 0 24px;
     max-width: var(--wrapper-width);
     margin: 0 auto;
   }
 
   &__title {
+    display: flex;
+    align-items: center;
     font-size: var(--font-size-28);
     font-weight: var(--font-weight-bold);
+    height: 52px;
     margin: 0;
   }
 
@@ -29,12 +27,6 @@ $breakpoint-phone: 640px; // ≤640 → phone
     display: flex;
     align-items: center;
     gap: 28px;
-
-    & > .post-header__divider {
-      width: 1px;
-      height: 24px;
-      background-color: var(--color-gray-300);
-    }
   }
 
   &__emoji-container {
@@ -49,37 +41,29 @@ $breakpoint-phone: 640px; // ≤640 → phone
     background-color: var(--color-gray-300);
   }
 
-  /* 모바일 전용 레이아웃 (≤640px) */
-  &__mobile {
-    display: none; // 기본에는 숨김
-    flex-direction: column;
-    align-items: center;
-    padding: 12px 16px;
-    background-color: var(--color-white);
-
-    & > .post-header__title {
-      font-size: var(--font-size-24);
-      margin-bottom: 8px;
-    }
-
-    & > .post-header__menu-container {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-
-      & > .post-header__divider {
-        display: none; // 모바일에서는 구분선 숨김
-      }
-    }
-  }
-
-  @media (max-width: $breakpoint-phone) {
+  @include mobile {
+    // 1) 컨테이너 전체를 세로(column) 배치로 전환
     &__container {
-      display: none;
-    }
-    &__mobile {
       display: flex;
-      width: 100%;
+      flex-direction: column; // 가로 → 세로
+      align-items: flex-start; // 왼쪽 정렬
+      padding: 12px 16px; // 약간의 패딩
+      height: auto; // 높이 자동
+    }
+
+    // 2) 제목과 메뉴 사이 간격 늘리기
+    &__title {
+      font-size: var(--font-size-24);
+      margin-bottom: 8px; // 제목 아래에 여백
+    }
+
+    // 3) 메뉴 컨테이너(=헤더 우측 메뉴들)를 아래쪽으로 내림
+    &__menu-container {
+      width: 100%; // 가로 전체 너비
+      height: 52px;
+      justify-content: space-between; // 왼쪽 정렬
+      margin: 0 auto; // 중앙 정렬
+      gap: 12px; // 아이템 간격 축소
     }
   }
 }

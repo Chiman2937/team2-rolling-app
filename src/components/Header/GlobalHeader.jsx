@@ -2,18 +2,24 @@ import { useNavigate } from 'react-router-dom';
 import LOGO from '@/assets/logo/Logo-Rolling.png';
 import Style from './GlobalHeader.module.scss';
 import useShowComponent from '@/hooks/useShowComponent';
-import Button from '@/components/Button/Button';
+import { DEVICE_TYPES } from '@/constants/deviceType';
+import { useDeviceType } from '@/hooks/useDeviceType';
 /**
  * GlobalHeader 컴포넌트
  * @description - 애플리케이션의 상단 헤더 컴포넌트로, 로고와 버튼을 포함합니다.
  * @returns {JSX.Element} - GlobalHeader 컴포넌트
  */
 function GlobalHeader() {
+  const deviceType = useDeviceType();
   const navigate = useNavigate();
   // 버튼을 보여줄 경로들
   const VISIBLE_PATHS = ['/', '/list'];
   const showButton = useShowComponent(VISIBLE_PATHS);
-
+  const isMobile = deviceType === DEVICE_TYPES.PHONE;
+  if (isMobile) {
+    // 모바일에서는 버튼을 숨김
+    return null;
+  }
   const handleButtonClick = () => {
     navigate('/post');
   };

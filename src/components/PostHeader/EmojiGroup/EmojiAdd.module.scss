@@ -15,6 +15,16 @@
     padding: 0;
     z-index: 1000;
   }
+  &__icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    gap: 8px;
+    border-radius: 8px;
+    border: 2px solid var(--color-gray-200);
+    background-color: var(--color-white);
+  }
 
   /* 드롭다운 내부에 EmojiPicker 자체를 래핑하는 컨테이너 */
   &__menu-container {

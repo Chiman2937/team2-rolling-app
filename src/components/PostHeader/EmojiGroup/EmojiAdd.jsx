@@ -73,6 +73,7 @@ export default function EmojiAdd({ id, onSuccess }) {
       className={Style['emoji-add__icon-btn']}
     >
       <img src={AddImojiIcon} alt='이모지 추가 아이콘' />
+      추가
     </button>
   );
 

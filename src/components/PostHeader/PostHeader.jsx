@@ -24,78 +24,35 @@ export default function PostHeader({ id, name }) {
   // 현재 디바이스 타입을 가져옴
   const deviceType = useDeviceType();
   const isDesktop = deviceType === DEVICE_TYPES.DESKTOP;
-  const isTablet = deviceType === DEVICE_TYPES.TABLET;
-  const isPhone = deviceType === DEVICE_TYPES.PHONE;
 
   return (
     <header className={Style['post-header']}>
-      {isDesktop && (
-        <div className={Style['post-header__container']}>
-          <h3 className={Style['post-header__title']}>To. {name}</h3>
+      <div className={Style['post-header__container']}>
+        <h3 className={Style['post-header__title']}>To. {name}</h3>
 
-          <nav className={Style['post-header__menu-container']}>
-            {/* 데스크톱에서만 ProfileGroup 표시 */}
-            <ProfileGroup id={id} />
+        <nav className={Style['post-header__menu-container']}>
+          {/* 데스크톱에서만 ProfileGroup 표시 */}
+          {isDesktop && (
+            <>
+              <ProfileGroup id={id} />
+              <div className={Style['post-header__divider']} />
+            </>
+          )}
 
-            <div className={Style['post-header__divider']} />
+          <div className={Style['post-header__emoji-container']}>
+            <EmojiGroup id={id} refreshKey={refreshKey} />
+            <EmojiAdd id={id} onSuccess={handleAddSuccess} />
+          </div>
 
-            <div className={Style['post-header__emoji-container']}>
-              <EmojiGroup id={id} refreshKey={refreshKey} />
-              <EmojiAdd id={id} onSuccess={handleAddSuccess} />
-            </div>
+          <div className={Style['post-header__divider']} />
 
-            <div className={Style['post-header__divider']} />
-
-            <ShareMenu
-              onKakaoClick={() => {
-                /* 공유 로직 */
-              }}
-            />
-          </nav>
-        </div>
-      )}
-
-      {isTablet && (
-        <div className={Style['post-header__container']}>
-          <h3 className={Style['post-header__title']}>To. {name}</h3>
-
-          <nav className={Style['post-header__menu-container']}>
-            <div className={Style['post-header__emoji-container']}>
-              <EmojiGroup id={id} refreshKey={refreshKey} />
-              <EmojiAdd id={id} onSuccess={handleAddSuccess} />
-            </div>
-
-            <div className={Style['post-header__divider']} />
-
-            <ShareMenu
-              onKakaoClick={() => {
-                /* 공유 로직 */
-              }}
-            />
-          </nav>
-        </div>
-      )}
-
-      {isPhone && (
-        <div className={Style['post-header__mobile']}>
-          <h3 className={Style['post-header__title']}>To. {name}</h3>
-
-          <nav className={Style['post-header__menu-container']}>
-            <div className={Style['post-header__emoji-container']}>
-              <EmojiGroup id={id} refreshKey={refreshKey} />
-              <EmojiAdd id={id} onSuccess={handleAddSuccess} />
-            </div>
-
-            <div className={Style['post-header__divider']} />
-
-            <ShareMenu
-              onKakaoClick={() => {
-                /* 공유 로직 */
-              }}
-            />
-          </nav>
-        </div>
-      )}
+          <ShareMenu
+            onKakaoClick={() => {
+              /* 공유 로직 */
+            }}
+          />
+        </nav>
+      </div>
     </header>
   );
 }
