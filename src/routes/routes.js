@@ -6,14 +6,18 @@ import RollingPaperItemPage from '../pages/RollingPaperItemPage/RollingPaperItem
 const PostHeaderTestPage = lazy(() => import('@/pages/PostHeaderTestPage.jsx'));
 const TestPage = lazy(() => import('@/pages/TestPage.jsx'));
 import CreateRollingPaperPage from '@/pages/CreateRollingPaperPage/CreateRollingPaperPage';
+const TestPage = lazy(() => import('@/pages/TestPage.jsx'));
+const HomePage = lazy(() => import('@/pages/HomePage/HomePage.jsx'));
 
-//ex): const PostPage = lazy(() => import('@/pages/PostPage/PostPage.jsx'));
 export const routes = [
   { path: '/post', element: CreateRollingPaperPage },
   // ex: { path: '/post', element: PostPage }, // 게시글 작성 페이지
   //ex2: { path: '/list', element: ListPage },
+
   { path: '/testHeader', element: PostHeaderTestPage }, // 테스트용 헤더 페이지
-  { path: '/', element: TestPage },
   // 추가 라우트..
+  { path: '/', element: HomePage },
+  { path: '/test', element: TestPage },
+  { path: '/post', element: CreateRollingPaperPage },
   { path: 'post/:id', element: RollingPaperItemPage }, // 상세 목록 페이지
 ];

@@ -2,7 +2,7 @@
 @mixin responsive-width($mobile, $tablet, $desktop) {
   & {
     width: $mobile;
-  }
+	}
 
   @media screen and (min-width: 768px) and (max-width: 1247px) {
     width: $tablet;
