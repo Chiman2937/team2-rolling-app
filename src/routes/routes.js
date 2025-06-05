@@ -6,7 +6,6 @@ import RollingPaperItemPage from '../pages/RollingPaperItemPage/RollingPaperItem
 const PostHeaderTestPage = lazy(() => import('@/pages/PostHeaderTestPage.jsx'));
 const TestPage = lazy(() => import('@/pages/TestPage.jsx'));
 import CreateRollingPaperPage from '@/pages/CreateRollingPaperPage/CreateRollingPaperPage';
-const TestPage = lazy(() => import('@/pages/TestPage.jsx'));
 const HomePage = lazy(() => import('@/pages/HomePage/HomePage.jsx'));
 
 export const routes = [
