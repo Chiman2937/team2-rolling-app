@@ -1,9 +1,12 @@
-import { createContext, useRef, useState } from 'react';
+import { cloneElement, createContext, isValidElement, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './ModalProvider.module.scss';
 import CardModal from '../components/CardModal';
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const ModalContext = createContext();
+
+const MODAL_CLOSE_DELAY = 500;
 
 export const ModalProvider = ({ children }) => {
   const [modal, setModal] = useState({});
@@ -12,24 +15,29 @@ export const ModalProvider = ({ children }) => {
 
   const closeTimeoutRef = useRef(null);
 
-  const showModal = (modalItems) => {
-    if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current);
-      closeTimeoutRef.current = null;
-      setIsClosing(false);
-      setIsOpen(false);
-    }
-    setModal(modalItems);
-    setIsOpen(true);
+  const resetTimer = () => {
+    clearTimeout(closeTimeoutRef.current);
+    closeTimeoutRef.current = null;
   };
 
-  const closeModal = () => {
-    setIsClosing(true);
+  const pendingForClosingAnimation = () => {
     closeTimeoutRef.current = setTimeout(() => {
       setIsOpen(false);
       setIsClosing(false);
       closeTimeoutRef.current = null;
-    }, 300);
+    }, MODAL_CLOSE_DELAY);
+  };
+
+  const showModal = (ModalComponent) => {
+    resetTimer();
+    setModal(ModalComponent);
+    setIsOpen(true);
+    setIsClosing(false);
+  };
+
+  const closeModal = () => {
+    setIsClosing(true);
+    pendingForClosingAnimation();
   };
 
   return (
@@ -39,7 +47,7 @@ export const ModalProvider = ({ children }) => {
         createPortal(
           <div className={`${styles['modal-background']} ${styles[isClosing ? 'isClosing' : '']}`}>
             <div className={`${styles['modal-wrapper']} ${styles[isClosing ? 'isClosing' : '']}`}>
-              <CardModal modalItems={modal} onClose={closeModal} />
+              {isValidElement(modal) ? cloneElement(modal, { onClose: closeModal }) : null}
             </div>
           </div>,
           document.getElementById('modal-root'),

@@ -3,6 +3,7 @@ import DeleteIcon from './DeleteIcon';
 import plusImg from '@/assets/icons/icon_plus.svg';
 import SenderProfile from './SenderProfile';
 import { useModal } from '@/hooks/useModal';
+import CardModal from './CardModal';
 
 const ItemCard = ({ cardData, isAddCard, isEditMode }) => {
   const { showModal } = useModal(); // showModal 함수 받아옴
@@ -22,12 +23,13 @@ const ItemCard = ({ cardData, isAddCard, isEditMode }) => {
   };
 
   const onClickItemCard = () => {
-    showModal({
+    const modalItems = {
       sender,
       imageUrl: profileImageURL,
-      createdAt: formatDate(createdAt),
-      content: content,
-    });
+      createdAt,
+      content,
+    };
+    showModal(<CardModal modalItems={modalItems} />);
   };
 
   return (
