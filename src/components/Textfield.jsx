@@ -21,14 +21,14 @@ const Textfield = ({
 }) => {
   const statusClass = {
     null: '',
-    error: 'textfield--error',
-    success: 'textfield--success',
+    false: 'textfield--error',
+    true: 'textfield--success',
   };
 
   const statusMessageClass = {
     null: '',
-    error: 'textfield__message--error',
-    success: 'textfield__message--success',
+    false: 'textfield__message--error',
+    true: 'textfield__message--success',
   };
 
   const showMessage = !disabled && !isValid && message;
