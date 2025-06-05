@@ -23,18 +23,6 @@ const HomePage = () => {
   );
 };
 
-const HomePage = () => {
-  return (
-    <main>
-      <section className={styles['page-points']}>
-        {landingData.map((card, index) => (
-          <PointsContainer key={`${landingData.point}-${index}`} {...card} />
-        ))}
-      </section>
-    </main>
-  );
-};
-
 const landingData = [
   {
     point: 'Point. 01',
