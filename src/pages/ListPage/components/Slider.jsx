@@ -15,9 +15,12 @@ const Slider = ({ cards }) => {
     currentIndex * cardsPerPage + cardsPerPage,
   );
 
+  const showPrev = cards.length > cardsPerPage && currentIndex > 0;
+  const showNext = cards.length > cardsPerPage && currentIndex < maxIndex;
+
   return (
     <div className={styles.slider}>
-      {cards.length > cardsPerPage && currentIndex > 0 && (
+      {showPrev && (
         <button className={styles['slider__arrow--left']} onClick={handlePrev}>
           {'<'}
         </button>
@@ -31,7 +34,7 @@ const Slider = ({ cards }) => {
         </div>
       </div>
 
-      {cards.length > cardsPerPage && currentIndex < maxIndex && (
+      {showNext && (
         <button className={styles['slider__arrow--right']} onClick={handleNext}>
           {'>'}
         </button>
