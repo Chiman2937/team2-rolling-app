@@ -7,8 +7,9 @@ import styles from '@/components/Textfield.module.scss';
   
   [Textfield 상태 속성]
   - disabled: 비활성화 상태
-  - isValid: 에러 또는 성공 상태 => true 또는 false 값을 넘긴다.
+  - isValid: 에러 또는 성공 상태 => null(초기상태). true 또는 false 값을 넘긴다.
   - message: 메세지가 있는 경우 출력
+  - messageProps: isShow로 메시지를 보여줄지 여부 결정, text로 메시지 내용 전달
 */
 
 const Textfield = ({
@@ -16,8 +17,8 @@ const Textfield = ({
   placeholder = '입력해주세요',
   onChange,
   isValid = null,
-  message,
   disabled,
+  messageProps = { isShow: false, text: '' },
   ...rest
 }) => {
   const statusClass = {
@@ -32,7 +33,7 @@ const Textfield = ({
     true: 'textfield__message--success',
   };
 
-  const showMessage = !disabled && isValid === false && message;
+  const showMessage = messageProps?.isShow;
 
   return (
     <>
@@ -48,7 +49,7 @@ const Textfield = ({
         />
         {showMessage && (
           <div className={`${styles['textfield__message']} ${styles[statusMessageClass[isValid]]}`}>
-            {message + isValid}
+            {messageProps.text}
           </div>
         )}
       </div>
