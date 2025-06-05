@@ -7,7 +7,7 @@ import styles from '@/components/Textfield.module.scss';
   
   [Textfield 상태 속성]
   - disabled: 비활성화 상태
-  - isError: 에러 또는 성공 상태 => 초기값은 null, true 또는 false 값을 넘긴다.
+  - isError: 에러 또는 성공 상태 => true 또는 false 값을 넘긴다.
   - message: 메세지가 있는 경우 출력
 */
 
@@ -15,18 +15,16 @@ const Textfield = ({
   value,
   placeholder = '입력해주세요',
   onChange,
-  isValid = null,
+  isValid,
   message,
   disabled,
 }) => {
   const statusClass = {
-    null: '',
     false: 'textfield--error',
     true: 'textfield--success',
   };
 
   const statusMessageClass = {
-    null: '',
     false: 'textfield__message--error',
     true: 'textfield__message--success',
   };
