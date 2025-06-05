@@ -42,4 +42,5 @@ const landingData = [
     reverse: true,
   },
 ];
+
 export default HomePage;

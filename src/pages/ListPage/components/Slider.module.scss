@@ -1,0 +1,43 @@
+.slider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0;
+
+  &__arrow--left,
+  &__arrow--right {
+    background-color: var(--color-white);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    font-size: var(--font-size-18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+
+  &__arrow--left {
+    position: absolute;
+    left: -20px;
+  }
+
+  &__arrow--right {
+    position: absolute;
+    right: -20px;
+  }
+
+  &__container {
+    overflow: hidden; /* PC 슬라이드: 숨김 */
+    justify-content: flex-start;
+  }
+
+  &__track {
+    display: flex;
+    gap: 16px;
+    transition: transform 0.3s ease;
+  }
+}
