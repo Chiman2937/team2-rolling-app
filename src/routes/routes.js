@@ -5,8 +5,8 @@ import RollingPaperItemPage from '../pages/RollingPaperItemPage/RollingPaperItem
 
 import CreateRollingPaperPage from '@/pages/CreateRollingPaperPage/CreateRollingPaperPage';
 const TestPage = lazy(() => import('@/pages/TestPage.jsx'));
-const ListPage = lazy(() => import('@/pages/ListPage/ListPage.jsx'));
 const HomePage = lazy(() => import('@/pages/HomePage/HomePage.jsx'));
+const ListPage = lazy(() => import('@/pages/ListPage/ListPage.jsx'));
 
 export const routes = [
   // ex: { path: '/post', element: PostPage }, // 게시글 작성 페이지
