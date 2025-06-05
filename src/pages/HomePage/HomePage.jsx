@@ -1,10 +1,27 @@
 import styles from './HomePage.module.scss';
+import { Link } from 'react-router-dom';
 
 import imgPaperLg from '../../assets/images/home_makepaper_lg.svg';
 import imgPaperSm from '../../assets/images/home_makepaper_sm.svg';
 import imgImojiLg from '../../assets/images/home_addimoji_lg.png';
 import imgImojiSm from '../../assets/images/home_addimoji_sm.png';
 import PointsContainer from './PointsContainer';
+import Button from '../../components/Button/Button';
+
+const HomePage = () => {
+  return (
+    <main>
+      <section className={styles['page-points']}>
+        {landingData.map((card, index) => (
+          <PointsContainer key={`${landingData.point}-${index}`} {...card} />
+        ))}
+        <Link to='/list'>
+          <Button>구경해보기</Button>
+        </Link>
+      </section>
+    </main>
+  );
+};
 
 const HomePage = () => {
   return (
