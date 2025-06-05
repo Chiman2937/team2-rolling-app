@@ -7,6 +7,7 @@ const PostHeaderTestPage = lazy(() => import('@/pages/PostHeaderTestPage.jsx'));
 const TestPage = lazy(() => import('@/pages/TestPage.jsx'));
 import CreateRollingPaperPage from '@/pages/CreateRollingPaperPage/CreateRollingPaperPage';
 const HomePage = lazy(() => import('@/pages/HomePage/HomePage.jsx'));
+const ListPage = lazy(() => import('@/pages/ListPage/ListPage.jsx'));
 
 export const routes = [
   { path: '/post', element: CreateRollingPaperPage },
@@ -17,6 +18,7 @@ export const routes = [
   // 추가 라우트..
   { path: '/', element: HomePage },
   { path: '/test', element: TestPage },
+  { path: '/list', element: ListPage },
   { path: '/post', element: CreateRollingPaperPage },
   { path: 'post/:id', element: RollingPaperItemPage }, // 상세 목록 페이지
 ];

@@ -1,0 +1,99 @@
+/* Link가 기본 밑줄이나 색상 없이 동작하도록 */
+.item-card__link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.item-card {
+  position: relative;
+  width: 275px;
+  height: 260px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    height: 100%;
+    padding: 30px 24px;
+    color: var(--color-gray-900);
+  }
+
+  /* 배경에 이미지가 있을 때 텍스트를 흰색으로 덮어쓰는 클래스 */
+  &__content--image {
+    color: var(--color-white);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.54) 0%, rgba(0, 0, 0, 0.54) 100%);
+  }
+
+  &__title {
+    margin: 0;
+    font-size: var(--font-size-24);
+    font-weight: var(--font-weight-bold);
+  }
+
+  &__meta {
+    margin: 4px 0;
+    font-size: var(--font-size-16);
+  }
+
+  &__avatars {
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 32px;
+    margin-top: 8px;
+  }
+
+  &__avatar {
+    width: 32px;
+    height: 32px;
+    border: 2px solid var(--color-white);
+    border-radius: 50%;
+    background-color: var(--color-white);
+    overflow: hidden;
+    position: relative;
+    margin-left: -12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-14);
+    color: var(--color-gray-500);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  /* +n 텍스트 */
+  &__more {
+    font-size: var(--font-size-14);
+    font-weight: var(--font-weight-medium);
+  }
+
+  &__top-reactions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  &__reaction {
+    background-color: rgba(0, 0, 0, 0.54);
+    border-radius: 12px;
+    padding: 4px 8px;
+    font-size: 13px;
+    color: var(--color-white);
+  }
+
+  &__myDiv {
+    width: 100%;
+    margin: 1% 0;
+    border: 0.5px solid rgba(0, 0, 0, 0.12);
+  }
+}
