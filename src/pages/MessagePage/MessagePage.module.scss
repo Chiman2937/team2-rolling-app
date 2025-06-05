@@ -1,0 +1,129 @@
+/* src/pages/MessagePage.module.scss */
+
+/* BEM 규칙에 따라 클래스 네이밍 */
+.message-page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__label {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--color-gray-800);
+  }
+
+  /* 오류 메시지 (로딩 에러 등) */
+  &__error {
+    color: var(--color-red-600);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+
+  /* 프로필 이미지 목록 래퍼 */
+  &__image-list {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  /* 개별 이미지 버튼 */
+  &__image-item {
+    border: 2px solid transparent;
+    border-radius: 50%;
+    padding: 2px;
+    background-color: transparent;
+    transition: border-color 0.2s ease;
+
+    & img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    &:hover {
+      border-color: var(--color-purple-400);
+    }
+  }
+
+  /* 선택된 이미지 강조 */
+  &__image-item--selected {
+    border-color: var(--color-purple-600);
+  }
+
+  /* select 공통 스타일 */
+  &__select {
+    padding: 0.5rem;
+    border: 1px solid var(--color-gray-300);
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+
+    &:focus {
+      border-color: var(--color-purple-600);
+    }
+  }
+
+  /* 에디터 래퍼 */
+  &__editor-wrapper {
+    border: 1px solid var(--color-gray-300);
+    border-radius: 8px;
+    min-height: 200px;
+    overflow: hidden;
+
+    /* 에디터 내부에 padding 등을 주고 싶으면 여기에 추가 */
+    /* 예: .editor-content { padding: 0.75rem; } */
+  }
+
+  /* 전송 버튼 영역 */
+  &__actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  &__submit {
+    background-color: var(--color-purple-600);
+    color: var(--color-white);
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: var(--color-purple-700);
+    }
+
+    &:active {
+      background-color: var(--color-purple-800);
+    }
+
+    &:disabled {
+      background-color: var(--color-gray-400);
+      cursor: not-allowed;
+    }
+  }
+}
