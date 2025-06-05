@@ -1,0 +1,32 @@
+/* src/components/EmojiGroup/EmojiGroup.module.scss */
+
+.emoji-group {
+  display: inline-block;
+  position: relative;
+}
+
+/* 토글 버튼 래퍼 */
+.emoji-group__toggle {
+  display: flex;
+  align-items: center;
+}
+
+/* 드롭다운 메뉴 컨테이너 (최대 8개 이모지를 그리드로) */
+.emoji-group__menu {
+  width: 320px; /* 적절히 조절 가능 */
+  margin-top: 8px;
+  background: var(--color-white);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 8px;
+  z-index: 1000;
+}
+
+/* 로딩, 에러, 빈 상태 표시 */
+.emoji-group--loading,
+.emoji-group--error,
+.emoji-group--empty {
+  padding: 12px;
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+}
