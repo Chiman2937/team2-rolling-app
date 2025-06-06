@@ -11,8 +11,6 @@ const ListPage = () => {
   // 1) useApi로 전체 Recipient 목록(fetch) 요청
   const {
     data: listData,
-    loading: listLoading,
-    error: listError,
     // refetch 필요 시 사용 가능
   } = useApi(
     listRecipients,
@@ -43,14 +41,6 @@ const ListPage = () => {
     const byRecent = [...arr].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     setRecentCards(byRecent);
   }, [listData]);
-
-  // 4) 로딩/에러 처리
-  if (listLoading) {
-    return <div className={styles['list-page__status']}>로딩 중...</div>;
-  }
-  if (listError) {
-    return <div className={styles['list-page__status']}>에러 발생: {listError}</div>;
-  }
 
   return (
     <div className={styles['list-page']}>
