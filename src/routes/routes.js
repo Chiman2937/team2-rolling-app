@@ -6,6 +6,7 @@ import RollingPaperItemPage from '../pages/RollingPaperItemPage/RollingPaperItem
 const PostHeaderTestPage = lazy(() => import('@/pages/PostHeaderTestPage.jsx'));
 const TestPage = lazy(() => import('@/pages/TestPage.jsx'));
 import CreateRollingPaperPage from '@/pages/CreateRollingPaperPage/CreateRollingPaperPage';
+const LoadingSpinnerTestPage = lazy(() => import('@/pages/LoadingSpinnerTestPage.jsx'));
 const HomePage = lazy(() => import('@/pages/HomePage/HomePage.jsx'));
 const ListPage = lazy(() => import('@/pages/ListPage/ListPage.jsx'));
 
@@ -15,6 +16,7 @@ export const routes = [
   //ex2: { path: '/list', element: ListPage },
 
   { path: '/testHeader', element: PostHeaderTestPage }, // 테스트용 헤더 페이지
+  { path: '/testLoadingSpinner', element: LoadingSpinnerTestPage }, //로딩스피너 테스트 페이지
   // 추가 라우트..
   { path: '/', element: HomePage },
   { path: '/test', element: TestPage },
