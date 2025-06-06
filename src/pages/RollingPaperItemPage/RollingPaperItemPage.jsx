@@ -3,13 +3,15 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useApi } from '@/hooks/useApi.jsx';
 import { useModal } from '@/hooks/useModal';
 import styles from '@/pages/RollingPaperItemPage/RollingPaperItemPage.module.scss';
-import ListCard from '@/components/ListCard';
+import ListCard from './components/ListCard';
+import ActionCard from './components/ActionCard';
+import CardModal from '../../components/CardModal';
 import { getRecipient } from '@/apis/recipientsApi';
 import { deleteMessage } from '@/apis/messagesApi';
 import { deleteRecipient } from '@/apis/recipientsApi';
 import { useMessageItemsList } from '@/hooks/useMessageItemsList';
 import { useInfinityScroll } from '@/hooks/useInfinityScroll';
-import CardModal from '../../components/CardModal';
+import { COLOR_STYLES } from '../../constants/colorThemeStyle';
 
 const RollingPaperItemPage = () => {
   const navigate = useNavigate();
@@ -25,29 +27,6 @@ const RollingPaperItemPage = () => {
   /* 커스텀훅 영역 */
   const { itemList, hasNext, loadMore, initializeList } = useMessageItemsList(id); // 리스트 데이터 API 및 동작
   const { observerRef } = useInfinityScroll({ hasNext, callback: loadMore }); // 무한 스크롤 동작
-
-  const COLOR_STYLES = {
-    beige: {
-      primary: 'var(--color-beige-200)',
-      accent: 'var(--color-beige-300)',
-      border: 'rgb(0,0,0,0.08)',
-    },
-    purple: {
-      primary: 'var(--color-purple-200)',
-      accent: 'var(--color-purple-300)',
-      border: 'rgb(0,0,0,0.08)',
-    },
-    blue: {
-      primary: 'var(--color-blue-200)',
-      accent: 'var(--color-blue-300)',
-      border: 'rgb(0,0,0,0.08)',
-    },
-    green: {
-      primary: 'var(--color-green-200)',
-      accent: 'var(--color-blue-300)',
-      border: 'rgb(0,0,0,0.08)',
-    },
-  };
 
   /* 전체 배경 스타일 적용 */
   const containerStyle = {
@@ -109,7 +88,7 @@ const RollingPaperItemPage = () => {
             </button>
           )}
           <div className={styles['list__grid']}>
-            {!isEditMode && <ListCard isAddCard onAdd={handleOnClickAdd} />}
+            {!isEditMode && <ActionCard onAction={handleOnClickAdd} />}
             {itemList?.map((item) => (
               <ListCard
                 key={item.id}

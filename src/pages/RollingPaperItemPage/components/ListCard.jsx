@@ -1,7 +1,7 @@
-import styles from '@/components/ListCard.module.scss';
-import DeleteIcon from './DeleteIcon';
+import styles from './ListCard.module.scss';
+import DeleteIcon from '@/components/DeleteIcon';
 import plusImg from '@/assets/icons/icon_plus.svg';
-import SenderProfile from './SenderProfile';
+import SenderProfile from '@/components/SenderProfile';
 
 const ListCard = ({ cardData, isAddCard, isEditMode, onClick, onDelete, onAdd }) => {
   if (isAddCard)
