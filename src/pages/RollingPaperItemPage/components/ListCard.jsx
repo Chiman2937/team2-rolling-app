@@ -3,7 +3,7 @@ import DeleteIcon from '@/components/DeleteIcon';
 import plusImg from '@/assets/icons/icon_plus.svg';
 import SenderProfile from '@/components/SenderProfile';
 
-const ListCard = ({ cardData, isAddCard, isEditMode, onClick, onDelete, onAdd }) => {
+const ListCard = ({ cardData, isAddCard, showDelete, onClick, onDelete, onAdd }) => {
   if (isAddCard)
     return (
       <article className={styles['card']} onClick={onAdd}>
@@ -44,7 +44,7 @@ const ListCard = ({ cardData, isAddCard, isEditMode, onClick, onDelete, onAdd })
         <div className={styles['card__main']}>
           <header className={styles['card__sender']}>
             <SenderProfile sender={sender} imageUrl={profileImageURL} relationship={relationship} />
-            {isEditMode && (
+            {showDelete && (
               <button className={styles['card__button--delete']} onClick={onClickDeleteBtn}>
                 <DeleteIcon />
               </button>
