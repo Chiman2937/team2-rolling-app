@@ -23,5 +23,11 @@
 	aspect-ratio: 1 / 1;
 	border-radius: 999px;
 	animation: bounce 1.5s ease-in-out infinite;
+
+	animation-name: bounce;
+	animation-duration: var(--total-animation-duration);
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: infinite;
+
 	animation-delay: calc(var(--i) * 0.15s);
 }

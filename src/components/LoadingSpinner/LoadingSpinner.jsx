@@ -13,6 +13,7 @@ const DotBounce = ({ dotCount = 5, dotSize = 15, dotGap = 10 }) => {
       '--i': i,
       opacity: (i + 1) / dotCount,
       width: `${dotSize}px`,
+      '--total-animation-duration': `${0.15 * (dotCount + 3)}s`,
     };
   };
 
