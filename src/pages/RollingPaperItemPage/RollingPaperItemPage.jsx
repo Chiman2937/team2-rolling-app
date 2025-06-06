@@ -8,7 +8,6 @@ import ActionCard from './components/ActionCard';
 import CardModal from '../../components/CardModal';
 import { getRecipient } from '@/apis/recipientsApi';
 import { deleteMessage } from '@/apis/messagesApi';
-import { deleteRecipient } from '@/apis/recipientsApi';
 import { useMessageItemsList } from '@/hooks/useMessageItemsList';
 import { useInfinityScroll } from '@/hooks/useInfinityScroll';
 import { COLOR_STYLES } from '../../constants/colorThemeStyle';
@@ -23,7 +22,6 @@ const RollingPaperItemPage = () => {
   /* useApi 사용하여 API 불러오는 영역  */
   const { data: getRecipientData } = useApi(getRecipient, { id }, { immediate: true });
   const { refetch: deleteMessageRefetch } = useApi(deleteMessage, { id }, { immediate: false });
-  const { refetch: deleteRecipientRefetch } = useApi(deleteRecipient, { id }, { immediate: false });
 
   /* 커스텀훅 영역 */
   const { itemList, hasNext, loadMore, initializeList } = useMessageItemsList(id); // 리스트 데이터 API 및 동작
@@ -72,15 +70,6 @@ const RollingPaperItemPage = () => {
     }
   };
 
-  const handleRecipientsDelete = async () => {
-    try {
-      await deleteRecipientRefetch({ id });
-      navigate('/post/');
-    } catch (error) {
-      console.error('삭제 후 재요청 중 오류 발생:', error);
-    }
-  };
-
   return (
     <>
       {/* 헤더 영역 */}
@@ -88,7 +77,6 @@ const RollingPaperItemPage = () => {
         <div className={styles['list__container']}>
           <ListButtonGroup
             showDelete={isEditMode}
-            onClickDelete={handleRecipientsDelete}
             onClickEdit={handleOnClickEdit}
             onClickPrev={handleOnClickPrev}
             onClickGoList={handleOnClickGoList}
