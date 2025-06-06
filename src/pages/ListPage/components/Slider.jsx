@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styles from './Slider.module.scss';
 import ItemCard from './ItemCard';
+import ArrowButton from '../../../components/Button/ArrowButton';
 
 const Slider = ({ cards }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -21,9 +22,9 @@ const Slider = ({ cards }) => {
   return (
     <div className={styles.slider}>
       {showPrev && (
-        <button className={styles['slider__arrow--left']} onClick={handlePrev}>
-          {'<'}
-        </button>
+        <div className={styles['slider__arrow--left']}>
+          <ArrowButton direction='left' onClick={handlePrev} disabled={!showPrev} />
+        </div>
       )}
 
       <div className={styles['slider__container']}>
@@ -35,9 +36,9 @@ const Slider = ({ cards }) => {
       </div>
 
       {showNext && (
-        <button className={styles['slider__arrow--right']} onClick={handleNext}>
-          {'>'}
-        </button>
+        <div className={styles['slider__arrow--right']}>
+          <ArrowButton direction='right' onClick={handleNext} disabled={!showNext} />
+        </div>
       )}
     </div>
   );
