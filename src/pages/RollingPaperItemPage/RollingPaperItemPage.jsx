@@ -12,6 +12,7 @@ import { deleteRecipient } from '@/apis/recipientsApi';
 import { useMessageItemsList } from '@/hooks/useMessageItemsList';
 import { useInfinityScroll } from '@/hooks/useInfinityScroll';
 import { COLOR_STYLES } from '../../constants/colorThemeStyle';
+import ListButtonGroup from './components/ListButtonGroup';
 
 const RollingPaperItemPage = () => {
   const navigate = useNavigate();
@@ -46,6 +47,14 @@ const RollingPaperItemPage = () => {
     setIsEditMode(true);
   };
 
+  const handleOnClickPrev = () => {
+    setIsEditMode(false);
+  };
+
+  const handleOnClickGoList = () => {
+    navigate('/list');
+  };
+
   const handleOnClickCard = (modalData) => {
     showModal(<CardModal modalItems={modalData} onClose={closeModal} />);
   };
@@ -77,16 +86,13 @@ const RollingPaperItemPage = () => {
       {/* 헤더 영역 */}
       <section style={containerStyle} className={styles['list']}>
         <div className={styles['list__container']}>
-          {!isEditMode && (
-            <button className={styles['list__button']} onClick={handleOnClickEdit}>
-              수정하기
-            </button>
-          )}
-          {isEditMode && (
-            <button className={styles['list__button']} onClick={handleRecipientsDelete}>
-              페이지 삭제
-            </button>
-          )}
+          <ListButtonGroup
+            showDelete={isEditMode}
+            onClickDelete={handleRecipientsDelete}
+            onClickEdit={handleOnClickEdit}
+            onClickPrev={handleOnClickPrev}
+            onClickGoList={handleOnClickGoList}
+          />
           <div className={styles['list__grid']}>
             {!isEditMode && <ActionCard onAction={handleOnClickAdd} />}
             {itemList?.map((item) => (
