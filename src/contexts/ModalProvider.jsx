@@ -1,7 +1,6 @@
-import { cloneElement, createContext, isValidElement, useRef, useState } from 'react';
+import { createContext, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './ModalProvider.module.scss';
-import CardModal from '../components/CardModal';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const ModalContext = createContext();
@@ -45,9 +44,15 @@ export const ModalProvider = ({ children }) => {
       {children}
       {isOpen > 0 &&
         createPortal(
-          <div className={`${styles['modal-background']} ${styles[isClosing ? 'isClosing' : '']}`}>
-            <div className={`${styles['modal-wrapper']} ${styles[isClosing ? 'isClosing' : '']}`}>
-              {isValidElement(modal) ? cloneElement(modal, { onClose: closeModal }) : null}
+          <div
+            className={`${styles['modal-background']} ${styles[isClosing ? 'isClosing' : '']}`}
+            onClick={closeModal}
+          >
+            <div
+              className={`${styles['modal-wrapper']} ${styles[isClosing ? 'isClosing' : '']}`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {modal}
             </div>
           </div>,
           document.getElementById('modal-root'),
