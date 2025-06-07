@@ -20,7 +20,7 @@
     flex-direction: column;
     align-items: end;
     gap: 11px;
-    max-width: 1200px;
+    max-width: var(--wrapper-width);
   }
 
   &__grid {
@@ -49,14 +49,14 @@
   height: 56px;
   z-index: 100;
   border-radius: 12px;
-  background-color: #9935ff;
+  background-color: var(--color-purple-600);
   border: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 400;
+  color: var(--color-white);
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-regular);
   position: fixed;
 
   @media screen and (min-width: 768px) {
@@ -71,4 +71,8 @@
     height: 39px;
     position: static;
   }
+}
+
+.list__observer {
+  height: 1px;
 }

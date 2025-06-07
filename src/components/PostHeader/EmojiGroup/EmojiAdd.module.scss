@@ -1,0 +1,42 @@
+/* src/components/EmojiAdd/EmojiAdd.module.scss */
+
+.emoji-add {
+  position: relative;
+  display: inline-block;
+
+  /* 드롭다운 메뉴가 펼쳐질 때 적용할 스타일 */
+  &__menu {
+    /* DropdownButton 내부의 .dropdown__menu 과 함께 사용됨 */
+    max-width: 350px; /* EmojiPicker 가로 크기와 일치시키기 */
+    height: 350px; /* EmojiPicker 세로 크기와 일치시키기 */
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    z-index: 1000;
+  }
+  &__icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    gap: 8px;
+    border-radius: 8px;
+    border: 2px solid var(--color-gray-200);
+    background-color: var(--color-white);
+  }
+
+  /* 드롭다운 내부에 EmojiPicker 자체를 래핑하는 컨테이너 */
+  &__menu-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* API 호출 중 에러 메시지를 출력할 때 사용하는 스타일 */
+  &__error {
+    margin-top: 4px;
+    font-size: 12px;
+    color: #e53e3e;
+  }
+}

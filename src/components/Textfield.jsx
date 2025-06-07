@@ -7,7 +7,7 @@ import styles from '@/components/Textfield.module.scss';
   
   [Textfield 상태 속성]
   - disabled: 비활성화 상태
-  - isError: 에러 또는 성공 상태 => 초기값은 null, error 또는 success를 넘긴다.
+  - isValid: 에러 또는 성공 상태 => null(초기상태). true 또는 false 값을 넘긴다.
   - message: 메세지가 있는 경우 출력
 */
 
@@ -15,39 +15,44 @@ const Textfield = ({
   value,
   placeholder = '입력해주세요',
   onChange,
-  isError = null,
-  message,
+  isValid = null,
   disabled,
+  message,
+  className,
+  ...rest
 }) => {
   const statusClass = {
     null: '',
-    error: 'textfield--error',
-    success: 'textfield--success',
+    false: 'textfield--error',
+    true: 'textfield--success',
   };
 
   const statusMessageClass = {
     null: '',
-    error: 'textfield__message--error',
-    success: 'textfield__message--success',
+    false: 'textfield__message--error',
+    true: 'textfield__message--success',
   };
 
   const showMessage = !disabled && message;
 
   return (
     <>
-      <input
-        type='text'
-        placeholder={placeholder}
-        disabled={disabled}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className={`${styles['textfield']} ${styles[statusClass[isError]]} `}
-      />
-      {showMessage && (
-        <div className={`${styles['textfield__message']} ${styles[statusMessageClass[isError]]}`}>
-          {message}
-        </div>
-      )}
+      <div>
+        <input
+          type='text'
+          placeholder={placeholder}
+          disabled={disabled}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className={`${className} ${styles['textfield']} ${styles[statusClass[isValid]]} `}
+          {...rest}
+        />
+        {showMessage && (
+          <div className={`${styles['textfield__message']} ${styles[statusMessageClass[isValid]]}`}>
+            {message}
+          </div>
+        )}
+      </div>
     </>
   );
 };

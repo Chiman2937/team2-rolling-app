@@ -1,109 +1,96 @@
-import { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useApi } from '@/hooks/useApi.jsx';
+import { useModal } from '@/hooks/useModal';
 import styles from '@/pages/RollingPaperItemPage/RollingPaperItemPage.module.scss';
-import ItemCard from '@/components/ItemCard';
-import { listRecipientMessages } from '../../apis/recipientMessageApi';
-import { getRecipient } from '../../apis/recipientsApi';
-import { listRecipientReactions } from '../../apis/recipientReactionsApi';
-// import { createRecipientReaction } from '../../apis/recipientReactionsApi';
+import ListCard from '@/components/ListCard';
+import { getRecipient } from '@/apis/recipientsApi';
+import { deleteMessage } from '@/apis/messagesApi';
+import { deleteRecipient } from '@/apis/recipientsApi';
+import { useMessageItemsList } from '@/hooks/useMessageItemsList';
+import { useInfinityScroll } from '@/hooks/useInfinityScroll';
 
-function RollingPaperItemPage() {
+const RollingPaperItemPage = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
+  const { showModal } = useModal();
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const [itemData, setItemData] = useState({
-    backgroundColor: '',
-    backgroundImageURL: '',
-    reactionCount: 0,
-    topReactions: [],
-  });
+  /* useApi 사용하여 API 불러오는 영역  */
+  const { data: getRecipientData } = useApi(getRecipient, { id }, { immediate: true });
+  const { refetch: deleteMessageRefetch } = useApi(deleteMessage, { id }, { immediate: false });
+  const { refetch: deleteRecipientRefetch } = useApi(deleteRecipient, { id }, { immediate: false });
 
-  const [offset, setOffset] = useState(0);
-  const [hasNext, setHasNext] = useState(null);
-  const [itemList, setItemList] = useState([]);
-  const observerRef = useRef(null);
+  /* 커스텀훅 영역 */
+  const { itemList, hasNext, loadMore, initializeList } = useMessageItemsList(id); // 리스트 데이터 API 및 동작
+  const { observerRef } = useInfinityScroll({ hasNext, callback: loadMore }); // 무한 스크롤 동작
 
+  const COLOR_STYLES = {
+    beige: {
+      primary: 'var(--color-beige-200)',
+      accent: 'var(--color-beige-300)',
+      border: 'rgb(0,0,0,0.08)',
+    },
+    purple: {
+      primary: 'var(--color-purple-200)',
+      accent: 'var(--color-purple-300)',
+      border: 'rgb(0,0,0,0.08)',
+    },
+    blue: {
+      primary: 'var(--color-blue-200)',
+      accent: 'var(--color-blue-300)',
+      border: 'rgb(0,0,0,0.08)',
+    },
+    green: {
+      primary: 'var(--color-green-200)',
+      accent: 'var(--color-blue-300)',
+      border: 'rgb(0,0,0,0.08)',
+    },
+  };
+
+  /* 전체 배경 스타일 적용 */
   const containerStyle = {
-    backgroundColor: itemData.backgroundColor ? '' : itemData.backgroundColor,
-    backgroundImage: itemData.backgroundImageURL ? `url(${itemData.backgroundImageURL})` : 'none',
+    backgroundColor: !getRecipientData?.backgroundImageURL
+      ? COLOR_STYLES[getRecipientData?.backgroundColor]?.primary
+      : '',
+    backgroundImage: getRecipientData?.backgroundImageURL
+      ? `url(${getRecipientData?.backgroundImageURL})`
+      : 'none',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
     backgroundSize: 'cover',
   };
 
+  /* 버튼, 카드 클릭 시 동작  */
   const handleOnClickEdit = () => {
     setIsEditMode(true);
   };
 
-  const getItemDetail = async () => {
+  const handleOnClickCard = (modalData) => {
+    showModal(modalData);
+  };
+
+  const handleOnClickAdd = () => {
+    navigate('message');
+  };
+
+  const handleMessageDelete = async (messageId) => {
     try {
-      const data = await getRecipient({ id });
-      const { backgroundColor, backgroundImageURL, reactionCount, topReactions } = data;
-      setItemData({ backgroundColor, backgroundImageURL, reactionCount, topReactions });
+      await deleteMessageRefetch({ id: messageId });
+      initializeList();
     } catch (error) {
-      console.error('에러 발생:', error);
+      console.error('삭제 시 오류 발생:', error);
     }
   };
 
-  const getMessageList = async (params = {}) => {
+  const handleRecipientsDelete = async () => {
     try {
-      const data = await listRecipientMessages({ recipientId: id, ...params });
-      const { results, next } = data;
-      setItemList([...itemList, ...results]);
-      setHasNext(!!next);
-      setOffset((prev) => prev + 8);
+      await deleteRecipientRefetch({ id });
+      navigate('/post/');
     } catch (error) {
-      console.error('에러 발생:', error);
+      console.error('삭제 후 재요청 중 오류 발생:', error);
     }
   };
-
-  const getReactions = async (params = {}) => {
-    try {
-      const data = await listRecipientReactions({ recipientId: id, ...params });
-      console.log(data);
-    } catch (error) {
-      console.error('에러 발생:', error);
-    }
-  };
-
-  // const createReaction = async (params = {}) => {
-  //   try {
-  //     await createRecipientReaction({ recipientId: '11727', ...params });
-  //   } catch (error) {
-  //     console.error('에러 발생:', error);
-  //   }
-  // };
-
-  useEffect(() => {
-    getItemDetail();
-    getReactions({ limit: 8, offset: 0 });
-  }, []);
-
-  useEffect(() => {
-    getMessageList({ limit: 8, offset: 0 });
-  }, []);
-
-  useEffect(() => {
-    const onScroll = (entries) => {
-      const firstEntry = entries[0];
-
-      if (firstEntry.isIntersecting && hasNext) {
-        getMessageList({ limit: 6, offset });
-      }
-    };
-
-    const observer = new IntersectionObserver(onScroll);
-
-    if (observerRef.current) {
-      observer.observe(observerRef.current);
-    }
-
-    return () => {
-      if (observerRef.current) {
-        observer.unobserve(observerRef.current);
-      }
-    };
-  }, [hasNext]);
 
   return (
     <>
@@ -115,19 +102,29 @@ function RollingPaperItemPage() {
               수정하기
             </button>
           )}
-          {isEditMode && <button className={styles['list__button']}>삭제하기</button>}
+          {isEditMode && (
+            <button className={styles['list__button']} onClick={handleRecipientsDelete}>
+              페이지 삭제
+            </button>
+          )}
           <div className={styles['list__grid']}>
-            {!isEditMode && <ItemCard isAddCard />}
-            {itemList.map((item) => (
-              <ItemCard key={item.id} cardData={item} isEditMode={isEditMode} />
+            {!isEditMode && <ListCard isAddCard onAdd={handleOnClickAdd} />}
+            {itemList?.map((item) => (
+              <ListCard
+                key={item.id}
+                cardData={item}
+                isEditMode={isEditMode}
+                onClick={handleOnClickCard}
+                onDelete={handleMessageDelete}
+              />
             ))}
           </div>
           {/* 무한 스크롤 감지하는 영역*/}
-          <div ref={observerRef} />
+          <div ref={observerRef} className={styles['list__observer']} />
         </div>
       </section>
     </>
   );
-}
+};
 
 export default RollingPaperItemPage;

@@ -1,0 +1,79 @@
+/* src/components/DropdownButton/DropdownButton.module.scss */
+
+.dropdown {
+  position: relative;
+  display: inline-block; /* 필요 시 inline-block or block */
+
+  &--row {
+    /* 메뉴가 row 형태로 펼쳐질 때 */
+    .dropdown__menu {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap; /* 여러 줄로 감싸기 */
+      gap: 8px; /* 메뉴 아이템 간격 */
+    }
+  }
+
+  &--column {
+    /* 메뉴가 column 형태로 펼쳐질 때 (기본) */
+    .dropdown__menu {
+      display: flex;
+      flex-direction: column;
+      gap: 4px; /* 메뉴 아이템 간격 */
+    }
+  }
+
+  /* 드롭다운이 열렸을 때 */
+  &--open {
+    .dropdown__menu {
+      opacity: 1;
+      /* transform: scaleY(1) translateX(-50%); */
+      /* JS 인라인 스타일로 대체됨 */
+      pointer-events: auto;
+    }
+  }
+
+  /* 토글 영역 기본 스타일 */
+  &__toggle {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 드롭다운 메뉴 영역 기본 스타일 */
+  &__menu {
+    position: absolute;
+    top: 100%; /* 토글 바로 아래 */
+    left: 50%; /* 토글의 중앙 기준으로 정렬 */
+    margin-top: 4px;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: var(--color-white);
+
+    /* 중앙 정렬을 위해 X축으로 -50% 이동 */
+    transform-origin: top center;
+    transform: scaleY(0) translateX(-50%);
+    opacity: 0;
+    pointer-events: none;
+
+    /* 열림/닫힘 애니메이션 */
+    transition:
+      transform 100ms ease,
+      opacity 100ms ease;
+    z-index: 100;
+  }
+
+  /* 메뉴 아이템 기본 스타일 */
+  &__menu-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: var(--color-gray-100);
+    }
+  }
+}
