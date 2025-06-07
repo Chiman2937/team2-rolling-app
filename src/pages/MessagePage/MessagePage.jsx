@@ -1,128 +1,93 @@
 // src/pages/MessagePage/MessagePage.jsx
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Textfield from '@/components/Textfield';
-import ImagePreloader from '@/components/ImagePreloader';
-import styles from './MessagePage.module.scss';
-import { useApi } from '@/hooks/useApi';
-import { getProfileImages } from '@/apis/profileImagesApi';
-import { createRecipientMessage } from '@/apis/recipientMessageApi';
+
+import React from 'react';
 import { useToast } from '@/hooks/useToast';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useApi } from '@/hooks/useApi';
+import { createRecipientMessage } from '@/apis/recipientMessageApi';
+import { useForm } from '@/hooks/useForm';
+import Textfield from '@/components/Textfield';
+import Dropdown from '@/components/Dropdown';
+import ProfileSelector from './components/ProfileSelector';
+import styles from './MessagePage.module.scss';
+
+// 방금 만든 Editor 컴포넌트를 가져옵니다.
+import Editor from '@/components/Editor/Editor';
 
 const RELATIONSHIP_OPTIONS = ['친구', '지인', '동료', '가족'];
 const FONT_OPTIONS = ['Noto Sans', 'Pretendard', '나눔명조', '나눔손글씨 손편지체'];
 
-function MessagePage({ id }) {
+function MessagePage() {
   const { showToast } = useToast();
   const navigate = useNavigate();
-  const recipientId = id;
+  const { id: recipientId } = useParams();
 
-  // --- 입력값 상태 ---
-  const [senderName, setSenderName] = useState('');
-  const [profileImages, setProfileImages] = useState([]);
-  const [selectedImage, setSelectedImage] = useState('');
-  const [relationship, setRelationship] = useState(RELATIONSHIP_OPTIONS[0]);
-  const [content, setContent] = useState(''); // 이제 이 setContent 를 <textarea> 에 연결
-  const [font, setFont] = useState(FONT_OPTIONS[0]);
+  // useForm 훅으로 모든 필드(특히 content) 값을 관리
+  const { values, handleChange, resetForm, isFormValid } = useForm({
+    senderName: '',
+    relationship: RELATIONSHIP_OPTIONS[0],
+    profileImageUrl: '',
+    content: '', // 여기서 Tiptap Editor의 HTML이 계속 업데이트됩니다.
+    font: FONT_OPTIONS[0],
+  });
 
-  // --- 프로필 이미지 목록 가져오기 (API 호출) ---
-  const { data: imageData, loading: loadingImages, error: errorImages } = useApi(getProfileImages);
+  const { data, loading, error, refetch } = useApi(
+    createRecipientMessage,
+    {
+      recipientId,
+      ...values,
+    },
+    {
+      errorMessage: '메시지 생성에 실패했습니다. 다시 시도해 주세요.',
+      immediate: false,
+    },
+  );
 
-  useEffect(() => {
-    if (imageData && Array.isArray(imageData.imageUrls)) {
-      setProfileImages(imageData.imageUrls);
-      setSelectedImage(imageData.imageUrls[0] || '');
-    }
-  }, [imageData]);
-
-  // --- 이미지 선택 핸들러 ---
-  const handleImageClick = (url) => {
-    setSelectedImage(url);
-  };
-
-  // --- 메시지 전송 핸들러 ---
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!senderName.trim()) {
-      showToast({ type: 'fail', message: '이름을 입력해주세요.', timer: 2000 });
+    if (!isFormValid) {
+      showToast('모든 필드를 올바르게 입력해 주세요.', 'error');
       return;
     }
-    if (!content.trim()) {
-      showToast({ type: 'fail', message: '내용을 입력해주세요.', timer: 2000 });
-      return;
+    refetch();
+    if (loading) {
+      showToast('메시지를 생성하는 중입니다...', 'info');
     }
-    if (!selectedImage) {
-      showToast({ type: 'fail', message: '프로필 이미지를 선택해주세요.', timer: 2000 });
-      return;
+    if (error) {
+      resetForm();
     }
 
-    try {
-      await createRecipientMessage({
-        recipientId: Number(recipientId),
-        sender: senderName,
-        profileImageURL: selectedImage,
-        relationship,
-        content,
-        font,
-      });
-
-      showToast({ type: 'success', message: '메시지가 성공적으로 전송되었습니다!', timer: 2000 });
-      navigate(`/recipients/${recipientId}`);
-    } catch (err) {
-      showToast({ type: 'fail', message: err.message, timer: 2000 });
+    if (data) {
+      showToast('메시지가 성공적으로 생성되었습니다!', 'success');
+      console.log('생성된 메시지:', data);
+      resetForm(); // 폼 초기화
+      // 메시지 생성 후, 메시지 목록 페이지로 이동
+      navigate(`/messages/${recipientId}`);
     }
   };
 
   return (
     <div className={styles['message-page']}>
-      <h1 className={styles['message-page__title']}>메시지 작성</h1>
-
-      {/* 프로필 이미지 배열이 준비되면 미리 로딩 */}
-      {Array.isArray(profileImages) && profileImages.length > 0 && (
-        <ImagePreloader imageUrls={profileImages} />
-      )}
-
       <form className={styles['message-page__form']} onSubmit={handleSubmit}>
-        {/* 1) From. (이름 입력) */}
+        {/* 1) From (이름 입력) */}
         <div className={styles['message-page__field']}>
           <label htmlFor='senderName' className={styles['message-page__label']}>
             From.
           </label>
           <Textfield
-            value={senderName}
+            value={values.senderName}
             placeholder='이름을 입력해 주세요.'
-            onChange={setSenderName}
+            onChange={handleChange('senderName')}
             isValid={true}
-            message=''
-            disabled={false}
+            message='이름은 필수 입력 사항입니다.'
+            disabled={loading}
           />
         </div>
 
         {/* 2) 프로필 이미지 선택 */}
         <div className={styles['message-page__field']}>
           <label className={styles['message-page__label']}>프로필 이미지</label>
-          {loadingImages && <p>이미지 로딩 중...</p>}
-          {errorImages && (
-            <p className={styles['message-page__error']}>
-              이미지를 불러오는 중 오류가 발생했습니다.
-            </p>
-          )}
-
-          <div className={styles['message-page__image-list']}>
-            {profileImages.map((url) => (
-              <button
-                type='button'
-                key={url}
-                className={`${styles['message-page__image-item']} ${
-                  selectedImage === url ? styles['message-page__image-item--selected'] : ''
-                }`}
-                onClick={() => handleImageClick(url)}
-              >
-                <img src={url} alt='프로필' className={styles['message-page__image-thumb']} />
-              </button>
-            ))}
-          </div>
+          <ProfileSelector onSelectImage={handleChange('profileImageUrl')} />
         </div>
 
         {/* 3) 상대와의 관계 (select) */}
@@ -130,30 +95,23 @@ function MessagePage({ id }) {
           <label htmlFor='relationship' className={styles['message-page__label']}>
             상대와의 관계
           </label>
-          <select
-            id='relationship'
-            value={relationship}
-            onChange={(e) => setRelationship(e.target.value)}
-            className={styles['message-page__select']}
-          >
-            {RELATIONSHIP_OPTIONS.map((opt) => (
-              <option key={opt} value={opt}>
-                {opt}
-              </option>
-            ))}
-          </select>
+          <Dropdown
+            value={values.relationship}
+            dropdownItems={RELATIONSHIP_OPTIONS}
+            onChange={handleChange('relationship')}
+            disabled={loading}
+          />
         </div>
 
-        {/* 4) 내용 (textarea로 대체) */}
+        {/* 4) 내용 (Tiptap Editor) */}
         <div className={styles['message-page__field']}>
           <label className={styles['message-page__label']}>내용을 입력해 주세요</label>
           <div className={styles['message-page__editor-wrapper']}>
-            <textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              placeholder='내용을 입력하세요.'
-              className={styles['message-page__textarea']}
-            />
+            {/* 
+              Editor 컴포넌트에 content(HTML)와 onUpdate 콜백을 전달:
+              onUpdate(html) → handleChange('content')(html) 형태로 폼 값이 갱신됩니다.
+            */}
+            <Editor content={values.content} onUpdate={handleChange('content')} />
           </div>
         </div>
 
@@ -162,23 +120,21 @@ function MessagePage({ id }) {
           <label htmlFor='font' className={styles['message-page__label']}>
             폰트 선택
           </label>
-          <select
-            id='font'
-            value={font}
-            onChange={(e) => setFont(e.target.value)}
-            className={styles['message-page__select']}
-          >
-            {FONT_OPTIONS.map((opt) => (
-              <option key={opt} value={opt}>
-                {opt}
-              </option>
-            ))}
-          </select>
+          <Dropdown
+            value={values.font}
+            dropdownItems={FONT_OPTIONS}
+            onChange={handleChange('font')}
+            disabled={loading}
+          />
         </div>
 
         {/* 6) 전송 버튼 */}
         <div className={styles['message-page__actions']}>
-          <button type='submit' className={styles['message-page__submit']}>
+          <button
+            type='submit'
+            className={styles['message-page__submit']}
+            disabled={!isFormValid || loading}
+          >
             생성하기
           </button>
         </div>

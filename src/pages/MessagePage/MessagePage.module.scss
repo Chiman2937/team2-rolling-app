@@ -1,34 +1,29 @@
-/* src/pages/MessagePage.module.scss */
-
-/* BEM 규칙에 따라 클래스 네이밍 */
 .message-page {
-  max-width: 600px;
+  max-width: 720px;
   margin: 0 auto;
-  padding: 2rem 1rem;
 
-  &__title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 1.5rem;
-    text-align: center;
+  @include mobile {
+    max-width: 320px;
   }
 
   &__form {
+    margin-top: 50px;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 50px;
   }
 
   &__field {
     display: flex;
     flex-direction: column;
+    gap: 12px;
   }
 
   &__label {
-    font-size: 1rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-    color: var(--color-gray-800);
+    font-size: var(--font-size-24);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 12px;
+    color: var(--color-gray-900);
   }
 
   /* 오류 메시지 (로딩 에러 등) */
@@ -38,61 +33,15 @@
     margin-top: 0.25rem;
   }
 
-  /* 프로필 이미지 목록 래퍼 */
-  &__image-list {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-
-  /* 개별 이미지 버튼 */
-  &__image-item {
-    border: 2px solid transparent;
-    border-radius: 50%;
-    padding: 2px;
-    background-color: transparent;
-    transition: border-color 0.2s ease;
-
-    & img {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    &:hover {
-      border-color: var(--color-purple-400);
-    }
-  }
-
-  /* 선택된 이미지 강조 */
-  &__image-item--selected {
-    border-color: var(--color-purple-600);
-  }
-
-  /* select 공통 스타일 */
-  &__select {
-    padding: 0.5rem;
-    border: 1px solid var(--color-gray-300);
-    border-radius: 8px;
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 0.2s ease;
-
-    &:focus {
-      border-color: var(--color-purple-600);
-    }
-  }
-
   /* 에디터 래퍼 */
   &__editor-wrapper {
     border: 1px solid var(--color-gray-300);
     border-radius: 8px;
-    min-height: 200px;
-    overflow: hidden;
-
-    /* 에디터 내부에 padding 등을 주고 싶으면 여기에 추가 */
-    /* 예: .editor-content { padding: 0.75rem; } */
+    max-height: 500px;
+  }
+  &__editor {
+    width: 100%;
+    height: 100%;
   }
 
   /* 전송 버튼 영역 */
