@@ -10,30 +10,14 @@ import Dropdown from '@/components/Dropdown/Dropdown';
 import ProfileSelector from './components/ProfileSelector';
 import styles from './MessagePage.module.scss';
 import Editor from '@/components/Editor/Editor';
-import { useEffect } from 'react';
+import { FONT_OPTIONS, FONT_DROPDOWN_ITEMS } from '@/constants/fontMap';
+import { useEffect, useState } from 'react';
 
+// 상대와의 관계 옵션
 const RELATIONSHIP_OPTIONS = ['친구', '지인', '동료', '가족'];
-// ① API 전송용 순수 문자열 배열 (변경하지 않음)
-const FONT_OPTIONS = ['Noto Sans', 'Pretendard', '나눔명조', '나눔손글씨 손편지체'];
-
-// ② 폰트 이름 → CSS 변수 매핑
-const FONT_CSS_VAR_MAP = {
-  'Noto Sans': 'var(--font-family-noto-sans)',
-  Pretendard: 'var(--font-family-base)',
-  나눔명조: 'var(--font-family-nanum-myeongjo)',
-  '나눔손글씨 손편지체': 'var(--font-family-nanum-son-pyeonji)',
-};
-
-// ③ Dropdown에 넘길 items
-const FONT_DROPDOWN_ITEMS = FONT_OPTIONS.map((fontName) => ({
-  value: fontName, // onChange 로 전달될 실제 문자열
-  label: fontName, // 화면에 보여줄 텍스트
-  style: {
-    fontFamily: FONT_CSS_VAR_MAP[fontName], // 각 아이템에 인라인 스타일 적용
-  },
-}));
 
 function MessagePage() {
+  const [fontDropdownOpen, setFontDropdownOpen] = useState(false);
   const { showToast } = useToast();
   const navigate = useNavigate();
   const { id: recipientId } = useParams();
@@ -65,13 +49,6 @@ function MessagePage() {
     errorMessage: '메시지 생성에 실패했습니다. 다시 시도해 주세요.',
     immediate: false,
   });
-
-  // Dropdown 에 넘길 폰트 목록 (값 + 표시 레이블 + 인라인 스타일)
-  const fontItems = FONT_OPTIONS.map((font) => ({
-    value: font,
-    label: font,
-    style: { fontFamily: font },
-  }));
 
   useEffect(() => {
     if (data) {
@@ -157,15 +134,17 @@ function MessagePage() {
             폰트 선택
           </label>
           <Dropdown
-            dropdownItems={fontItems}
+            dropdownItems={FONT_DROPDOWN_ITEMS}
             value={values.font}
             onChange={handleChange('font')}
             disabled={loading}
+            onOpenChange={setFontDropdownOpen}
           />
         </div>
 
         {/* 6) 전송 버튼 */}
         <div className={styles['message-page__actions']}>
+          {fontDropdownOpen && <div className={styles['message-page__spacer']} />}
           <button
             type='submit'
             className={styles['message-page__submit']}
