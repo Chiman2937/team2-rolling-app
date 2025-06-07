@@ -24,32 +24,29 @@ function MessagePage() {
 
   // useForm 훅으로 모든 필드(특히 content) 값을 관리
   const { values, handleChange, resetForm, isFormValid } = useForm({
-    senderName: '',
+    sender: '',
     relationship: RELATIONSHIP_OPTIONS[0],
-    profileImageUrl: '',
+    profileImageURL: '',
     content: '', // 여기서 Tiptap Editor의 HTML이 계속 업데이트됩니다.
     font: FONT_OPTIONS[0],
   });
-
-  const { data, loading, error, refetch } = useApi(
-    createRecipientMessage,
-    {
-      recipientId,
-      ...values,
-    },
-    {
-      errorMessage: '메시지 생성에 실패했습니다. 다시 시도해 주세요.',
-      immediate: false,
-    },
-  );
+  // 메시지 생성 API 호출을 위한 useApi 훅 사용
+  const { data, loading, error, refetch } = useApi(createRecipientMessage, null, {
+    errorMessage: '메시지 생성에 실패했습니다. 다시 시도해 주세요.',
+    immediate: false,
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!isFormValid) {
       showToast('모든 필드를 올바르게 입력해 주세요.', 'error');
       return;
     }
-    refetch();
+    refetch({
+      recipientId,
+      ...values,
+    });
     if (loading) {
       showToast('메시지를 생성하는 중입니다...', 'info');
     }
@@ -62,7 +59,7 @@ function MessagePage() {
       console.log('생성된 메시지:', data);
       resetForm(); // 폼 초기화
       // 메시지 생성 후, 메시지 목록 페이지로 이동
-      navigate(`/messages/${recipientId}`);
+      navigate(`/post/${recipientId}`);
     }
   };
 
@@ -75,9 +72,9 @@ function MessagePage() {
             From.
           </label>
           <Textfield
-            value={values.senderName}
+            value={values.sender}
             placeholder='이름을 입력해 주세요.'
-            onChange={handleChange('senderName')}
+            onChange={handleChange('sender')}
             isValid={true}
             message='이름은 필수 입력 사항입니다.'
             disabled={loading}
@@ -87,7 +84,7 @@ function MessagePage() {
         {/* 2) 프로필 이미지 선택 */}
         <div className={styles['message-page__field']}>
           <label className={styles['message-page__label']}>프로필 이미지</label>
-          <ProfileSelector onSelectImage={handleChange('profileImageUrl')} />
+          <ProfileSelector onSelectImage={handleChange('profileImageURL')} />
         </div>
 
         {/* 3) 상대와의 관계 (select) */}
@@ -103,7 +100,7 @@ function MessagePage() {
           />
         </div>
 
-        {/* 4) 내용 (Tiptap Editor) */}
+        {/* 4) 내용 (laxical Editor) */}
         <div className={styles['message-page__field']}>
           <label className={styles['message-page__label']}>내용을 입력해 주세요</label>
           <div className={styles['message-page__editor-wrapper']}>

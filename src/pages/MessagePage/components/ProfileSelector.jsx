@@ -26,6 +26,11 @@ function ProfileSelector({ onSelectImage }) {
     }
   }, [loading, imageUrls, selectedUrl, onSelectImage]);
 
+  const handleImageSelect = (url) => {
+    setSelectedUrl(url);
+    onSelectImage && onSelectImage(url);
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -59,7 +64,7 @@ function ProfileSelector({ onSelectImage }) {
                     ? styles['profile-selector__image-selected']
                     : styles['profile-selector__image']
                 }
-                onClick={() => setSelectedUrl(url)}
+                onClick={() => handleImageSelect(url)}
                 key={url}
               />
             );
