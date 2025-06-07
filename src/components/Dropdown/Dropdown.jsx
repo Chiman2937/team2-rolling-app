@@ -21,8 +21,15 @@ import DropdownIcon from './DropdownIcon';
  * @param {(string|DropdownItem)[]} props.dropdownItems - 목록 (문자열 혹은 DropdownItem 객체)
  * @param {(newValue: string) => void} props.onChange   - 값 변경 시 호출되는 콜백
  * @param {boolean} [props.disabled=false]              - 드롭다운 비활성화 여부
+ * @param {(isOpen: boolean) => void} [props.onOpenChange] - 드롭다운 열림/닫힘 상태 변경 시 호출되는 콜백
  */
-export default function Dropdown({ value, dropdownItems = [], onChange, disabled = false }) {
+export default function Dropdown({
+  value,
+  dropdownItems = [],
+  onChange,
+  disabled = false,
+  onOpenChange,
+}) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -36,6 +43,11 @@ export default function Dropdown({ value, dropdownItems = [], onChange, disabled
     window.addEventListener('mousedown', handleClickOutside);
     return () => window.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    // 드롭다운 열림 상태가 변경되면 콜백 호출
+    onOpenChange?.(open);
+  }, [open, onOpenChange]);
 
   // items 중 현재 선택된 객체 찾기 (문자열이면 undefined)
   const selectedItem = dropdownItems.find((item) =>
