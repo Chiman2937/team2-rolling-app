@@ -21,7 +21,6 @@ function OnEditorChange({ onUpdate }) {
     const remove = editor.registerUpdateListener(({ editorState }) => {
       editorState.read(() => {
         const html = $generateHtmlFromNodes(editor);
-        console.log('현재 HTML:', html);
         onUpdate(html);
       });
     });

@@ -32,6 +32,7 @@ export default React.memo(function ToolbarButton({
 
   return (
     <button
+      type='button'
       className={`${styles.toolbar__item} ${active ? styles['toolbar__item--active'] : ''}`}
       disabled={disabled}
       onClick={onClick}
