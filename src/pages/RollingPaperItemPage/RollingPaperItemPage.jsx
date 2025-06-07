@@ -9,11 +9,12 @@ import { deleteMessage } from '@/apis/messagesApi';
 import { deleteRecipient } from '@/apis/recipientsApi';
 import { useMessageItemsList } from '@/hooks/useMessageItemsList';
 import { useInfinityScroll } from '@/hooks/useInfinityScroll';
+import CardModal from '../../components/CardModal';
 
 const RollingPaperItemPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { showModal } = useModal();
+  const { showModal, closeModal } = useModal();
   const [isEditMode, setIsEditMode] = useState(false);
 
   /* useApi 사용하여 API 불러오는 영역  */
@@ -67,7 +68,7 @@ const RollingPaperItemPage = () => {
   };
 
   const handleOnClickCard = (modalData) => {
-    showModal(modalData);
+    showModal(<CardModal modalItems={modalData} onClose={closeModal} />);
   };
 
   const handleOnClickAdd = () => {
