@@ -1,0 +1,11 @@
+.viewer-container {
+  width: 100%; // 상위가 지정한 너비에 맞춰 늘어납니다.
+  height: 100%; // 높이도 자유롭게
+  overflow: auto; // 내용이 넘치면 스크롤바
+}
+
+.viewer-content {
+  padding: 0;
+  margin: 0;
+  line-height: 1.6; // 단락 간 여백
+}
