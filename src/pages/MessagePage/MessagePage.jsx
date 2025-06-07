@@ -1,6 +1,5 @@
 // src/pages/MessagePage/MessagePage.jsx
 
-import React from 'react';
 import { useToast } from '@/hooks/useToast';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useApi } from '@/hooks/useApi';
@@ -10,9 +9,8 @@ import Textfield from '@/components/Textfield';
 import Dropdown from '@/components/Dropdown';
 import ProfileSelector from './components/ProfileSelector';
 import styles from './MessagePage.module.scss';
-
-// 방금 만든 Editor 컴포넌트를 가져옵니다.
 import Editor from '@/components/Editor/Editor';
+import { useEffect } from 'react';
 
 const RELATIONSHIP_OPTIONS = ['친구', '지인', '동료', '가족'];
 const FONT_OPTIONS = ['Noto Sans', 'Pretendard', '나눔명조', '나눔손글씨 손편지체'];
@@ -22,45 +20,61 @@ function MessagePage() {
   const navigate = useNavigate();
   const { id: recipientId } = useParams();
 
-  // useForm 훅으로 모든 필드(특히 content) 값을 관리
-  const { values, handleChange, resetForm, isFormValid } = useForm({
+  // 초기 폼 값 설정
+  const initialValues = {
     sender: '',
     relationship: RELATIONSHIP_OPTIONS[0],
     profileImageURL: '',
-    content: '', // 여기서 Tiptap Editor의 HTML이 계속 업데이트됩니다.
+    content: '',
     font: FONT_OPTIONS[0],
-  });
+  };
+
+  // content 필드만 HTML 태그 제거 후 텍스트 길이 > 0 체크
+  const validationRules = {
+    content: (html) => {
+      const div = document.createElement('div');
+      div.innerHTML = html;
+      // &nbsp; 같은 비문자 공백도 제거
+      const text = div.textContent.replace(/\u00a0/g, '').trim();
+      return text.length > 0;
+    },
+  };
+  // useForm 훅으로 모든 필드(특히 content) 값을 관리
+  const { values, handleChange, resetForm, isFormValid } = useForm(initialValues, validationRules);
+
   // 메시지 생성 API 호출을 위한 useApi 훅 사용
-  const { data, loading, error, refetch } = useApi(createRecipientMessage, null, {
+  const { data, loading, refetch } = useApi(createRecipientMessage, null, {
     errorMessage: '메시지 생성에 실패했습니다. 다시 시도해 주세요.',
     immediate: false,
   });
 
+  useEffect(() => {
+    if (data) {
+      console.log('메시지 생성 성공:', data);
+    }
+  }, [data]);
+
+  // 폼 제출 핸들러
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // 폼 유효성 검사
     if (!isFormValid) {
       showToast('모든 필드를 올바르게 입력해 주세요.', 'error');
       return;
     }
-    refetch({
+
+    // 이 호출이 성공할 때까지 기다렸다가
+    await refetch({
       recipientId,
       ...values,
     });
-    if (loading) {
-      showToast('메시지를 생성하는 중입니다...', 'info');
-    }
-    if (error) {
-      resetForm();
-    }
 
-    if (data) {
-      showToast('메시지가 성공적으로 생성되었습니다!', 'success');
-      console.log('생성된 메시지:', data);
-      resetForm(); // 폼 초기화
-      // 메시지 생성 후, 메시지 목록 페이지로 이동
-      navigate(`/post/${recipientId}`);
-    }
+    // 성공 처리
+    showToast('메시지가 성공적으로 생성되었습니다!', 'success');
+
+    resetForm();
+    navigate(`/post/${recipientId}`); // 실제 라우트에 맞게 수정
   };
 
   return (
