@@ -2,6 +2,9 @@
 :root {
   /* Font */
   --font-family-base: 'Pretendard', sans-serif;
+  --font-family-noto-sans: 'Noto Sans', sans-serif;
+  --font-family-nanum-myeongjo: 'Nanum Myeongjo', serif;
+  --font-family-nanum-son-pyeonji: 'Nanum Son Pyeonji', cursive;
 
   /* Font sizes */
   --font-size-28: 28px;
@@ -72,7 +75,6 @@
 
   /* Color - Surface */
   --color-surface: #f6f8ff;
-
 
   /* Wrapper 너비 변수 */
   --wrapper-width: 1200px;
