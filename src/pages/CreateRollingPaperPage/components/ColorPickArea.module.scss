@@ -1,0 +1,35 @@
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%,-50%) scale(0.5);
+  }
+  30% {
+    opacity: 0.8;
+    transform: translate(-50%,-50%) scale(1.2);
+  }
+  100% {
+		opacity: 1;
+    transform: translate(-50%,-50%) scale(1.0);
+  }
+}
+
+.color-pick-area {
+	&__container {
+		margin-top: 40px;
+		margin-bottom: 40px;
+	}
+	&__label {
+		font-size: 20px;
+		font-weight: 700;
+		color: var(--color-gray-700);
+	}
+	&__palette {
+		display: grid;
+		grid-template-columns: repeat(4,1fr);
+		grid-template-rows: repeat(1,1fr);
+		justify-content: space-between;
+		gap: 2%;
+		margin-top: 20px;
+		margin-bottom: 30px;
+	}
+}
