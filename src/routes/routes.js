@@ -9,6 +9,7 @@ import CreateRollingPaperPage from '@/pages/CreateRollingPaperPage/CreateRolling
 const LoadingSpinnerTestPage = lazy(() => import('@/pages/LoadingSpinnerTestPage.jsx'));
 const HomePage = lazy(() => import('@/pages/HomePage/HomePage.jsx'));
 const ListPage = lazy(() => import('@/pages/ListPage/ListPage.jsx'));
+const MessagePage = lazy(() => import('@/pages/MessagePage/MessagePage.jsx'));
 
 export const routes = [
   { path: '/post', element: CreateRollingPaperPage },
@@ -23,4 +24,5 @@ export const routes = [
   { path: '/list', element: ListPage },
   { path: '/post', element: CreateRollingPaperPage },
   { path: 'post/:id', element: RollingPaperItemPage }, // 상세 목록 페이지
+  { path: '/post/:id/message', element: MessagePage },
 ];
