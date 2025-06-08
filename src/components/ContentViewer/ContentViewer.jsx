@@ -41,8 +41,9 @@ export default function ContentViewer({ content = '', maxLength, className = '',
         wordBreak: 'break-word',
         ...style,
       }}
-      // sanitize → truncate된 HTML만 주입
-      dangerouslySetInnerHTML={{ __html: displayedHtml }}
-    />
+    >
+      {/* sanitize → truncate된 HTML만 주입 */}
+      <div className='viewer-content' dangerouslySetInnerHTML={{ __html: displayedHtml }} />
+    </div>
   );
 }

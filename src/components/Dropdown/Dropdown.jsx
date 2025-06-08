@@ -84,7 +84,7 @@ export default function Dropdown({
         onClick={() => !disabled && setOpen((prev) => !prev)}
       >
         <div className={styles['dropdown__button-content']}>
-          <span>{displayLabel}</span>
+          <span style={displayStyle}>{displayLabel}</span>
           <DropdownIcon
             className={`
               ${styles['dropdown__button-icon']}

@@ -34,8 +34,9 @@ function OnEditorChange({ onUpdate }) {
  * Editor 컴포넌트
  * @param {string} content - 초기 HTML
  * @param {(html: string) => void} onUpdate - 변경된 HTML 콜백
+ * @param {React.CSSProperties} [style] - 에디터 스타일
  */
-export default function Editor({ content = '', onUpdate }) {
+export default function Editor({ content = '', onUpdate, style = {} }) {
   // 1) theme: 텍스트 포맷 → CSS 클래스 매핑
   const theme = {
     text: {
@@ -64,18 +65,20 @@ export default function Editor({ content = '', onUpdate }) {
   };
 
   return (
-    <LexicalComposer initialConfig={initialConfig}>
-      <ToolbarPlugin />
+    <div style={style}>
+      <LexicalComposer initialConfig={initialConfig}>
+        <ToolbarPlugin />
 
-      {/* RichTextPlugin 하나로 bold/italic/underline/strikethrough 지원 */}
-      <RichTextPlugin
-        contentEditable={<ContentEditable className={styles.editor__content} />}
-        placeholder={<div className={styles.editor__placeholder}>내용을 입력해 주세요…</div>}
-        ErrorBoundary={LexicalErrorBoundary}
-      />
+        {/* RichTextPlugin 하나로 bold/italic/underline/strikethrough 지원 */}
+        <RichTextPlugin
+          contentEditable={<ContentEditable className={styles.editor__content} />}
+          placeholder={<div className={styles.editor__placeholder}>내용을 입력해 주세요…</div>}
+          ErrorBoundary={LexicalErrorBoundary}
+        />
 
-      <HistoryPlugin />
-      <OnEditorChange onUpdate={onUpdate} />
-    </LexicalComposer>
+        <HistoryPlugin />
+        <OnEditorChange onUpdate={onUpdate} />
+      </LexicalComposer>
+    </div>
   );
 }
