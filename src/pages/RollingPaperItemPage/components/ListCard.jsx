@@ -1,5 +1,5 @@
 import styles from './ListCard.module.scss';
-import DeleteIcon from '@/components/DeleteIcon';
+import DeleteIcon from './DeleteIcon';
 import SenderProfile from '@/components/SenderProfile';
 
 const ListCard = ({ cardData, showDelete, onClick, onDelete }) => {

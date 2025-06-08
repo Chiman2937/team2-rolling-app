@@ -13,7 +13,7 @@ export const useInfinityScroll = ({ hasNext, callback }) => {
     };
 
     /* 무한 스크롤 감시 */
-    const observer = new IntersectionObserver(onScroll);
+    const observer = new IntersectionObserver(onScroll, { threshold: 0.5 });
     const currentRef = observerRef.current;
     if (currentRef) {
       observer.observe(currentRef);

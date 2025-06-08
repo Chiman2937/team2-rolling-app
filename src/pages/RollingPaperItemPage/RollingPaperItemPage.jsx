@@ -8,10 +8,13 @@ import ActionCard from './components/ActionCard';
 import CardModal from '../../components/CardModal';
 import { getRecipient } from '@/apis/recipientsApi';
 import { deleteMessage } from '@/apis/messagesApi';
+import { deleteRecipient } from '@/apis/recipientsApi';
 import { useMessageItemsList } from '@/hooks/useMessageItemsList';
 import { useInfinityScroll } from '@/hooks/useInfinityScroll';
 import { COLOR_STYLES } from '../../constants/colorThemeStyle';
 import ListButtonGroup from './components/ListButtonGroup';
+import RequestDeletePaperModal from './components/RequestDeletePaperModal';
+import DeletePaperSuccessModal from './components/DeletePaperSuccessModal';
 
 const RollingPaperItemPage = () => {
   const navigate = useNavigate();
@@ -22,6 +25,7 @@ const RollingPaperItemPage = () => {
   /* useApi 사용하여 API 불러오는 영역  */
   const { data: getRecipientData } = useApi(getRecipient, { id }, { immediate: true });
   const { refetch: deleteMessageRefetch } = useApi(deleteMessage, { id }, { immediate: false });
+  const { refetch: deleteRecipientRefetch } = useApi(deleteRecipient, { id }, { immediate: false });
 
   /* 커스텀훅 영역 */
   const { itemList, hasNext, loadMore, initializeList } = useMessageItemsList(id); // 리스트 데이터 API 및 동작
@@ -57,16 +61,43 @@ const RollingPaperItemPage = () => {
     showModal(<CardModal modalItems={modalData} onClose={closeModal} />);
   };
 
-  const handleOnClickAdd = () => {
+  const handleOnClickAddMessage = () => {
     navigate('message');
   };
 
-  const handleMessageDelete = async (messageId) => {
+  /* 메세지 삭제 */
+  const handleOnClickDeleteMessage = async (messageId) => {
     try {
       await deleteMessageRefetch({ id: messageId });
       initializeList();
     } catch (error) {
       console.error('삭제 시 오류 발생:', error);
+    }
+  };
+
+  /* 롤링페이퍼 페이퍼 삭제 */
+  const handleOnClickDeletePaper = () => {
+    showModal(
+      <RequestDeletePaperModal
+        onConfirm={() => handleOnDeletePaperConfirm()}
+        onCancel={closeModal}
+      />,
+    );
+  };
+
+  const handleOnDeletePaperConfirm = async () => {
+    try {
+      await deleteRecipientRefetch({ id });
+      showModal(
+        <DeletePaperSuccessModal
+          onClose={() => {
+            closeModal();
+            navigate('/list');
+          }}
+        />,
+      );
+    } catch (error) {
+      console.error('롤링페이퍼 삭제 시 오류 발생:', error);
     }
   };
 
@@ -82,14 +113,15 @@ const RollingPaperItemPage = () => {
             onClickGoList={handleOnClickGoList}
           />
           <div className={styles['list__grid']}>
-            {!isEditMode && <ActionCard onAction={handleOnClickAdd} />}
+            {!isEditMode && <ActionCard isAdd onAction={handleOnClickAddMessage} />}
+            {isEditMode && <ActionCard onAction={handleOnClickDeletePaper} />}
             {itemList?.map((item) => (
               <ListCard
                 key={item.id}
                 cardData={item}
-                isEditMode={isEditMode}
+                showDelete={isEditMode}
                 onClick={handleOnClickCard}
-                onDelete={handleMessageDelete}
+                onDelete={handleOnClickDeleteMessage}
               />
             ))}
           </div>
