@@ -54,6 +54,7 @@
     position: relative;
     height: 32px;
     margin-top: 8px;
+    min-height: 24px;
   }
 
   &__avatar {
@@ -88,6 +89,7 @@
     display: flex;
     gap: 8px;
     margin-top: 8px;
+    min-height: 24px;
   }
 
   &__reaction {
