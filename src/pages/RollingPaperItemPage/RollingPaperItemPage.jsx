@@ -7,8 +7,8 @@ import ListCard from './components/ListCard';
 import ActionCard from './components/ActionCard';
 import CardModal from '../../components/CardModal';
 import { getRecipient } from '@/apis/recipientsApi';
-import { deleteMessage } from '@/apis/messagesApi';
-import { deleteRecipient } from '@/apis/recipientsApi';
+// import { deleteMessage } from '@/apis/messagesApi';
+// import { deleteRecipient } from '@/apis/recipientsApi';
 import { useMessageItemsList } from '@/hooks/useMessageItemsList';
 import { useInfinityScroll } from '@/hooks/useInfinityScroll';
 import { COLOR_STYLES } from '../../constants/colorThemeStyle';
@@ -24,11 +24,10 @@ const RollingPaperItemPage = () => {
 
   /* useApi 사용하여 API 불러오는 영역  */
   const { data: getRecipientData } = useApi(getRecipient, { id }, { immediate: true });
-  const { refetch: deleteMessageRefetch } = useApi(deleteMessage, { id }, { immediate: false });
-  const { refetch: deleteRecipientRefetch } = useApi(deleteRecipient, { id }, { immediate: false });
 
   /* 커스텀훅 영역 */
-  const { itemList, hasNext, loadMore, initializeList } = useMessageItemsList(id); // 리스트 데이터 API 및 동작
+  const { itemList, hasNext, loadMore, onClickDeleteMessage, onDeletePaperConfirm } =
+    useMessageItemsList(id); // 리스트 데이터 API 및 동작
   const { observerRef } = useInfinityScroll({ hasNext, callback: loadMore }); // 무한 스크롤 동작
 
   /* 전체 배경 스타일 적용 */
@@ -66,13 +65,8 @@ const RollingPaperItemPage = () => {
   };
 
   /* 메세지 삭제 */
-  const handleOnClickDeleteMessage = async (messageId) => {
-    try {
-      await deleteMessageRefetch({ id: messageId });
-      initializeList();
-    } catch (error) {
-      console.error('삭제 시 오류 발생:', error);
-    }
+  const handleOnClickDeleteMessage = () => {
+    onClickDeleteMessage();
   };
 
   /* 롤링페이퍼 페이퍼 삭제 */
@@ -86,8 +80,7 @@ const RollingPaperItemPage = () => {
   };
 
   const handleOnDeletePaperConfirm = async () => {
-    try {
-      await deleteRecipientRefetch({ id });
+    onDeletePaperConfirm(() =>
       showModal(
         <DeletePaperSuccessModal
           onClose={() => {
@@ -95,10 +88,8 @@ const RollingPaperItemPage = () => {
             navigate('/list');
           }}
         />,
-      );
-    } catch (error) {
-      console.error('롤링페이퍼 삭제 시 오류 발생:', error);
-    }
+      ),
+    );
   };
 
   return (
