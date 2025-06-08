@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useApi } from '@/hooks/useApi.jsx';
 import { listRecipientMessages } from '@/apis/recipientMessageApi';
 import { deleteMessage } from '@/apis/messagesApi';
@@ -22,18 +22,18 @@ export const useMessageItemsList = (id) => {
 
   /* API 실행 후 데이터 세팅 */
   useEffect(() => {
-    if (!messageList) return;
+    if (loading || !messageList) return;
     const { results, previous } = messageList;
     setItemList((prevList) => (offset === 0 || !previous ? results : [...prevList, ...results]));
-  }, [messageList, offset]);
+  }, [messageList, offset, loading]);
 
   /* 스크롤 시 데이터 다시 불러옴  */
-  const loadMore = useCallback(() => {
+  const loadMore = () => {
     if (loading || !hasNext) return;
     const newOffset = offset === 0 ? offset + 8 : offset + 6;
     getMessageListRefetch({ recipientId: id, limit: 6, offset: newOffset });
     setOffset(newOffset);
-  }, [loading, hasNext, offset, id, getMessageListRefetch]);
+  };
 
   /* 삭제 후 데이터 초기 상태로 불러옴 */
   const initializeList = () => {
