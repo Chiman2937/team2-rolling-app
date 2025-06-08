@@ -53,11 +53,11 @@ const ListPage = () => {
       {/* 최근에 만든 롤링 페이퍼 ⭐️ */}
       <section className={styles['list-page__section']}>
         <h2 className={styles['list-page__title']}>최근에 만든 롤링 페이퍼 ⭐️</h2>
-        <Slider cards={recentCards} />
+        <Slider className={styles['list-page_slider']} cards={recentCards} />
       </section>
 
       <Link to='/post' style={{ textDecoration: 'none', textAlign: 'center' }}>
-        <Button>나도 만들어보기</Button>
+        <button className={styles['list-page__createButton']}>나도 만들어보기</button>
       </Link>
     </div>
   );
