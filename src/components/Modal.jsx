@@ -1,6 +1,6 @@
 import styles from './Modal.module.scss';
 
-const Modal = ({ children, className, ...props }) => {
+const Modal = ({ children, className = '', ...props }) => {
   return (
     <div className={`${styles['container']} ${className}`} {...props}>
       {children}
@@ -8,7 +8,7 @@ const Modal = ({ children, className, ...props }) => {
   );
 };
 
-const HeaderArea = ({ children, className }) => {
+const HeaderArea = ({ children, className = '' }) => {
   return <div className={className}>{children}</div>;
 };
 
