@@ -23,7 +23,7 @@ const RollingPaperItemPage = () => {
   const [isEditMode, setIsEditMode] = useState(false);
 
   /* useApi 사용하여 API 불러오는 영역  */
-  const { data: getRecipientData } = useApi(getRecipient, { id }, { immediate: true });
+  const { data: recipientData } = useApi(getRecipient, { id }, { immediate: true });
 
   /* 커스텀훅 영역 */
   const { itemList, hasNext, loadMore, onClickDeleteMessage, onDeletePaperConfirm } =
@@ -32,11 +32,11 @@ const RollingPaperItemPage = () => {
 
   /* 전체 배경 스타일 적용 */
   const containerStyle = {
-    backgroundColor: !getRecipientData?.backgroundImageURL
-      ? COLOR_STYLES[getRecipientData?.backgroundColor]?.primary
+    backgroundColor: !recipientData?.backgroundImageURL
+      ? COLOR_STYLES[recipientData?.backgroundColor]?.primary
       : '',
-    backgroundImage: getRecipientData?.backgroundImageURL
-      ? `url(${getRecipientData?.backgroundImageURL})`
+    backgroundImage: recipientData?.backgroundImageURL
+      ? `url(${recipientData?.backgroundImageURL})`
       : 'none',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',

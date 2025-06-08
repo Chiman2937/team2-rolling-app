@@ -7,7 +7,7 @@ import { deleteRecipient } from '@/apis/recipientsApi';
 export const useMessageItemsList = (id) => {
   /* useApi 사용하여 메시지 리스트 호출 */
   const {
-    data: getMessageListData,
+    data: messageList,
     loading,
     refetch: getMessageListRefetch,
   } = useApi(listRecipientMessages, { recipientId: id, limit: 8, offset: 0 }, { immediate: true });
@@ -16,15 +16,15 @@ export const useMessageItemsList = (id) => {
   const { refetch: deleteRecipientRefetch } = useApi(deleteRecipient, { id }, { immediate: false });
 
   const [itemList, setItemList] = useState([]);
-  const hasNext = !!getMessageListData?.next;
+  const hasNext = !!messageList?.next;
   const [offset, setOffset] = useState(0);
 
   /* API 실행 후 데이터 세팅 */
   useEffect(() => {
-    if (!getMessageListData) return;
-    const { results, previous } = getMessageListData;
+    if (!messageList) return;
+    const { results, previous } = messageList;
     setItemList((prevList) => (offset === 0 || !previous ? results : [...prevList, ...results]));
-  }, [getMessageListData, offset]);
+  }, [messageList, offset]);
 
   /* 스크롤 시 데이터 다시 불러옴  */
   const loadMore = useCallback(() => {
