@@ -45,3 +45,27 @@ export const FONT_DROPDOWN_ITEMS = FONT_OPTIONS.map((fontName) => ({
     fontFamily: FONT_STYLES[fontName].fontFamily,
   },
 }));
+
+/**
+ * getFontStyle: 폰트 이름에 해당하는 스타일 객체를 반환
+ * - 폰트 이름이 FONT_STYLES에 없으면 기본 폰트(Noto Sans) 스타일 반환
+ * @param {*} fontName
+ */
+
+export function getFontStyle(fontName) {
+  if (FONT_STYLES[fontName]) {
+    return FONT_STYLES[fontName];
+  }
+  // 없다면 에러 던짐
+  throw new Error(`존재하지 않는 폰트 : ${fontName}`);
+}
+
+/**
+ * getFontFamily: 폰트 이름에 해당하는 fontFamily 값을 반환
+ * - 폰트 이름이 FONT_STYLES에 없으면 기본 폰트(Noto Sans) 스타일 반환
+ * @param {string} fontName
+ * @returns {string}
+ */
+export function getFontFamily(fontName) {
+  return getFontStyle(fontName).fontFamily;
+}
