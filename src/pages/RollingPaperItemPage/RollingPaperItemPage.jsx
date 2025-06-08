@@ -2,19 +2,18 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useApi } from '@/hooks/useApi.jsx';
 import { useModal } from '@/hooks/useModal';
-import styles from '@/pages/RollingPaperItemPage/RollingPaperItemPage.module.scss';
-import ListCard from './components/ListCard';
-import ActionCard from './components/ActionCard';
-import CardModal from '../../components/CardModal';
 import { getRecipient } from '@/apis/recipientsApi';
-// import { deleteMessage } from '@/apis/messagesApi';
-// import { deleteRecipient } from '@/apis/recipientsApi';
 import { useMessageItemsList } from '@/hooks/useMessageItemsList';
 import { useInfinityScroll } from '@/hooks/useInfinityScroll';
 import { COLOR_STYLES } from '../../constants/colorThemeStyle';
+import styles from '@/pages/RollingPaperItemPage/RollingPaperItemPage.module.scss';
 import ListButtonGroup from './components/ListButtonGroup';
+import ListCard from './components/ListCard';
+import ActionCard from './components/ActionCard';
+import CardModal from '../../components/CardModal';
 import RequestDeletePaperModal from './components/RequestDeletePaperModal';
 import DeletePaperSuccessModal from './components/DeletePaperSuccessModal';
+import PostHeader from '@/components/PostHeader/PostHeader';
 
 const RollingPaperItemPage = () => {
   const navigate = useNavigate();
@@ -95,6 +94,7 @@ const RollingPaperItemPage = () => {
   return (
     <>
       {/* 헤더 영역 */}
+      <PostHeader id={id} name={recipientData?.name} />
       <section style={containerStyle} className={styles['list']}>
         <div className={styles['list__container']}>
           <ListButtonGroup

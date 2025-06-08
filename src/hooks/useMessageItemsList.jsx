@@ -12,6 +12,7 @@ export const useMessageItemsList = (id) => {
     refetch: getMessageListRefetch,
   } = useApi(listRecipientMessages, { recipientId: id, limit: 8, offset: 0 }, { immediate: true });
 
+  /* useApi 삭제 관련 Api  */
   const { refetch: deleteMessageRefetch } = useApi(deleteMessage, { id }, { immediate: false });
   const { refetch: deleteRecipientRefetch } = useApi(deleteRecipient, { id }, { immediate: false });
 
@@ -60,5 +61,5 @@ export const useMessageItemsList = (id) => {
     }
   };
 
-  return { itemList, hasNext, loadMore, onClickDeleteMessage, onDeletePaperConfirm, loading };
+  return { itemList, hasNext, loading, loadMore, onClickDeleteMessage, onDeletePaperConfirm };
 };
