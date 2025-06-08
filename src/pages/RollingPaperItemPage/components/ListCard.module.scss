@@ -14,8 +14,13 @@
   transition: transform 0.5s;
   will-change: transform;
   transform: translateZ(0);
+  cursor: pointer;
 
   &:hover {
+    transform: scale(1.05);
+  }
+
+  &:active {
     transform: scale(1.05);
   }
 
@@ -28,6 +33,12 @@
     aspect-ratio: 384 / 280;
   }
 }
+
+.card--column {
+  flex-direction: column;
+  gap: 8px;
+}
+
 .card__container {
   width: clamp(272px, 80vw, 384px);
   height: 100%;
@@ -101,4 +112,15 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+}
+
+.card__icon--delete {
+  width: 56px;
+  height: 56px;
+  color: var(--color-gray-500);
+}
+
+.card__text--delete {
+  font-size: var(--font-size-18);
+  color: var(--color-gray-600);
 }

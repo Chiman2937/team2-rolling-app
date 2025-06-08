@@ -1,18 +1,8 @@
-import styles from '@/components/ListCard.module.scss';
+import styles from './ListCard.module.scss';
 import DeleteIcon from './DeleteIcon';
-import plusImg from '@/assets/icons/icon_plus.svg';
-import SenderProfile from './SenderProfile';
+import SenderProfile from '@/components/SenderProfile';
 
-const ListCard = ({ cardData, isAddCard, isEditMode, onClick, onDelete, onAdd }) => {
-  if (isAddCard)
-    return (
-      <article className={styles['card']} onClick={onAdd}>
-        <button className={`${styles['card__button--add']}`}>
-          <img src={plusImg} alt='플러스 아이콘' />
-        </button>
-      </article>
-    );
-
+const ListCard = ({ cardData, showDelete, onClick, onDelete }) => {
   /* 폰트 확인 후 해당 폰트로 보여줘야 함 */
   const { id, sender, profileImageURL, content, createdAt, relationship } = cardData;
 
@@ -44,7 +34,7 @@ const ListCard = ({ cardData, isAddCard, isEditMode, onClick, onDelete, onAdd })
         <div className={styles['card__main']}>
           <header className={styles['card__sender']}>
             <SenderProfile sender={sender} imageUrl={profileImageURL} relationship={relationship} />
-            {isEditMode && (
+            {showDelete && (
               <button className={styles['card__button--delete']} onClick={onClickDeleteBtn}>
                 <DeleteIcon />
               </button>

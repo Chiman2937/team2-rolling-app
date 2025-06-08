@@ -1,6 +1,7 @@
+import styles from './InfinityScrollWrapper.module.scss';
 import { useEffect, useRef } from 'react';
 
-export const useInfinityScroll = ({ hasNext, callback }) => {
+const InfinityScrollWrapper = ({ children, hasNext, callback }) => {
   const observerRef = useRef(null);
 
   useEffect(() => {
@@ -13,7 +14,7 @@ export const useInfinityScroll = ({ hasNext, callback }) => {
     };
 
     /* 무한 스크롤 감시 */
-    const observer = new IntersectionObserver(onScroll);
+    const observer = new IntersectionObserver(onScroll, { threshold: 0.5 });
     const currentRef = observerRef.current;
     if (currentRef) {
       observer.observe(currentRef);
@@ -25,7 +26,14 @@ export const useInfinityScroll = ({ hasNext, callback }) => {
       }
       observer.disconnect();
     };
-  }, [hasNext, callback]);
+  }, [observerRef, hasNext, callback]);
 
-  return { observerRef };
+  return (
+    <div className={styles['container']}>
+      {children}
+      <div ref={observerRef} className={styles['container__observer']} />
+    </div>
+  );
 };
+
+export default InfinityScrollWrapper;
