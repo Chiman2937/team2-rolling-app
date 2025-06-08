@@ -1,7 +1,7 @@
 import styles from './ImagePickArea.module.scss';
 import { useRef, useState } from 'react';
 import { useApi } from '@/hooks/useApi';
-import { getBackgroundImages } from '@/apis/backgroundImagesAPI';
+import { getBackgroundImages } from '@/apis/backgroundImagesApi';
 import AddItemButton from './AddItemButton';
 import ImageSwatch from './ImageSwatch';
 
