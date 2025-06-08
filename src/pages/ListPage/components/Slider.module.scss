@@ -2,33 +2,42 @@
   position: relative;
   display: flex;
   align-items: center;
-  margin: 0;
-
-  &__arrow--left,
-  &__arrow--right {
-    z-index: 1;
-    @media screen and (min-width: 355px) and (max-width: 1199px) {
-      display: none;
-    }
-  }
-
-  &__arrow--left {
-    position: absolute;
-    left: -20px;
-  }
-
-  &__arrow--right {
-    position: absolute;
-    right: -20px;
-  }
 
   &__container {
-    justify-content: flex-start;
+    width: 100%;
+    /* 데스크톱: overflow hidden → 스크롤 안 보이게 */
+    @media (min-width: 1200px) {
+      overflow: hidden;
+    }
+    /* 모바일·태블릿: overflow-x auto → 직접 스크롤 허용 */
+    @media (max-width: 1199px) {
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+  &__container::-webkit-scrollbar {
+    display: none;
   }
 
   &__track {
     display: flex;
     gap: 16px;
-    transition: transform 0.3s ease;
+  }
+
+  /* 화살표 기본 스타일 */
+  &__arrow--left,
+  &__arrow--right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    display: flex;
+  }
+  &__arrow--left {
+    left: -20px;
+  }
+  &__arrow--right {
+    right: -20px;
   }
 }
