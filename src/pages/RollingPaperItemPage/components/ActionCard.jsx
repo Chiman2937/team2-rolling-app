@@ -8,8 +8,7 @@ const ActionCard = ({ onAction, isAdd }) => {
       {!isAdd && (
         <>
           <DeleteIcon className={`${styles['card__icon--delete']}`} />
-          <span className={`${styles['card__text--delete']}`}></span>
-          게시판 삭제하기
+          <div className={`${styles['card__text--delete']}`}>게시판 삭제하기</div>
         </>
       )}
       {isAdd && (
