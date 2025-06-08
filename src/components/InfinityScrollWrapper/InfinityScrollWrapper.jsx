@@ -1,6 +1,7 @@
+import styles from './InfinityScrollWrapper.module.scss';
 import { useEffect, useRef } from 'react';
 
-export const useInfinityScroll = ({ hasNext, callback }) => {
+const InfinityScrollWrapper = ({ children, hasNext, callback }) => {
   const observerRef = useRef(null);
 
   useEffect(() => {
@@ -25,7 +26,14 @@ export const useInfinityScroll = ({ hasNext, callback }) => {
       }
       observer.disconnect();
     };
-  }, [hasNext, callback]);
+  }, [observerRef, hasNext, callback]);
 
-  return { observerRef };
+  return (
+    <div className={styles['container']}>
+      {children}
+      <div ref={observerRef} className={styles['container__observer']} />
+    </div>
+  );
 };
+
+export default InfinityScrollWrapper;

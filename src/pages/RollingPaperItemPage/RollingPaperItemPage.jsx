@@ -4,7 +4,6 @@ import { useApi } from '@/hooks/useApi.jsx';
 import { useModal } from '@/hooks/useModal';
 import { getRecipient } from '@/apis/recipientsApi';
 import { useMessageItemsList } from '@/hooks/useMessageItemsList';
-import { useInfinityScroll } from '@/hooks/useInfinityScroll';
 import { COLOR_STYLES } from '../../constants/colorThemeStyle';
 import styles from '@/pages/RollingPaperItemPage/RollingPaperItemPage.module.scss';
 import ListButtonGroup from './components/ListButtonGroup';
@@ -14,6 +13,7 @@ import CardModal from '../../components/CardModal';
 import RequestDeletePaperModal from './components/RequestDeletePaperModal';
 import DeletePaperSuccessModal from './components/DeletePaperSuccessModal';
 import PostHeader from '@/components/PostHeader/PostHeader';
+import InfinityScrollWrapper from '@/components/InfinityScrollWrapper/InfinityScrollWrapper';
 
 const RollingPaperItemPage = () => {
   const navigate = useNavigate();
@@ -27,7 +27,6 @@ const RollingPaperItemPage = () => {
   /* 커스텀훅 영역 */
   const { itemList, hasNext, loadMore, onClickDeleteMessage, onDeletePaperConfirm } =
     useMessageItemsList(id); // 리스트 데이터 API 및 동작
-  const { observerRef } = useInfinityScroll({ hasNext, callback: loadMore }); // 무한 스크롤 동작
 
   /* 전체 배경 스타일 적용 */
   const containerStyle = {
@@ -103,21 +102,21 @@ const RollingPaperItemPage = () => {
             onClickPrev={handleOnClickPrev}
             onClickGoList={handleOnClickGoList}
           />
-          <div className={styles['list__grid']}>
-            {!isEditMode && <ActionCard isAdd onAction={handleOnClickAddMessage} />}
-            {isEditMode && <ActionCard onAction={handleOnClickDeletePaper} />}
-            {itemList?.map((item) => (
-              <ListCard
-                key={item.id}
-                cardData={item}
-                showDelete={isEditMode}
-                onClick={handleOnClickCard}
-                onDelete={handleOnClickDeleteMessage}
-              />
-            ))}
-          </div>
-          {/* 무한 스크롤 감지하는 영역*/}
-          <div ref={observerRef} className={styles['list__observer']} />
+          <InfinityScrollWrapper hasNext={hasNext} callback={loadMore}>
+            <div className={styles['list__grid']}>
+              {!isEditMode && <ActionCard isAdd onAction={handleOnClickAddMessage} />}
+              {isEditMode && <ActionCard onAction={handleOnClickDeletePaper} />}
+              {itemList?.map((item) => (
+                <ListCard
+                  key={item.id}
+                  cardData={item}
+                  showDelete={isEditMode}
+                  onClick={handleOnClickCard}
+                  onDelete={handleOnClickDeleteMessage}
+                />
+              ))}
+            </div>
+          </InfinityScrollWrapper>
         </div>
       </section>
     </>

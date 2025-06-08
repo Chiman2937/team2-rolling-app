@@ -19,18 +19,20 @@ export const useMessageItemsList = (id) => {
   const [itemList, setItemList] = useState([]);
   const hasNext = !!messageList?.next;
   const [offset, setOffset] = useState(0);
+  /* 초기 호출인지 확인 */
+  const isFirstCall = offset === 0;
 
   /* API 실행 후 데이터 세팅 */
   useEffect(() => {
     if (loading || !messageList) return;
     const { results, previous } = messageList;
-    setItemList((prevList) => (offset === 0 || !previous ? results : [...prevList, ...results]));
-  }, [messageList, offset, loading]);
+    setItemList((prevList) => (isFirstCall || !previous ? results : [...prevList, ...results]));
+  }, [messageList, isFirstCall, loading]);
 
   /* 스크롤 시 데이터 다시 불러옴  */
   const loadMore = () => {
     if (loading || !hasNext) return;
-    const newOffset = offset === 0 ? offset + 8 : offset + 6;
+    const newOffset = isFirstCall ? offset + 8 : offset + 6;
     getMessageListRefetch({ recipientId: id, limit: 6, offset: newOffset });
     setOffset(newOffset);
   };
