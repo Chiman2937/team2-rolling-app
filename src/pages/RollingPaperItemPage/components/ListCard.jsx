@@ -1,10 +1,11 @@
 import styles from './ListCard.module.scss';
 import DeleteIcon from './DeleteIcon';
 import SenderProfile from '@/components/SenderProfile';
-
+import ContentViewer from '@/components/ContentViewer/ContentViewer';
+import { FONT_STYLES } from '@/constants/fontMap';
 const ListCard = ({ cardData, showDelete, onClick, onDelete }) => {
   /* 폰트 확인 후 해당 폰트로 보여줘야 함 */
-  const { id, sender, profileImageURL, content, createdAt, relationship } = cardData;
+  const { id, sender, profileImageURL, content, createdAt, relationship, font } = cardData;
 
   const formatDateKRW = (isoString) => {
     const date = new Date(isoString);
@@ -41,7 +42,9 @@ const ListCard = ({ cardData, showDelete, onClick, onDelete }) => {
             )}
           </header>
           <hr className={styles['card__divider']} />
-          <section className={styles['card__content']}>{content}</section>
+          <section className={styles['card__content']}>
+            <ContentViewer content={content} font={font} />
+          </section>
         </div>
         <footer className={styles['card__date']}>{formatDateKRW(createdAt)}</footer>
       </div>
