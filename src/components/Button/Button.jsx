@@ -9,7 +9,7 @@ function Button({
   iconOnly = false,
   icon, //  새로 추가된 icon prop
   onClick,
-  className, //  간단하게 변경
+  className,
   ...rest //  나머지 모든 props 받기
 }) {
   const isDisabled = !enabled;
@@ -48,7 +48,17 @@ function Button({
       throw new Error(`Primary 버튼 지원 사이즈: large, stretch, medium, small. 현재: ${size}`);
     }
 
-    //  스펙 2: Outlined 버튼 (4가지)
+    //  스펙 2: Secondary 버튼 (1가지)
+    if (variant === 'secondary') {
+      // Secondary Small (92×39) - Primary Small과 같은 크기, 다른 스타일
+      if (size === 'small') {
+        return isDisabled ? styles['secondary-small-disabled'] : styles['secondary-small'];
+      }
+
+      throw new Error(`Secondary 버튼 지원 사이즈: small. 현재: ${size}`);
+    }
+
+    //  스펙 3: Outlined 버튼 (4가지)
     if (variant === 'outlined') {
       // 2-1. Outlined 40px 텍스트 (157×40) - 롤링 페이퍼 만들기
       if (size === '40' && !iconOnly) {
@@ -76,7 +86,9 @@ function Button({
     }
 
     // 지원하지 않는 variant
-    throw new Error(`지원하지 않는 variant: ${variant}. 지원 variant: primary, outlined`);
+    throw new Error(
+      `지원하지 않는 variant: ${variant}. 지원 variant: primary, secondary, outlined`,
+    );
   };
 
   const baseClassName = getButtonClassName();
