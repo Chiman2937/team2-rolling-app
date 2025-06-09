@@ -1,81 +1,104 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import BackgroundField from './components/BackgroundField';
+import ReceiverField from './components/ReceiverField';
 import styles from './CreateRollingPaperPage.module.scss';
+import logoIcon from '@/assets/icons/icon_logo_white.svg';
+import backIcon from '@/assets/icons/icon_back.svg';
 import { useNavigate } from 'react-router-dom';
-import { useApi } from '@/hooks/useApi';
-import { getBackgroundImages } from '@/apis/backgroundImagesApi';
 import { createRecipient } from '@/apis/recipientsApi';
-import ImagePreloader from '@/components/ImagePreloader';
-import BackgroundSelectSection from './components/BackgroundSelectSection';
-import { COLOR_STYLES } from '@/constants/colorThemeStyle';
-import ReceiverInputField from './components/ReceiverInputField';
+import LoadingOverlay from '../../components/LoadingOverlay';
+import { uploadImageToCloudinary } from '../../apis/syncApi/uploadImageToCloudinary';
+import { useToast } from '../../hooks/useToast';
+import { uploadColorToCloudinary } from '../../apis/syncApi/uploadColorToCloudinary';
 
-const COLOR_KEYS = Object.keys(COLOR_STYLES);
+const INITIAL_FORM_DATA = {
+  name: null,
+  backgroundColor: 'beige',
+  backgroundImageURL: null,
+};
 
 const CreateRollingPaperPage = () => {
-  const [receiver, setReceiver] = useState('');
-  const [backgroundType, setBackgroundType] = useState(null);
-  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const { showToast } = useToast();
+
+  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
+  const [newImageFileObject, setNewImageFileObject] = useState(null);
+
+  const [isCreatingNewPost, setIsCreatingNewPost] = useState(false);
 
   const navigate = useNavigate();
 
-  // Api 호출
-  const {
-    data: getData,
-    // loading: getLoading,
-    // error: getError,
-  } = useApi(getBackgroundImages, { immediate: true });
+  const isSubmitEnable = !!formData.name && !!formData.backgroundImageURL;
 
-  const backgroundImageURL = getData?.imageUrls || [];
-
-  const {
-    data: createData,
-    // loading: createLoading,
-    // error: createError,
-    refetch: requestCreateRecipient,
-  } = useApi(createRecipient, {}, { immediate: false });
-
-  //생성하기 버튼 활성화 여부
-  const submitEnable = !!receiver && selectedIndex !== -1;
-
-  //생성하기 버튼 이벤트
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // post request 보낼 formData 설정
-    const formData = {
-      name: receiver,
-      backgroundColor: backgroundType === 'color' ? COLOR_KEYS[selectedIndex] : COLOR_KEYS[0],
-      backgroundImageURL: backgroundType === 'image' ? backgroundImageURL[selectedIndex] : null,
-    };
-    await requestCreateRecipient(formData);
-    const pageId = createData.id;
-    // post/{id} 페이지로 리다이렉트
-    navigate(`/post/${pageId}`);
+  const formDataChange = (key, value) => {
+    setFormData((prev) => {
+      return {
+        ...prev,
+        [key]: value,
+      };
+    });
   };
 
-  // 컬러/이미지 토글 state 변경 시 선택한 아이템 index 초기화
-  useEffect(() => {
-    setSelectedIndex(-1);
-  }, [backgroundType]);
+  const handlePostSubmit = async (e) => {
+    e.preventDefault();
+    setIsCreatingNewPost(true);
+    try {
+      let nextFormData = formData;
+      if (newImageFileObject !== null) {
+        let uploadedImageUrl;
+        if (newImageFileObject?.color) {
+          uploadedImageUrl = await uploadColorToCloudinary(newImageFileObject);
+        } else {
+          uploadedImageUrl = await uploadImageToCloudinary(newImageFileObject);
+        }
+        if (!uploadedImageUrl) {
+          throw new Error('이미지 업로드에 실패했습니다.');
+        }
+        nextFormData = { ...nextFormData, backgroundImageURL: uploadedImageUrl };
+      }
+      const createdData = await createRecipient(nextFormData);
+      if (!createdData) {
+        throw new Error('post 요청에 실패했습니다.');
+      }
+      navigate(`/post/${createdData.id}`);
+    } catch (e) {
+      console.error('post 생성 중 오류 발생', e);
+      showToast?.({
+        type: 'fail',
+        message: '롤링페이퍼 생성 요청에 실패했습니다.',
+        timer: 2000,
+      });
+    } finally {
+      setIsCreatingNewPost(false);
+    }
+  };
+
+  const handleGoBackClick = (e) => {
+    e.preventDefault();
+    navigate(-1);
+  };
 
   return (
     <section className={styles['post-section']}>
-      <ImagePreloader imageUrls={backgroundImageURL} />
-      <ReceiverInputField receiver={receiver} setReceiver={setReceiver} />
-      <BackgroundSelectSection
-        backgroundType={backgroundType}
-        setBackgroundType={setBackgroundType}
-        selectedIndex={selectedIndex}
-        setSelectedIndex={setSelectedIndex}
-        imageURLs={backgroundImageURL}
+      <ReceiverField formDataChange={formDataChange} />
+      <BackgroundField
+        formDataChange={formDataChange}
+        setNewImageFileObject={setNewImageFileObject}
       />
-
-      <button
-        className={styles['post-section__submit']}
-        onClick={handleSubmit}
-        disabled={!submitEnable}
-      >
-        생성하기
-      </button>
+      <div className={styles['post-section__button-area']}>
+        <button
+          className={styles['post-section__submit']}
+          disabled={!isSubmitEnable}
+          onClick={handlePostSubmit}
+        >
+          <img className={styles['post-section__button-logo']} src={logoIcon} />
+          생성하기
+        </button>
+        <button className={styles['post-section__back']} onClick={handleGoBackClick}>
+          <img className={styles['post-section__button-logo']} src={backIcon} />
+          뒤로
+        </button>
+      </div>
+      {isCreatingNewPost && <LoadingOverlay description='새로운 롤링페이퍼를 만들고 있어요' />}
     </section>
   );
 };
