@@ -1,3 +1,4 @@
+// Slider.jsx
 import styles from './Slider.module.scss';
 import ItemCard from './ItemCard';
 import ArrowButton from '@/components/Button/ArrowButton';
@@ -8,7 +9,7 @@ const CARD_WIDTH = 275;
 const GAP = 16;
 const PAGE_SIZE = 4;
 
-const Slider = ({ cards }) => {
+const Slider = ({ cards, onLoadMore, hasMore, loading }) => {
   const { wrapperRef, isDesktop, pageIndex, canPrev, canNext, goPrev, goNext } = useSliderPaging({
     totalItems: cards.length,
     pageSize: PAGE_SIZE,
@@ -17,10 +18,17 @@ const Slider = ({ cards }) => {
     breakpoint: 1200,
   });
 
-  // 데스크톱 전용: 현재 페이지에 해당하는 카드만
   const visibleCards = isDesktop
     ? cards.slice(pageIndex * PAGE_SIZE, pageIndex * PAGE_SIZE + PAGE_SIZE)
     : cards;
+
+  const handleNext = () => {
+    if (isDesktop && !canNext && hasMore && typeof onLoadMore === 'function') {
+      onLoadMore();
+    } else {
+      goNext();
+    }
+  };
 
   return (
     <div className={styles.slider}>
@@ -40,9 +48,9 @@ const Slider = ({ cards }) => {
         </HorizontalScrollContainer>
       </div>
 
-      {isDesktop && canNext && (
+      {isDesktop && (canNext || hasMore) && (
         <div className={styles['slider__arrow--right']}>
-          <ArrowButton direction='right' onClick={goNext} />
+          <ArrowButton direction='right' onClick={handleNext} disabled={loading && !canNext} />
         </div>
       )}
     </div>

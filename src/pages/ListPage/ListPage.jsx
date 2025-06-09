@@ -1,56 +1,61 @@
+import { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import Slider from './components/Slider';
 import styles from './ListPage.module.scss';
-import Button from '@/components/Button/Button';
-import { Link } from 'react-router-dom';
-
 import { listRecipients } from '@/apis/recipientsApi';
-import { useApi } from '@/hooks/useApi';
 
-const ListPage = () => {
-  // 1) 인기순 데이터 (sortLike=true)
-  const { data: popularData } = useApi(
-    listRecipients,
-    { limit: 20, offset: 0, sortLike: true },
-    {
-      errorMessage: '인기 롤링페이퍼 목록을 불러오는 데 실패했습니다.',
-      retry: 1,
-      immediate: true, // 마운트 시 자동 호출
-    },
-  );
+const BATCH_SIZE = 20;
 
-  // 2) 최신순 데이터 (sortLike=false)
-  const { data: recentData } = useApi(
-    listRecipients,
-    { limit: 20, offset: 0, sortLike: false },
-    {
-      errorMessage: '최근 롤링페이퍼 목록을 불러오는 데 실패했습니다.',
-      retry: 1,
-      immediate: true, // 마운트 시 자동 호출
-    },
-  );
+// 공통 섹션 컴포넌트
+const PaginatedSection = ({ title, sortLike }) => {
+  const [offset, setOffset] = useState(0);
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
 
-  const popularCards = popularData?.results ?? [];
-  const recentCards = recentData?.results ?? [];
+  // 다음 배치 로드 함수
+  const loadMore = useCallback(() => {
+    if (!loading && hasMore) {
+      setOffset((prevCards) => prevCards + BATCH_SIZE);
+    }
+  }, [loading, hasMore]);
+
+  // offset 또는 sortLike 변경 시 API 호출
+  useEffect(() => {
+    let isMounted = true;
+    setLoading(true);
+
+    listRecipients({ limit: BATCH_SIZE, offset, sortLike })
+      .then(({ results }) => {
+        if (!isMounted) return;
+        setItems((prev) => [...prev, ...results]);
+        if (results.length < BATCH_SIZE) setHasMore(false);
+      })
+      .catch(() => setHasMore(false))
+      .finally(() => isMounted && setLoading(false));
+
+    return () => {
+      isMounted = false;
+    };
+  }, [offset, sortLike]);
 
   return (
-    <div className={styles['list-page']}>
-      {/* 인기 롤링 페이퍼 🔥 */}
-      <section className={styles['list-page__section']}>
-        <h2 className={styles['list-page__title']}>인기 롤링 페이퍼 🔥</h2>
-        <Slider className={styles['list-page_slider']} cards={popularCards} />
-      </section>
-
-      {/* 최근에 만든 롤링 페이퍼 ⭐️ */}
-      <section className={styles['list-page__section']}>
-        <h2 className={styles['list-page__title']}>최근에 만든 롤링 페이퍼 ⭐️</h2>
-        <Slider className={styles['list-page_slider']} cards={recentCards} />
-      </section>
-
-      <Link to='/post' style={{ textDecoration: 'none', textAlign: 'center' }}>
-        <button className={styles['list-page__createButton']}>나도 만들어보기</button>
-      </Link>
-    </div>
+    <section className={styles['list-page__section']}>
+      <h2 className={styles['list-page__title']}>{title}</h2>
+      {/* Slider가 마지막 페이지에서 우측 화살표 클릭 시 loadMore 호출 */}
+      <Slider cards={items} onLoadMore={loadMore} loading={loading} hasMore={hasMore} />
+    </section>
   );
 };
+
+const ListPage = () => (
+  <div className={styles['list-page']}>
+    <PaginatedSection title='인기 롤링 페이퍼 🔥' sortLike={true} />
+    <PaginatedSection title='최근에 만든 롤링 페이퍼 ⭐️' sortLike={false} />
+    <Link to='/post' className={styles['list-page__createLink']}>
+      <button className={styles['list-page__createButton']}>나도 만들어보기</button>
+    </Link>
+  </div>
+);
 
 export default ListPage;

@@ -53,6 +53,9 @@
     font-size: 18px;
     line-height: 28px;
     color: var(--color-white);
+    align-self: center;
+    display: block; // inline → block으로 바꿔서 margin:auto 적용
+    margin: 0 auto;
 
     @media screen and (min-width: 355px) and (max-width: 1199px) {
       width: 100%;
