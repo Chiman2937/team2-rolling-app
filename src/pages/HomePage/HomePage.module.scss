@@ -1,8 +1,12 @@
+/* HomePage.module.scss */
+
+/* 글로벌 설정 */
 * {
   box-sizing: border-box;
   font-family: var(--font-family-base);
 }
 
+/* 전체 페이지 포인트 섹션 레이아웃 */
 .page-points {
   display: flex;
   flex-direction: column;
@@ -21,5 +25,95 @@
 
   @media screen and (max-width: 767px) {
     padding: 0 24px;
+  }
+}
+
+/* 포인트 컨테이너 */
+.points-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 50px;
+  background-color: var(--color-surface);
+  border-radius: 16px;
+  width: 1200px;
+  padding: 90px;
+  overflow: hidden;
+
+  &--reverse {
+    flex-direction: row-reverse;
+  }
+
+  &__context {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 16px;
+
+    span {
+      border-radius: 50px;
+      background-color: var(--color-purple-600);
+      font-size: var(--font-size-14);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-white);
+      padding: 6px 12px;
+    }
+
+    h1 {
+      font-size: var(--font-size-24);
+      font-weight: var(--font-weight-bold);
+      line-height: 36px;
+      letter-spacing: -0.24px;
+      color: var(--color-gray-900);
+    }
+
+    p {
+      font-size: var(--font-size-18);
+      line-height: 28px;
+      letter-spacing: -0.18px;
+      color: var(--color-gray-500);
+    }
+  }
+
+  &__img-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    img {
+      width: 100%;
+      max-width: 720px;
+      min-width: 400px;
+      height: auto;
+    }
+  }
+
+  /* 중간 크기 화면 (tablet) */
+  @media screen and (min-width: 768px) and (max-width: 1199px) {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 36px;
+    padding: 40px;
+
+    &--reverse {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  /* 모바일 화면 */
+  @media screen and (min-width: 355px) and (max-width: 767px) {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 50px;
+    padding: 24px;
+
+    &--reverse {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 }
