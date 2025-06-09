@@ -5,11 +5,11 @@
   justify-content: center;
   align-items: start;
 
-  @media screen and (min-width: 768px) {
+  @include tablet {
     padding: 92px 24px;
   }
 
-  @media screen and (min-width: 1024px) {
+  @include desktop {
     padding: 113px 24px;
   }
 
@@ -31,48 +31,13 @@
     max-width: 100%;
     justify-items: center;
 
-    @media screen and (min-width: 768px) {
+    @include tablet {
       grid-template-columns: repeat(2, 1fr);
     }
 
-    @media screen and (min-width: 1024px) {
+    @include desktop {
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
     }
   }
 }
-
-.list__button {
-  left: 20px;
-  right: 20px;
-  bottom: 24px;
-  height: 56px;
-  z-index: 100;
-  border-radius: 12px;
-  background-color: var(--color-purple-600);
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-white);
-  font-size: var(--font-size-16);
-  font-weight: var(--font-weight-regular);
-  position: fixed;
-
-  @media screen and (min-width: 768px) {
-    left: 24px;
-    right: 24px;
-    bottom: 24px;
-  }
-
-  @media screen and (min-width: 1024px) {
-    border-radius: 6px;
-    width: 92px;
-    height: 39px;
-    position: static;
-  }
-}
-
-// .list__observer {
-//   height: 1px;
-// }
