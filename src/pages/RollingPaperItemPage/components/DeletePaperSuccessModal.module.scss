@@ -1,84 +1,89 @@
+$wrapper-margin-x: 20px;
+
+$wrapper-width-mobile: min(350px, calc(100vw - calc($wrapper-margin-x * 2)));
+$wrapper-width-tablet: 350px;
+$wrapper-width-desktop: 350px;
+
 .modal-styler {
-	padding: 16px;
-	margin: 0 20px;
-	width: 230px;
+  padding: 16px;
+  @include responsive-width($wrapper-width-mobile, $wrapper-width-tablet, $wrapper-width-desktop);
 }
 
 .header-area {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
 }
 
 .header-icon {
-	aspect-ratio: 1 / 1;
-	width: 50px;
-	margin-top: 10px;
+  aspect-ratio: 1 / 1;
+  width: 50px;
+  margin-top: 10px;
 }
 
 .title {
-	font-weight: 700;
-	font-size: 20px;
-	color: var(--color-gray-700);
-	text-align: center;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--color-gray-700);
+  text-align: center;
 }
 
 .content {
-	width: 100%;
-	margin: 15px 0 20px;
-	text-align: center;
-	font-weight: 400;
-	font-size: 15px;
-	line-height: 20px;
-	color: var(--color-gray-400);
+  width: 100%;
+  margin: 15px 0 20px;
+  text-align: center;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--color-gray-400);
 }
 
 .progress-bar {
-	margin: 0 10px 20px;
+  margin: 0 10px 20px;
 }
 
 .button-area {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	gap: 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 8px;
 }
 
 .button__submit {
-	border-radius: 10px;
-	padding: 10px 0;
-	width: 100%;
-	text-align: center;
-	cursor: pointer;
-	font-weight: 700;
-	font-size: 16px;
-	line-height: 26px;
+  border-radius: 10px;
+  padding: 10px 0;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
 
-	background-color: var(--color-purple-600);
-	border: none;
-	color: var(--color-white);
+  background-color: var(--color-purple-600);
+  border: none;
+  color: var(--color-white);
 
-	&:hover{
-		background-color: var(--color-purple-700);
-	}
+  &:hover {
+    background-color: var(--color-purple-700);
+  }
 }
 
 .button__cancel {
-	border-radius: 10px;
-	padding: 10px 0;
-	width: 100%;
-	text-align: center;
-	cursor: pointer;
-	font-weight: 700;
-	font-size: 16px;
-	line-height: 26px;
+  border-radius: 10px;
+  padding: 10px 0;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
 
-	background-color: #E9E9E9;
-	border: none;
-	color: var(--color-gray-600);
+  background-color: #e9e9e9;
+  border: none;
+  color: var(--color-gray-600);
 
-	&:hover{
-		background-color: #E2E2E2;
-	}
+  &:hover {
+    background-color: #e2e2e2;
+  }
 }

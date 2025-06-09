@@ -1,14 +1,19 @@
+import { useRef } from 'react';
 import styles from './Slider.module.scss';
 import ItemCard from './ItemCard';
 import ArrowButton from '../../../components/Button/ArrowButton';
 import HorizontalScrollContainer from '../../../components/HorizontalScrollContainer/HorizontalScrollContainer';
 import { useSliderPaging } from '@/hooks/useSliderPaging';
+import InfinityScrollWrapper from '@/components/InfinityScrollWrapper/InfinityScrollWrapper';
 
 const CARD_WIDTH = 275;
 const GAP = 16;
 const PAGE_SIZE = 4;
 
-const Slider = ({ cards }) => {
+const Slider = ({ cards, hasNext, loadMore }) => {
+  /* 무한 스크롤: 스크롤 감지 ref 요소 전달 */
+  const scrollObserverRef = useRef(null);
+
   const { wrapperRef, isDesktop, pageIndex, canPrev, canNext, goPrev, goNext } = useSliderPaging({
     totalItems: cards.length,
     pageSize: PAGE_SIZE,
@@ -31,12 +36,14 @@ const Slider = ({ cards }) => {
       )}
 
       <div ref={wrapperRef} className={styles['slider__container']}>
-        <HorizontalScrollContainer>
-          <div className={styles['slider__track']}>
-            {visibleCards.map((c) => (
-              <ItemCard key={c.id} data={c} />
-            ))}
-          </div>
+        <HorizontalScrollContainer ref={scrollObserverRef} hideScroll={false}>
+          <InfinityScrollWrapper hasNext={hasNext} callback={loadMore} isHorizontal>
+            <div className={styles['slider__track']}>
+              {visibleCards.map((c) => (
+                <ItemCard key={c.id} data={c} />
+              ))}
+            </div>
+          </InfinityScrollWrapper>
         </HorizontalScrollContainer>
       </div>
 
