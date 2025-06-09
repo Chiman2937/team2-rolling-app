@@ -3,6 +3,8 @@ import { useApi } from '@/hooks/useApi.jsx';
 import { listRecipientMessages } from '@/apis/recipientMessageApi';
 import { deleteMessage } from '@/apis/messagesApi';
 import { deleteRecipient } from '@/apis/recipientsApi';
+import { getRecipient } from '@/apis/recipientsApi';
+import { COLOR_STYLES } from '@/constants/colorThemeStyle';
 
 export const useMessageItemsList = (id) => {
   /* useApi 사용하여 메시지 리스트 호출 */
@@ -24,16 +26,23 @@ export const useMessageItemsList = (id) => {
     { immediate: false },
   );
 
-  const isLoading = messageLoading || deleteMessageLoading || deleteRecipientLoading;
+  const { loading: recipientDataLoading, data: recipientData } = useApi(
+    getRecipient,
+    { id },
+    { immediate: true },
+  );
+
+  const [showOverlay, setShowOverlay] = useState(false);
+  const isLoading = recipientDataLoading || messageLoading || deleteMessageLoading;
 
   const getLoadingDescription = () => {
     let description = '';
-    if (messageLoading) {
+    if (recipientDataLoading || messageLoading) {
       description = '롤링페이퍼 메시지 목록을 불러오고 있어요';
     } else if (deleteMessageLoading) {
       description = '롤링페이퍼 메시지를 삭제하고 있어요';
     } else if (deleteRecipientLoading) {
-      description = '롤링페이퍼 메시지를 삭제하고 있어요';
+      description = '롤링페이퍼를 삭제하고 있어요';
     }
     return description;
   };
@@ -52,6 +61,13 @@ export const useMessageItemsList = (id) => {
     const { results, previous } = messageList;
     setItemList((prevList) => (isFirstCall || !previous ? results : [...prevList, ...results]));
   }, [messageList, isFirstCall, messageLoading]);
+
+  /* 롤링페이퍼 삭제 시 로딩 오버레이 컴포넌트 처리  */
+  useEffect(() => {
+    if (deleteRecipientLoading) {
+      setShowOverlay(true);
+    }
+  }, [deleteRecipientLoading]);
 
   /* 스크롤 시 데이터 다시 불러옴  */
   const loadMore = () => {
@@ -88,9 +104,11 @@ export const useMessageItemsList = (id) => {
   };
 
   return {
+    recipientData,
     itemList,
     hasNext,
     isLoading,
+    showOverlay,
     loadingDescription,
     loadMore,
     onClickDeleteMessage,

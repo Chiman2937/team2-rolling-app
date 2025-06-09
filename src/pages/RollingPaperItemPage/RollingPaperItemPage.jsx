@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useApi } from '@/hooks/useApi.jsx';
+// import { useApi } from '@/hooks/useApi.jsx';
 import { useModal } from '@/hooks/useModal';
-import { getRecipient } from '@/apis/recipientsApi';
+// import { getRecipient } from '@/apis/recipientsApi';
 import { useMessageItemsList } from '@/hooks/useMessageItemsList';
 import { COLOR_STYLES } from '@/constants/colorThemeStyle';
 import CardModal from '@/components/CardModal';
@@ -23,12 +23,18 @@ const RollingPaperItemPage = () => {
   const [isEditMode, setIsEditMode] = useState(false);
 
   /* useApi 사용하여 API 불러오는 영역  */
-  const { data: recipientData } = useApi(getRecipient, { id }, { immediate: true });
+  // const { loading: recipientDataLoading, data: recipientData } = useApi(
+  //   getRecipient,
+  //   { id },
+  //   { immediate: true },
+  // );
 
   /* 커스텀훅 영역 */
   const {
+    recipientData,
     itemList,
     hasNext,
+    showOverlay,
     isLoading,
     loadingDescription,
     loadMore,
@@ -37,17 +43,19 @@ const RollingPaperItemPage = () => {
   } = useMessageItemsList(id); // 리스트 데이터 API 및 동작
 
   /* 전체 배경 스타일 적용 */
-  const containerStyle = {
-    backgroundColor: !recipientData?.backgroundImageURL
-      ? COLOR_STYLES[recipientData?.backgroundColor]?.primary
-      : '',
-    backgroundImage: recipientData?.backgroundImageURL
-      ? `url(${recipientData?.backgroundImageURL})`
-      : 'none',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
-  };
+  const containerStyle = recipientData
+    ? {
+        backgroundColor: !recipientData?.backgroundImageURL
+          ? COLOR_STYLES[recipientData?.backgroundColor]?.primary
+          : '',
+        backgroundImage: recipientData?.backgroundImageURL
+          ? `url(${recipientData?.backgroundImageURL})`
+          : 'none',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+      }
+    : {};
 
   const paperDeleteModalData = {
     title: (
@@ -145,12 +153,13 @@ const RollingPaperItemPage = () => {
     );
   };
 
+  if (showOverlay || isLoading) {
+    return <LoadingOverlay description={loadingDescription} />;
+  }
   return (
     <>
       {/* 헤더 영역 */}
       <PostHeader id={id} name={recipientData?.name} />
-      {/* 로딩 컴포넌트 */}
-      {isLoading && <LoadingOverlay description={loadingDescription} />}
       <section style={containerStyle} className={styles['list']}>
         <div className={styles['list__container']}>
           <ListButtonGroup
