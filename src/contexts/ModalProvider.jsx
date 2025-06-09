@@ -1,6 +1,7 @@
-import { createContext, useRef, useState } from 'react';
+import { createContext, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './ModalProvider.module.scss';
+import { useLocation } from 'react-router-dom';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const ModalContext = createContext();
@@ -11,6 +12,8 @@ export const ModalProvider = ({ children }) => {
   const [modal, setModal] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+
+  const location = useLocation();
 
   const closeTimeoutRef = useRef(null);
 
@@ -38,6 +41,26 @@ export const ModalProvider = ({ children }) => {
     setIsClosing(true);
     pendingForClosingAnimation();
   };
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    setIsOpen(false);
+  }, [location]);
 
   return (
     <ModalContext.Provider value={{ showModal, closeModal }}>
