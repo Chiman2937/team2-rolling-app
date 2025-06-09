@@ -42,6 +42,10 @@ export const ModalProvider = ({ children }) => {
     pendingForClosingAnimation();
   };
 
+  const closeModalImmediately = () => {
+    setIsOpen(false);
+  };
+
   useEffect(() => {
     if (!isOpen) return;
 
@@ -59,7 +63,7 @@ export const ModalProvider = ({ children }) => {
 
   useEffect(() => {
     if (!isOpen) return;
-    setIsOpen(false);
+    closeModalImmediately();
   }, [location]);
 
   return (
