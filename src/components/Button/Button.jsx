@@ -9,7 +9,7 @@ function Button({
   iconOnly = false,
   icon, //  새로 추가된 icon prop
   onClick,
-  className,
+  className, //  간단하게 변경
   ...rest //  나머지 모든 props 받기
 }) {
   const isDisabled = !enabled;
@@ -48,14 +48,19 @@ function Button({
       throw new Error(`Primary 버튼 지원 사이즈: large, stretch, medium, small. 현재: ${size}`);
     }
 
-    //  스펙 2: Secondary 버튼 (1가지)
+    //  스펙 2: Secondary 버튼 (2가지)
     if (variant === 'secondary') {
       // Secondary Small (92×39) - Primary Small과 같은 크기, 다른 스타일
       if (size === 'small') {
         return isDisabled ? styles['secondary-small-disabled'] : styles['secondary-small'];
       }
 
-      throw new Error(`Secondary 버튼 지원 사이즈: small. 현재: ${size}`);
+      // Secondary Stretch (100%×39) - Secondary Small의 너비만 늘린 버전
+      if (size === 'stretch') {
+        return isDisabled ? styles['secondary-stretch-disabled'] : styles['secondary-stretch'];
+      }
+
+      throw new Error(`Secondary 버튼 지원 사이즈: small, stretch. 현재: ${size}`);
     }
 
     //  스펙 3: Outlined 버튼 (4가지)
