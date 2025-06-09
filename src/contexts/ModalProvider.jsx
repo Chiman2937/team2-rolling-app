@@ -1,45 +1,85 @@
-import { createContext, useRef, useState } from 'react';
+import { createContext, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './ModalProvider.module.scss';
-import CardModal from '../components/CardModal';
+import { useLocation } from 'react-router-dom';
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const ModalContext = createContext();
+
+const MODAL_CLOSE_DELAY = 500;
 
 export const ModalProvider = ({ children }) => {
   const [modal, setModal] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
+  const location = useLocation();
+
   const closeTimeoutRef = useRef(null);
 
-  const showModal = (modalItems) => {
-    if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current);
-      closeTimeoutRef.current = null;
-      setIsClosing(false);
-      setIsOpen(false);
-    }
-    setModal(modalItems);
-    setIsOpen(true);
+  const resetTimer = () => {
+    clearTimeout(closeTimeoutRef.current);
+    closeTimeoutRef.current = null;
   };
 
-  const closeModal = () => {
-    setIsClosing(true);
+  const pendingForClosingAnimation = () => {
     closeTimeoutRef.current = setTimeout(() => {
       setIsOpen(false);
       setIsClosing(false);
       closeTimeoutRef.current = null;
-    }, 300);
+    }, MODAL_CLOSE_DELAY);
   };
+
+  const showModal = (ModalComponent) => {
+    resetTimer();
+    setModal(ModalComponent);
+    setIsOpen(true);
+    setIsClosing(false);
+  };
+
+  const closeModal = () => {
+    setIsClosing(true);
+    pendingForClosingAnimation();
+  };
+
+  const closeModalImmediately = () => {
+    setIsOpen(false);
+  };
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    closeModalImmediately();
+  }, [location]);
 
   return (
     <ModalContext.Provider value={{ showModal, closeModal }}>
       {children}
       {isOpen > 0 &&
         createPortal(
-          <div className={`${styles['modal-background']} ${styles[isClosing ? 'isClosing' : '']}`}>
-            <div className={`${styles['modal-wrapper']} ${styles[isClosing ? 'isClosing' : '']}`}>
-              <CardModal modalItems={modal} onClose={closeModal} />
+          <div
+            className={`${styles['modal-background']} ${styles[isClosing ? 'isClosing' : '']}`}
+            onClick={closeModal}
+          >
+            <div
+              className={`${styles['modal-wrapper']} ${styles[isClosing ? 'isClosing' : '']}`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {modal}
             </div>
           </div>,
           document.getElementById('modal-root'),
