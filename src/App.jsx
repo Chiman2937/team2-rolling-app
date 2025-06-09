@@ -21,8 +21,10 @@ const App = () => {
           />
           <meta
             property='og:image'
-            content={`${window.location.origin}/images/image_opengraph.svg`}
+            content={`${window.location.origin}/images/image_opengraph.png`}
           />
+          <meta property='og:image:width' content='1200' />
+          <meta property='og:image:height' content='630' />
           <meta property='og:url' content={window.location.href} />
           <meta property='og:type' content='website' />
         </Helmet>
