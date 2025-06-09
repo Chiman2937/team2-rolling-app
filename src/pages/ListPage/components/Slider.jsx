@@ -1,43 +1,49 @@
-import { useState } from 'react';
 import styles from './Slider.module.scss';
 import ItemCard from './ItemCard';
+import ArrowButton from '../../../components/Button/ArrowButton';
+import HorizontalScrollContainer from '../../../components/HorizontalScrollContainer/HorizontalScrollContainer';
+import { useSliderPaging } from '@/hooks/useSliderPaging';
+
+const CARD_WIDTH = 275;
+const GAP = 16;
+const PAGE_SIZE = 4;
 
 const Slider = ({ cards }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const cardsPerPage = 4;
-  const maxIndex = Math.max(0, Math.ceil(cards.length / cardsPerPage) - 1);
+  const { wrapperRef, isDesktop, pageIndex, canPrev, canNext, goPrev, goNext } = useSliderPaging({
+    totalItems: cards.length,
+    pageSize: PAGE_SIZE,
+    cardWidth: CARD_WIDTH,
+    gap: GAP,
+    breakpoint: 1200,
+  });
 
-  const handlePrev = () => setCurrentIndex((i) => Math.max(i - 1, 0));
-  const handleNext = () => setCurrentIndex((i) => Math.min(i + 1, maxIndex));
-
-  const cardsToShow = cards.slice(
-    currentIndex * cardsPerPage,
-    currentIndex * cardsPerPage + cardsPerPage,
-  );
-
-  const showPrev = cards.length > cardsPerPage && currentIndex > 0;
-  const showNext = cards.length > cardsPerPage && currentIndex < maxIndex;
+  // 데스크톱 전용: 현재 페이지에 해당하는 카드만
+  const visibleCards = isDesktop
+    ? cards.slice(pageIndex * PAGE_SIZE, pageIndex * PAGE_SIZE + PAGE_SIZE)
+    : cards;
 
   return (
     <div className={styles.slider}>
-      {showPrev && (
-        <button className={styles['slider__arrow--left']} onClick={handlePrev}>
-          {'<'}
-        </button>
+      {isDesktop && canPrev && (
+        <div className={styles['slider__arrow--left']}>
+          <ArrowButton direction='left' onClick={goPrev} />
+        </div>
       )}
 
-      <div className={styles['slider__container']}>
-        <div className={styles['slider__track']}>
-          {cardsToShow.map((card, idx) => (
-            <ItemCard key={`${card.id}-${idx}`} data={card} />
-          ))}
-        </div>
+      <div ref={wrapperRef} className={styles['slider__container']}>
+        <HorizontalScrollContainer>
+          <div className={styles['slider__track']}>
+            {visibleCards.map((c) => (
+              <ItemCard key={c.id} data={c} />
+            ))}
+          </div>
+        </HorizontalScrollContainer>
       </div>
 
-      {showNext && (
-        <button className={styles['slider__arrow--right']} onClick={handleNext}>
-          {'>'}
-        </button>
+      {isDesktop && canNext && (
+        <div className={styles['slider__arrow--right']}>
+          <ArrowButton direction='right' onClick={goNext} />
+        </div>
       )}
     </div>
   );
