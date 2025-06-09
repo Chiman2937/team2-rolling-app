@@ -1,6 +1,13 @@
-.enabled {
+/* ===== 실제 스펙 기반 새 CSS ===== */
+
+/** 1. Primary 버튼들 (4가지) **/
+
+/* 1-1. Primary Large (280×56) - 구경해보기, 나도 만들어보기 */
+.primary-large {
   background-color: var(--color-purple-600);
   color: var(--color-white);
+  width: 280px;
+  height: 56px;
   padding: 14px 24px;
   border: none;
   border-radius: 12px;
@@ -9,402 +16,434 @@
   font-family: var(--font-family-base);
   letter-spacing: -0.18px;
   line-height: 28px;
-  min-width: 208px;
-  max-width: 208px;
   text-align: center;
   cursor: pointer;
   transition: background-color 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.enabled:hover {
+.primary-large:hover {
   background-color: var(--color-purple-700);
 }
 
-.enabled:active {
+.primary-large:active {
   background-color: var(--color-purple-800);
 }
 
-.enabled:focus {
+.primary-large:focus {
   border: 2px solid var(--color-purple-900);
 }
 
-.disabled {
+.primary-large-disabled {
   background-color: var(--color-gray-300);
   color: var(--color-white);
+  width: 280px;
+  height: 56px;
   padding: 14px 24px;
   border: none;
   border-radius: 12px;
   font-size: var(--font-size-18);
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-base);
-  line-height: 28px;
   letter-spacing: -0.18px;
-  min-width: 208px;
-  max-width: 208px;
+  line-height: 28px;
+  text-align: center;
   cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/** 작은버전 Primary Button **/
-
-.enabled-small {
+/* 1-2. Primary Stretch (100%×56) - 생성하기 */
+.primary-stretch {
   background-color: var(--color-purple-600);
   color: var(--color-white);
-  padding: 7px 16px;
+  width: 100%;
+  height: 56px;
+  padding: 14px 24px;
   border: none;
-  border-radius: 6px;
-  font-size: var(--font-size-16);
-  font-weight: var(--font-weight-regular);
+  border-radius: 12px;
+  font-size: var(--font-size-18);
+  font-weight: var(--font-weight-bold);
   font-family: var(--font-family-base);
-  letter-spacing: -0.16px;
-  line-height: 26px;
-  min-width: 122px;
-  max-width: 122px;
+  letter-spacing: -0.18px;
+  line-height: 28px;
   text-align: center;
   cursor: pointer;
   transition: background-color 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.enabled-small:hover {
+.primary-stretch:hover {
   background-color: var(--color-purple-700);
 }
 
-.enabled-small:active {
+.primary-stretch:active {
   background-color: var(--color-purple-800);
 }
 
-.enabled-small:focus {
+.primary-stretch:focus {
   border: 2px solid var(--color-purple-900);
 }
 
-.disabled-small {
+.primary-stretch-disabled {
   background-color: var(--color-gray-300);
   color: var(--color-white);
-  padding: 7px 16px;
-  border: none;
-  border-radius: 6px;
-  font-size: var(--font-size-16);
-  font-weight: var(--font-weight-regular);
-  font-family: var(--font-family-base);
-  line-height: 26px;
-  letter-spacing: -0.16px;
-  min-width: 122px;
-  max-width: 122px;
-  cursor: not-allowed;
-}
-
-/**  Secondary Button **/
-
-.secondary-small {
-  background-color: var(--color-white);
-  color: var(--color-purple-600);
-  border: 1px solid var(--color-purple-600);
-  padding: 7px 16px;
-  border-radius: 6px;
-  font-size: var(--font-size-16);
-  font-weight: var(--font-weight-regular);
-  font-family: var(--font-family-base);
-  line-height: 26px;
-  letter-spacing: -0.16px;
-  min-width: 122px;
-  max-width: 122px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.secondary-small:hover {
-  border: 1px solid var(--color-purple-700);
-  background-color: var(--color-purple-100);
-}
-
-.secondary-small:active {
-  border: 1px solid var(--color-purple-800);
-  background-color: var(--color-purple-100);
-}
-
-.secondary-small:focus {
-  border: 1px solid var(--color-purple-800);
-  background-color: var(--color-purple-100);
-}
-
-.secondary-small-disabled {
-  background-color: var(--color-gray-300);
-  color: var(--color-white);
-  border: none;
-  cursor: not-allowed;
-  padding: 7px 16px;
-  border-radius: 6px;
-  font-size: var(--font-size-16);
-  font-weight: var(--font-weight-regular);
-  font-family: var(--font-family-base);
-  line-height: 26px;
-  letter-spacing: -0.16px;
-  min-width: 122px;
-  max-width: 122px;
-}
-
-/**  OutLined **/
-
-.outlined-56 {
-  background-color: var(--color-white);
-  color: var(--color-gray-900);
-  border: 1px solid var(--color-gray-300);
-  padding: 14px 24px; /* 위아래 14px → 총 높이 약 56px */
-  border-radius: 12px;
-  font-size: var(--font-size-18);
-  font-weight: var(--font-weight-bold);
-  font-family: var(--font-family-base);
-  line-height: 28px;
-  letter-spacing: -0.18px;
-  min-width: 208px;
-  max-width: 208px;
-  text-align: center;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.outlined-56:hover {
-  background-color: var(--color-gray-100);
-}
-
-.outlined-56:active {
-  background-color: var(--color-gray-100);
-}
-
-.outlined-56:focus {
-  border: 1px solid var(--color-gray-500);
-}
-
-.outlined-56-disabled {
-  background-color: var(--color-gray-300);
-  color: var(--color-white);
-  border: 1px solid var(--color-gray-300);
-  cursor: not-allowed;
+  width: 100%;
+  height: 56px;
   padding: 14px 24px;
+  border: none;
   border-radius: 12px;
   font-size: var(--font-size-18);
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-base);
-  line-height: 28px;
   letter-spacing: -0.18px;
-  min-width: 208px;
-  max-width: 208px;
+  line-height: 28px;
   text-align: center;
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-/** 40 OutLined **/
 
-.outlined-40 {
-  background-color: var(--color-white);
-  color: var(--color-gray-900);
-  border: 1px solid var(--color-gray-300);
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: var(--font-size-16);
-  font-weight: var(--font-weight-regular);
-  font-family: var(--font-family-base);
+/* 1-3. Primary Medium (120×40) - 모달 확인 */
+.primary-medium {
+  background-color: var(--color-purple-600);
+  color: var(--color-white);
+  width: 120px;
   height: 40px;
+  padding: 7px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-regular);
+  font-family: var(--font-family-base);
+  letter-spacing: -0.16px;
+  line-height: 26px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.primary-medium:hover {
+  background-color: var(--color-purple-700);
+}
+
+.primary-medium:active {
+  background-color: var(--color-purple-800);
+}
+
+.primary-medium:focus {
+  border: 2px solid var(--color-purple-900);
+}
+
+.primary-medium-disabled {
+  background-color: var(--color-gray-300);
+  color: var(--color-white);
+  width: 120px;
+  height: 40px;
+  padding: 7px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-regular);
+  font-family: var(--font-family-base);
+  letter-spacing: -0.16px;
+  line-height: 26px;
+  text-align: center;
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 1-4. Primary Small (92×39) - 삭제하기 */
+.primary-small {
+  background-color: var(--color-purple-600);
+  color: var(--color-white);
+  width: 92px;
+  height: 39px;
+  padding: 7px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-regular);
+  font-family: var(--font-family-base);
+  letter-spacing: -0.16px;
+  line-height: 26px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.primary-small:hover {
+  background-color: var(--color-purple-700);
+}
+
+.primary-small:active {
+  background-color: var(--color-purple-800);
+}
+
+.primary-small:focus {
+  border: 2px solid var(--color-purple-900);
+}
+
+.primary-small-disabled {
+  background-color: var(--color-gray-300);
+  color: var(--color-white);
+  width: 92px;
+  height: 39px;
+  padding: 7px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-regular);
+  font-family: var(--font-family-base);
+  letter-spacing: -0.16px;
+  line-height: 26px;
+  text-align: center;
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/** 2. Outlined 버튼들 (4가지) **/
+
+/* 2-1. Outlined 40px 텍스트 (157×40) - 롤링 페이퍼 만들기 */
+.outlined-40-text {
+  background-color: var(--color-white);
+  color: var(--color-gray-900);
+  border: 1px solid var(--color-gray-300);
+  width: 157px;
+  height: 40px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-regular);
+  font-family: var(--font-family-base);
   line-height: 20px;
   letter-spacing: -0.16px;
-  min-width: 120px;
-  max-width: 120px;
   text-align: center;
   cursor: pointer;
   transition: background-color 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
 }
 
-.outlined-40:hover {
-  border: 1px solid var(--color-gray-300);
+.outlined-40-text:hover {
   background-color: var(--color-gray-100);
 }
 
-.outlined-40:active {
-  border: 1px solid var(--color-gray-300);
+.outlined-40-text:active {
+  background-color: var(--color-gray-100);
 }
 
-.outlined-40:focus {
+.outlined-40-text:focus {
   border: 1px solid var(--color-gray-500);
 }
 
-.outlined-40-disabled {
+.outlined-40-text-disabled {
   background-color: var(--color-gray-300);
   color: var(--color-white);
   border: 1px solid var(--color-gray-300);
   cursor: not-allowed;
+  width: 157px;
+  height: 40px;
   padding: 8px 16px;
-  border-radius: 8px;
+  border-radius: 6px;
   font-size: var(--font-size-16);
   font-weight: var(--font-weight-regular);
   font-family: var(--font-family-base);
   line-height: 20px;
   letter-spacing: -0.16px;
-  min-width: 120px;
-  max-width: 120px;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
 }
 
-button:disabled img {
-  filter: brightness(0) invert(1);
-  opacity: 0.8;
-}
-
-/** 36 OutLined **/
-
-.outlined-36 {
+/* 2-2. Outlined 36px 아이콘+텍스트 (88×36) - 이모티콘+추가 */
+.outlined-36-text {
   background-color: var(--color-white);
   color: var(--color-gray-900);
   border: 1px solid var(--color-gray-300);
+  width: 89px;
+  height: 36px;
   padding: 6px 16px;
   border-radius: 6px;
   font-size: var(--font-size-16);
   font-weight: var(--font-weight-medium);
   font-family: var(--font-family-base);
-  line-height: 18px;
-  height: var(--button-size-36);
+  line-height: 24px;
   letter-spacing: -0.15px;
-  min-width: 122px;
-  max-width: 122px;
   text-align: center;
   cursor: pointer;
   transition: background-color 0.2s ease;
-
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 3px;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
 }
 
-.outlined-36:hover {
+.outlined-36-text:hover {
   background-color: var(--color-gray-100);
 }
 
-.outlined-36:active {
+.outlined-36-text:active {
   background-color: var(--color-gray-100);
 }
 
-.outlined-36:focus {
+.outlined-36-text:focus {
   border: 1px solid var(--color-gray-500);
 }
 
-.outlined-36-disabled {
+.outlined-36-text-disabled {
   background-color: var(--color-gray-300);
   color: var(--color-white);
   border: 1px solid var(--color-gray-300);
   cursor: not-allowed;
-  padding: 6px 14px;
+  width: 89px;
+  height: 36px;
+  padding: 6px 16px;
   border-radius: 6px;
   font-size: var(--font-size-16);
   font-weight: var(--font-weight-medium);
   font-family: var(--font-family-base);
-  line-height: 18px;
+  line-height: 24px;
   letter-spacing: -0.15px;
-  min-width: auto;
-  max-width: 124px;
   text-align: center;
-
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 3px;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
 }
 
-/** 28 OutLined **/
-
-.outlined-28 {
+/* 2-3. Outlined 36px 아이콘만 (56×36) - 헤더 아이콘들 */
+.outlined-36-icon {
   background-color: var(--color-white);
   color: var(--color-gray-900);
   border: 1px solid var(--color-gray-300);
-  padding: 2px 16px;
+  width: 56px;
+  height: 36px;
   border-radius: 6px;
-  font-size: var(--font-size-14);
-  font-weight: var(--font-weight-regular);
-  font-family: var(--font-family-base);
-  line-height: 20px;
-  letter-spacing: -0.15px;
-  min-width: 122px;
-  max-width: 122px;
-  height: 28px;
-  text-align: center;
   cursor: pointer;
   transition: background-color 0.2s ease;
-
   display: flex;
   align-items: center;
   justify-content: center;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
 }
 
-.outlined-28:hover {
+.outlined-36-icon:hover {
   background-color: var(--color-gray-100);
 }
 
-.outlined-28:active {
-  background-color: var (--color-gray-100);
+.outlined-36-icon:active {
+  background-color: var(--color-gray-200);
 }
 
-.outlined-28:focus {
+.outlined-36-icon:focus {
   border: 1px solid var(--color-gray-500);
 }
 
-.outlined-28-disabled {
+.outlined-36-icon-disabled {
   background-color: var(--color-gray-300);
-  color: var(--color-white);
   border: 1px solid var(--color-gray-300);
   cursor: not-allowed;
-  padding: 4px 10px;
+  width: 56px;
+  height: 36px;
   border-radius: 6px;
-  font-size: var(--font-size-14);
-  font-weight: var(--font-weight-regular);
-  font-family: var(--font-family-base);
-  line-height: 16px;
-  letter-spacing: -0.15px;
-  min-width: 122px;
-  max-width: 122px;
-  text-align: center;
-
   display: flex;
   align-items: center;
   justify-content: center;
+
+  img {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1);
+    opacity: 0.6;
+  }
 }
 
-/** 36 Outlined trash icon **/
-
-.outlined-icon-36 {
-  width: var(--button-size-36);
-  height: var(--button-size-36);
+/* 2-4. Outlined 40px 아이콘만 (40×40) - 휴지통 삭제 */
+.outlined-40-icon {
   background-color: var(--color-white);
+  color: var(--color-gray-900);
   border: 1px solid var(--color-gray-300);
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.outlined-40-icon:hover {
+  background-color: var(--color-gray-100);
+}
+
+.outlined-40-icon:active {
+  background-color: var(--color-gray-200);
+}
+
+.outlined-40-icon:focus {
+  border: 1px solid var(--color-gray-500);
+}
+
+.outlined-40-icon-disabled {
+  background-color: var(--color-gray-300);
+  border: 1px solid var(--color-gray-300);
+  cursor: not-allowed;
+  width: 40px;
+  height: 40px;
   border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
 
-  &:hover {
-    background-color: var(--color-gray-100);
+  img {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1);
+    opacity: 0.6;
   }
+}
 
-  &:active {
-    background-color: var(--color-gray-200);
-  }
-
-  &:focus {
-    border: 1px solid var(--color-gray-500);
-  }
-
-  &:disabled {
-    color: var(--color-white);
-    background-color: var(--color-gray-300);
-    border-color: var(--color-gray-300);
-    cursor: not-allowed;
-
-    img {
-      filter: brightness(0) invert(1);
-      opacity: 0.6;
-    }
-  }
+/* 전역 disabled 이미지 스타일 */
+button:disabled img {
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
 }
