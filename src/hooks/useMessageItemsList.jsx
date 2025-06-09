@@ -32,7 +32,8 @@ export const useMessageItemsList = (id) => {
   );
 
   const [showOverlay, setShowOverlay] = useState(false);
-  const isLoading = recipientDataLoading || messageLoading || deleteMessageLoading;
+  const isLoading =
+    recipientDataLoading || messageLoading || deleteMessageLoading || deleteRecipientLoading;
 
   const getLoadingDescription = () => {
     let description = '';
