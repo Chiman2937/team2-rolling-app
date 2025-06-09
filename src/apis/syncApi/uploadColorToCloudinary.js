@@ -1,12 +1,10 @@
-export const uploadImageToCloudinary = async (imageFileObject) => {
+export const uploadColorToCloudinary = async (ColorFileObject) => {
   const cloudName = process.env.PUBLIC_CLOUDINARY_CLOUD_NAME;
-  const timestamp = Date.now();
-  const baseName = imageFileObject.name.replace(/\.[^/.]+$/, ''); // 확장자 제거
+  const hex = ColorFileObject.color.replace('#', '');
   const formData = new FormData();
-  formData.append('file', imageFileObject);
+  formData.append('file', ColorFileObject);
   formData.append('upload_preset', 'rolling_preset');
-  formData.append('public_id', `images/${baseName}_${timestamp}`);
-
+  formData.append('public_id', `colors/${hex}`);
   try {
     const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
       method: 'POST',

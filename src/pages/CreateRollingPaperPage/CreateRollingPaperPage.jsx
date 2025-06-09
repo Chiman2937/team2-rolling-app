@@ -9,6 +9,7 @@ import { createRecipient } from '@/apis/recipientsApi';
 import LoadingOverlay from '../../components/LoadingOverlay';
 import { uploadImageToCloudinary } from '../../apis/syncApi/uploadImageToCloudinary';
 import { useToast } from '../../hooks/useToast';
+import { uploadColorToCloudinary } from '../../apis/syncApi/uploadColorToCloudinary';
 
 const INITIAL_FORM_DATA = {
   name: null,
@@ -43,7 +44,12 @@ const CreateRollingPaperPage = () => {
     try {
       let nextFormData = formData;
       if (newImageFileObject !== null) {
-        const uploadedImageUrl = await uploadImageToCloudinary(newImageFileObject);
+        let uploadedImageUrl;
+        if (newImageFileObject?.color) {
+          uploadedImageUrl = await uploadColorToCloudinary(newImageFileObject);
+        } else {
+          uploadedImageUrl = await uploadImageToCloudinary(newImageFileObject);
+        }
         if (!uploadedImageUrl) {
           throw new Error('이미지 업로드에 실패했습니다.');
         }

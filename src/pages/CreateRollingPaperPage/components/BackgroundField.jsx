@@ -17,7 +17,12 @@ const BackgroundField = ({ formDataChange, setNewImageFileObject }) => {
         <OptionToggle.button label={'컬러'} type={'color'} />
         <OptionToggle.button label={'이미지'} type={'image'} />
       </OptionToggle>
-      {backgroundType === 'color' && <ColorPickArea formDataChange={formDataChange} />}
+      {backgroundType === 'color' && (
+        <ColorPickArea
+          formDataChange={formDataChange}
+          setNewImageFileObject={setNewImageFileObject}
+        />
+      )}
       {backgroundType === 'image' && (
         <ImagePickArea
           formDataChange={formDataChange}

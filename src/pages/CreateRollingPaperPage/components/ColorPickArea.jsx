@@ -4,17 +4,19 @@ import { useModal } from '../../../hooks/useModal';
 import ColorPickerModal from './ColorPickerModal';
 import ColorSwatch from './ColorSwatch';
 import AddItemButton from './AddItemButton';
+import { getColorImageBlob } from '../../../utils/getColorImageBlob';
 
 const DEFAULT_COLOR_KEY = ['#FFE2AD', '#ECD9FF', '#B1E4FF', '#D0F5C3'];
 
-const ColorPickArea = ({ formDataChange }) => {
+const ColorPickArea = ({ formDataChange, setNewImageFileObject }) => {
   const [selectedColor, setSelectedColor] = useState(null);
   const [customColorList, setCustomColorList] = useState([null, null, null]);
   const { showModal, closeModal } = useModal();
 
-  const handleColorSelect = (hexColor) => {
+  const handleColorSelect = async (hexColor) => {
     setSelectedColor(hexColor);
     formDataChange('backgroundImageURL', hexColor);
+    setNewImageFileObject(await getColorImageBlob(hexColor));
   };
 
   const handleAddButtonClick = () => {
