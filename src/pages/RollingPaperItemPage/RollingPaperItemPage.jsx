@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-// import { useApi } from '@/hooks/useApi.jsx';
 import { useModal } from '@/hooks/useModal';
-// import { getRecipient } from '@/apis/recipientsApi';
 import { useMessageItemsList } from '@/hooks/useMessageItemsList';
 import { COLOR_STYLES } from '@/constants/colorThemeStyle';
 import CardModal from '@/components/CardModal';
@@ -21,13 +19,6 @@ const RollingPaperItemPage = () => {
   const { id } = useParams();
   const { showModal, closeModal } = useModal();
   const [isEditMode, setIsEditMode] = useState(false);
-
-  /* useApi 사용하여 API 불러오는 영역  */
-  // const { loading: recipientDataLoading, data: recipientData } = useApi(
-  //   getRecipient,
-  //   { id },
-  //   { immediate: true },
-  // );
 
   /* 커스텀훅 영역 */
   const {

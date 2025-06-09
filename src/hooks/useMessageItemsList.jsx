@@ -4,7 +4,6 @@ import { listRecipientMessages } from '@/apis/recipientMessageApi';
 import { deleteMessage } from '@/apis/messagesApi';
 import { deleteRecipient } from '@/apis/recipientsApi';
 import { getRecipient } from '@/apis/recipientsApi';
-import { COLOR_STYLES } from '@/constants/colorThemeStyle';
 
 export const useMessageItemsList = (id) => {
   /* useApi 사용하여 메시지 리스트 호출 */
