@@ -3,18 +3,51 @@ import { useApi } from '@/hooks/useApi.jsx';
 import { listRecipientMessages } from '@/apis/recipientMessageApi';
 import { deleteMessage } from '@/apis/messagesApi';
 import { deleteRecipient } from '@/apis/recipientsApi';
+import { getRecipient } from '@/apis/recipientsApi';
 
 export const useMessageItemsList = (id) => {
   /* useApi 사용하여 메시지 리스트 호출 */
   const {
     data: messageList,
-    loading,
+    loading: messageLoading,
     refetch: getMessageListRefetch,
   } = useApi(listRecipientMessages, { recipientId: id, limit: 8, offset: 0 }, { immediate: true });
 
   /* useApi 삭제 관련 Api  */
-  const { refetch: deleteMessageRefetch } = useApi(deleteMessage, { id }, { immediate: false });
-  const { refetch: deleteRecipientRefetch } = useApi(deleteRecipient, { id }, { immediate: false });
+  const { loading: deleteMessageLoading, refetch: deleteMessageRefetch } = useApi(
+    deleteMessage,
+    { id },
+    { immediate: false },
+  );
+  const { loading: deleteRecipientLoading, refetch: deleteRecipientRefetch } = useApi(
+    deleteRecipient,
+    { id },
+    { immediate: false },
+  );
+
+  const { loading: recipientDataLoading, data: recipientData } = useApi(
+    getRecipient,
+    { id },
+    { immediate: true },
+  );
+
+  const [showOverlay, setShowOverlay] = useState(false);
+  const isLoading =
+    recipientDataLoading || messageLoading || deleteMessageLoading || deleteRecipientLoading;
+
+  const getLoadingDescription = () => {
+    let description = '';
+    if (recipientDataLoading || messageLoading) {
+      description = '롤링페이퍼 메시지 목록을 불러오고 있어요';
+    } else if (deleteMessageLoading) {
+      description = '롤링페이퍼 메시지를 삭제하고 있어요';
+    } else if (deleteRecipientLoading) {
+      description = '롤링페이퍼를 삭제하고 있어요';
+    }
+    return description;
+  };
+
+  const loadingDescription = getLoadingDescription();
 
   const [itemList, setItemList] = useState([]);
   const hasNext = !!messageList?.next;
@@ -24,14 +57,21 @@ export const useMessageItemsList = (id) => {
 
   /* API 실행 후 데이터 세팅 */
   useEffect(() => {
-    if (loading || !messageList) return;
+    if (messageLoading || !messageList) return;
     const { results, previous } = messageList;
     setItemList((prevList) => (isFirstCall || !previous ? results : [...prevList, ...results]));
-  }, [messageList, isFirstCall, loading]);
+  }, [messageList, isFirstCall, messageLoading]);
+
+  /* 롤링페이퍼 삭제 시 로딩 오버레이 컴포넌트 처리  */
+  useEffect(() => {
+    if (deleteRecipientLoading) {
+      setShowOverlay(true);
+    }
+  }, [deleteRecipientLoading]);
 
   /* 스크롤 시 데이터 다시 불러옴  */
   const loadMore = () => {
-    if (loading || !hasNext) return;
+    if (messageLoading || !hasNext) return;
     const newOffset = isFirstCall ? offset + 8 : offset + 6;
     getMessageListRefetch({ recipientId: id, limit: 6, offset: newOffset });
     setOffset(newOffset);
@@ -39,7 +79,7 @@ export const useMessageItemsList = (id) => {
 
   /* 삭제 후 데이터 초기 상태로 불러옴 */
   const initializeList = () => {
-    if (loading) return;
+    if (messageLoading) return;
     setOffset(0);
     getMessageListRefetch({ recipientId: id, limit: 8, offset: 0 });
   };
@@ -63,5 +103,15 @@ export const useMessageItemsList = (id) => {
     }
   };
 
-  return { itemList, hasNext, loading, loadMore, onClickDeleteMessage, onDeletePaperConfirm };
+  return {
+    recipientData,
+    itemList,
+    hasNext,
+    isLoading,
+    showOverlay,
+    loadingDescription,
+    loadMore,
+    onClickDeleteMessage,
+    onDeletePaperConfirm,
+  };
 };
