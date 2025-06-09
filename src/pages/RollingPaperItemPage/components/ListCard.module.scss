@@ -16,8 +16,10 @@
   transform: translateZ(0);
   cursor: pointer;
 
-  &:hover {
-    transform: scale(1.05);
+  @media (hover: hover) {
+    &:hover {
+      transform: scale(1.05);
+    }
   }
 
   &:active {
