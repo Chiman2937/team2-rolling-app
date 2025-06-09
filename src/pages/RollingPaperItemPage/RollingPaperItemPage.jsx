@@ -26,8 +26,15 @@ const RollingPaperItemPage = () => {
   const { data: recipientData } = useApi(getRecipient, { id }, { immediate: true });
 
   /* 커스텀훅 영역 */
-  const { itemList, hasNext, loading, loadMore, onClickDeleteMessage, onDeletePaperConfirm } =
-    useMessageItemsList(id); // 리스트 데이터 API 및 동작
+  const {
+    itemList,
+    hasNext,
+    isLoading,
+    loadingDescription,
+    loadMore,
+    onClickDeleteMessage,
+    onDeletePaperConfirm,
+  } = useMessageItemsList(id); // 리스트 데이터 API 및 동작
 
   /* 전체 배경 스타일 적용 */
   const containerStyle = {
@@ -143,7 +150,7 @@ const RollingPaperItemPage = () => {
       {/* 헤더 영역 */}
       <PostHeader id={id} name={recipientData?.name} />
       {/* 로딩 컴포넌트 */}
-      {loading && <LoadingOverlay description='새로운 롤링페이퍼를 만들고 있어요' />}
+      {isLoading && <LoadingOverlay description={loadingDescription} />}
       <section style={containerStyle} className={styles['list']}>
         <div className={styles['list__container']}>
           <ListButtonGroup
