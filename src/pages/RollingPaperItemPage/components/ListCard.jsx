@@ -21,6 +21,7 @@ const ListCard = ({ cardData, showDelete, onClick, onDelete }) => {
       imageUrl: profileImageURL,
       createdAt: formatDateKRW(createdAt),
       content: content,
+      font: font,
     });
   };
 

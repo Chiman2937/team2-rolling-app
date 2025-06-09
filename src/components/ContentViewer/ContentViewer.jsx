@@ -3,7 +3,7 @@
 import React, { useMemo } from 'react';
 import DOMPurify from 'dompurify';
 import truncate from 'html-truncate';
-import { getFontFamily } from '@/constants/fontMap';
+import { getFontStyle } from '@/constants/fontMap';
 
 /**
  * 안전한 HTML 뷰어
@@ -40,12 +40,16 @@ export default function ContentViewer({
         overflow: 'auto',
         whiteSpace: 'pre-wrap',
         wordBreak: 'break-word',
-        fontFamily: getFontFamily(font),
+
         ...style,
       }}
     >
       {/* sanitize → truncate된 HTML만 주입 */}
-      <div className='viewer-content' dangerouslySetInnerHTML={{ __html: displayedHtml }} />
+      <div
+        className='viewer-content'
+        style={getFontStyle(font)}
+        dangerouslySetInnerHTML={{ __html: displayedHtml }}
+      />
     </div>
   );
 }

@@ -5,6 +5,7 @@ import Editor from '@/components/Editor/Editor';
 
 const CardModal = ({ modalItems, onClose }) => {
   const { sender, imageUrl, createdAt, content, font } = modalItems;
+  console.log('CardModal', modalItems);
 
   return (
     <Modal className={styles['modal-styler']}>
@@ -14,6 +15,7 @@ const CardModal = ({ modalItems, onClose }) => {
       <Modal.divider />
       <Modal.contentArea>
         <div className={styles['content']}>
+          {console.log('fontsss', font)}
           <Editor content={content} readOnly font={font} />
         </div>
       </Modal.contentArea>

@@ -58,6 +58,7 @@ export default function Editor({
       strikethrough: styles.editor__textStrikethrough,
     },
   };
+  console.log('foooont', font, 'getFontFamily(font)', getFontFamily(font));
 
   // 2) initialEditorState: content가 있으면 파싱해서 DOM => 노드 트리로 초기화
   const initialEditorState = useMemo(() => {
@@ -84,12 +85,12 @@ export default function Editor({
       console.error('Lexical Error:', error);
     },
   };
-
+  console.log('font', font, 'getFontFamily(font)', getFontFamily(font));
   return (
     <div
       className={className}
       style={{
-        getFontFamily: getFontFamily(font),
+        fontFamily: getFontFamily(font),
         ...style,
       }}
     >
@@ -98,7 +99,12 @@ export default function Editor({
 
         {/* RichTextPlugin 하나로 bold/italic/underline/strikethrough 지원 */}
         <RichTextPlugin
-          contentEditable={<ContentEditable className={styles.editor__content} />}
+          contentEditable={
+            <ContentEditable
+              style={{ fontFamily: getFontFamily(font) }}
+              className={styles.editor__content}
+            />
+          }
           placeholder={
             readOnly ? null : (
               <div className={styles.editor__placeholder}>내용을 입력해 주세요…</div>

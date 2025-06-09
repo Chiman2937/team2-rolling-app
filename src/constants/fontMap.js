@@ -8,35 +8,22 @@
 /**
  * FONT_STYLES: 각 폰트 이름 → 스타일 매핑
  * (COLOR_STYLES와 동일한 형태)
- *  캡슐화함
- *  Fallback 추가함
+ *
  */
 
 const FONT_STYLES = {
   Pretendard: {
-    // --font-family-base 변수가 없으면 'Pretendard', sans-serif 를 사용
-    fontFamily: `var(
-      --font-family-base,
-      'Pretendard', sans-serif
-    )`,
+    /* --font-family-base 가 없다면 즉시 'Pretendard', sans-serif 사용 */
+    fontFamily: "var(--font-family-base, 'Pretendard', sans-serif)",
   },
   'Noto Sans': {
-    fontFamily: `var(
-      --font-family-noto-sans,
-      'Noto Sans', sans-serif
-    )`,
+    fontFamily: "var(--font-family-noto-sans, 'Noto Sans', sans-serif)",
   },
   나눔명조: {
-    fontFamily: `var(
-      --font-family-nanum-myeongjo,
-      'Nanum Myeongjo', serif
-    )`,
+    fontFamily: "var(--font-family-nanum-myeongjo, 'Nanum Myeongjo', serif)",
   },
   '나눔손글씨 손편지체': {
-    fontFamily: `var(
-      --font-family-nanum-son-pyeonji,
-      'Nanum Son Pyeonji', cursive
-    )`,
+    fontFamily: "var(--font-family-nanum-son-pyeonji, 'Nanum Son Pyeonji', cursive)",
   },
 };
 
@@ -68,12 +55,20 @@ export const FONT_DROPDOWN_ITEMS = FONT_OPTIONS.map((fontName) => ({
  * @param {*} fontName
  */
 
+export function getFontStyle(fontName) {
+  if (FONT_STYLES[fontName]) {
+    return FONT_STYLES[fontName];
+  }
+  // 없다면 에러 던짐
+  throw new Error(`존재하지 않는 폰트 : ${fontName}`);
+}
+
 /**
  * getFontFamily: 폰트 이름에 해당하는 fontFamily 값을 반환
- * - 폰트 이름이 FONT_STYLES에 없으면 기본 폰트(Pretendard) 스타일 반환
+ * - 폰트 이름이 FONT_STYLES에 없으면 기본 폰트(Noto Sans) 스타일 반환
  * @param {string} fontName
  * @returns {string}
  */
 export function getFontFamily(fontName) {
-  return FONT_STYLES[fontName]?.fontFamily || FONT_STYLES['Pretendard'].fontFamily;
+  return getFontStyle(fontName).fontFamily;
 }
