@@ -19,7 +19,7 @@ export const useKakaoShare = () => {
       },
       buttons: [
         {
-          title: '롤링 보러가기',
+          title: '롤링페이퍼 보러가기',
           link: {
             mobileWebUrl: currentUrl,
             webUrl: currentUrl,
