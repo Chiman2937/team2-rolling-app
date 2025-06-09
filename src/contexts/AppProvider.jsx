@@ -5,8 +5,8 @@ import { ModalProvider } from './ModalProvider';
 
 export default function AppProvider({ children }) {
   return (
-    <ToastProvider>
-      <ModalProvider>{children}</ModalProvider>
-    </ToastProvider>
+    <ModalProvider>
+      <ToastProvider>{children}</ToastProvider>
+    </ModalProvider>
   );
 }
