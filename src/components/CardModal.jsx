@@ -2,7 +2,7 @@ import styles from './CardModal.module.scss';
 import Modal from '@/components/Modal';
 import SenderProfile from '@/components/SenderProfile';
 import Editor from '@/components/Editor/Editor';
-import { FONT_STYLES } from '@/constants/fontMap';
+
 const CardModal = ({ modalItems, onClose }) => {
   const { sender, imageUrl, createdAt, content, font } = modalItems;
 

@@ -11,7 +11,7 @@ import { $generateHtmlFromNodes, $generateNodesFromDOM } from '@lexical/html';
 import { $getRoot } from 'lexical';
 import ToolbarPlugin from './Toolbar';
 import styles from './Editor.module.scss';
-import { getFontStyle } from '@/constants/fontMap';
+import { getFontFamily } from '@/constants/fontMap';
 
 /**
  * 에디터 내용 변경 시 HTML을 상위(onUpdate)로 전달
@@ -84,14 +84,12 @@ export default function Editor({
       console.error('Lexical Error:', error);
     },
   };
-  // 4) 폰트 스타일 가져오기
-  const fontStyles = getFontStyle(font);
 
   return (
     <div
       className={className}
       style={{
-        ...fontStyles,
+        getFontFamily: getFontFamily(font),
         ...style,
       }}
     >

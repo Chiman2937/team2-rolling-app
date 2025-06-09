@@ -3,7 +3,7 @@
 import React, { useMemo } from 'react';
 import DOMPurify from 'dompurify';
 import truncate from 'html-truncate';
-import { getFontStyle } from '@/constants/fontMap';
+import { getFontFamily } from '@/constants/fontMap';
 
 /**
  * 안전한 HTML 뷰어
@@ -32,7 +32,6 @@ export default function ContentViewer({
     return truncate(sanitizedHtml, maxLength, { ellipsis: '…' });
   }, [sanitizedHtml, maxLength]);
 
-  const fontStyle = getFontStyle(font);
   return (
     <div
       className={className}
@@ -41,7 +40,7 @@ export default function ContentViewer({
         overflow: 'auto',
         whiteSpace: 'pre-wrap',
         wordBreak: 'break-word',
-        ...fontStyle,
+        fontFamily: getFontFamily(font),
         ...style,
       }}
     >

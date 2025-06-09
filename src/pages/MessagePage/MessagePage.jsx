@@ -10,7 +10,7 @@ import Dropdown from '@/components/Dropdown/Dropdown';
 import ProfileSelector from './components/ProfileSelector';
 import styles from './MessagePage.module.scss';
 import Editor from '@/components/Editor/Editor';
-import { FONT_OPTIONS, FONT_STYLES, FONT_DROPDOWN_ITEMS } from '@/constants/fontMap';
+import { FONT_OPTIONS, FONT_DROPDOWN_ITEMS } from '@/constants/fontMap';
 import { useEffect, useState } from 'react';
 
 // 상대와의 관계 옵션
