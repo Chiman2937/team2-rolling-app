@@ -21,6 +21,40 @@ const RollingPaperItemPage = () => {
   const { id } = useParams();
   const { showModal, closeModal } = useModal();
   const [isEditMode, setIsEditMode] = useState(false);
+  const paperDeleteModalData = {
+    title: (
+      <>
+        정말 이 롤링페이퍼를
+        <br />
+        <strong style={{ color: 'var(--color-purple-600)' }}>{' 삭제'}</strong>
+        하시겠습니까?
+      </>
+    ),
+    content: (
+      <>
+        삭제하면 모든 메시지가 함께 삭제되며
+        <br />
+        복구할 수 없습니다.
+      </>
+    ),
+  };
+
+  const messageDeleteModalData = {
+    title: (
+      <>
+        메시지를
+        <strong style={{ color: 'var(--color-purple-600)' }}>{' 삭제'}</strong>
+        하시겠습니까?
+      </>
+    ),
+    content: (
+      <>
+        삭제하면 메시지가 삭제되며
+        <br />
+        복구할 수 없습니다.
+      </>
+    ),
+  };
 
   /* useApi 사용하여 API 불러오는 영역  */
   const { data: recipientData } = useApi(getRecipient, { id }, { immediate: true });
@@ -64,8 +98,19 @@ const RollingPaperItemPage = () => {
   };
 
   /* 메세지 삭제 */
-  const handleOnClickDeleteMessage = () => {
-    onClickDeleteMessage();
+  const handleOnClickDeleteMessage = (messageId) => {
+    showModal(
+      <RequestDeletePaperModal
+        onConfirm={() => handleOnDeleteMessageConfirm(messageId)}
+        onCancel={closeModal}
+        modalItems={messageDeleteModalData}
+      />,
+    );
+  };
+
+  const handleOnDeleteMessageConfirm = async (messageId) => {
+    onClickDeleteMessage(messageId);
+    closeModal();
   };
 
   /* 롤링페이퍼 페이퍼 삭제 */
@@ -74,6 +119,7 @@ const RollingPaperItemPage = () => {
       <RequestDeletePaperModal
         onConfirm={() => handleOnDeletePaperConfirm()}
         onCancel={closeModal}
+        modalItems={paperDeleteModalData}
       />,
     );
   };
