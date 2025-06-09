@@ -127,7 +127,7 @@ function MessagePage() {
             <Editor
               content={values.content}
               onUpdate={handleChange('content')}
-              style={{ fontFamily: FONT_STYLES[values.font].fontFamily }}
+              font={values.font}
             />
           </div>
         </div>
