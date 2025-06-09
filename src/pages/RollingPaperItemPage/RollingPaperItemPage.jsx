@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+
 import { useModal } from '@/hooks/useModal';
 import { useMessageItemsList } from '@/hooks/useMessageItemsList';
 import { COLOR_STYLES } from '@/constants/colorThemeStyle';
