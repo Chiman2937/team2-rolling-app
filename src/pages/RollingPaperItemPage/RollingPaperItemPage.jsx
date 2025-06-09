@@ -21,6 +21,27 @@ const RollingPaperItemPage = () => {
   const { id } = useParams();
   const { showModal, closeModal } = useModal();
   const [isEditMode, setIsEditMode] = useState(false);
+
+  /* useApi 사용하여 API 불러오는 영역  */
+  const { data: recipientData } = useApi(getRecipient, { id }, { immediate: true });
+
+  /* 커스텀훅 영역 */
+  const { itemList, hasNext, loading, loadMore, onClickDeleteMessage, onDeletePaperConfirm } =
+    useMessageItemsList(id); // 리스트 데이터 API 및 동작
+
+  /* 전체 배경 스타일 적용 */
+  const containerStyle = {
+    backgroundColor: !recipientData?.backgroundImageURL
+      ? COLOR_STYLES[recipientData?.backgroundColor]?.primary
+      : '',
+    backgroundImage: recipientData?.backgroundImageURL
+      ? `url(${recipientData?.backgroundImageURL})`
+      : 'none',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+  };
+
   const paperDeleteModalData = {
     title: (
       <>
@@ -54,26 +75,6 @@ const RollingPaperItemPage = () => {
         복구할 수 없습니다.
       </>
     ),
-  };
-
-  /* useApi 사용하여 API 불러오는 영역  */
-  const { data: recipientData } = useApi(getRecipient, { id }, { immediate: true });
-
-  /* 커스텀훅 영역 */
-  const { itemList, hasNext, loading, loadMore, onClickDeleteMessage, onDeletePaperConfirm } =
-    useMessageItemsList(id); // 리스트 데이터 API 및 동작
-
-  /* 전체 배경 스타일 적용 */
-  const containerStyle = {
-    backgroundColor: !recipientData?.backgroundImageURL
-      ? COLOR_STYLES[recipientData?.backgroundColor]?.primary
-      : '',
-    backgroundImage: recipientData?.backgroundImageURL
-      ? `url(${recipientData?.backgroundImageURL})`
-      : 'none',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
   };
 
   /* 버튼, 카드 클릭 시 동작  */
