@@ -5,12 +5,13 @@ const ListButtonGroup = ({ showDelete, onClickEdit, onClickPrev, onClickGoList }
   return (
     <>
       <div className={styles['list__button-group']}>
-        <button
+        <Button onClick={onClickGoList}>목록으로</Button>
+        {/* <button
           className={`${styles['list__button']} ${styles['list__button--border']}`}
           onClick={onClickGoList}
         >
           목록으로
-        </button>
+        </button> */}
         {!showDelete && (
           <button className={styles['list__button']} onClick={onClickEdit}>
             편집하기
