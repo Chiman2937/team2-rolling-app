@@ -1,5 +1,12 @@
 .container {
-  width: 100%;
+  &--vertical {
+    width: 100%;
+  }
+
+  &--horizontal {
+    display: flex;
+    flex-direction: row;
+  }
 }
 
 .container__observer {
