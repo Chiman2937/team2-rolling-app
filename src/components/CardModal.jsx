@@ -15,7 +15,6 @@ const CardModal = ({ modalItems, onClose }) => {
       <Modal.divider />
       <Modal.contentArea>
         <div className={styles['content']}>
-          {console.log('fontsss', font)}
           <Editor content={content} readOnly font={font} />
         </div>
       </Modal.contentArea>

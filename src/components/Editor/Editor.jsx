@@ -85,7 +85,7 @@ export default function Editor({
       console.error('Lexical Error:', error);
     },
   };
-  console.log('font', font, 'getFontFamily(font)', getFontFamily(font));
+
   return (
     <div
       className={className}
