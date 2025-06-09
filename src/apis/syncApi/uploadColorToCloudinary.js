@@ -1,5 +1,5 @@
 export const uploadColorToCloudinary = async (ColorFileObject) => {
-  const cloudName = process.env.PUBLIC_CLOUDINARY_CLOUD_NAME;
+  const cloudName = import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME;
   const hex = ColorFileObject.color.replace('#', '');
   const formData = new FormData();
   formData.append('file', ColorFileObject);
