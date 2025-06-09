@@ -4,15 +4,16 @@ import { useApi } from '@/hooks/useApi.jsx';
 import { useModal } from '@/hooks/useModal';
 import { getRecipient } from '@/apis/recipientsApi';
 import { useMessageItemsList } from '@/hooks/useMessageItemsList';
-import { COLOR_STYLES } from '../../constants/colorThemeStyle';
-import styles from '@/pages/RollingPaperItemPage/RollingPaperItemPage.module.scss';
-import ListButtonGroup from './components/ListButtonGroup';
-import ListCard from './components/ListCard';
-import ActionCard from './components/ActionCard';
-import CardModal from '../../components/CardModal';
-import RequestDeletePaperModal from './components/RequestDeletePaperModal';
-import DeletePaperSuccessModal from './components/DeletePaperSuccessModal';
+import { COLOR_STYLES } from '@/constants/colorThemeStyle';
+import CardModal from '@/components/CardModal';
 import PostHeader from '@/components/PostHeader/PostHeader';
+import LoadingOverlay from '@/components/LoadingOverlay';
+import styles from '@/pages/RollingPaperItemPage/RollingPaperItemPage.module.scss';
+import ListCard from '@/pages/RollingPaperItemPage/components/ListCard';
+import ActionCard from '@/pages/RollingPaperItemPage/components/ActionCard';
+import ListButtonGroup from '@/pages/RollingPaperItemPage/components/ListButtonGroup';
+import RequestDeletePaperModal from '@/pages/RollingPaperItemPage/components/RequestDeletePaperModal';
+import DeletePaperSuccessModal from '@/pages/RollingPaperItemPage/components/DeletePaperSuccessModal';
 import InfinityScrollWrapper from '@/components/InfinityScrollWrapper/InfinityScrollWrapper';
 
 const RollingPaperItemPage = () => {
@@ -25,7 +26,7 @@ const RollingPaperItemPage = () => {
   const { data: recipientData } = useApi(getRecipient, { id }, { immediate: true });
 
   /* 커스텀훅 영역 */
-  const { itemList, hasNext, loadMore, onClickDeleteMessage, onDeletePaperConfirm } =
+  const { itemList, hasNext, loading, loadMore, onClickDeleteMessage, onDeletePaperConfirm } =
     useMessageItemsList(id); // 리스트 데이터 API 및 동작
 
   /* 전체 배경 스타일 적용 */
@@ -94,6 +95,8 @@ const RollingPaperItemPage = () => {
     <>
       {/* 헤더 영역 */}
       <PostHeader id={id} name={recipientData?.name} />
+      {/* 로딩 컴포넌트 */}
+      {loading && <LoadingOverlay description='새로운 롤링페이퍼를 만들고 있어요' />}
       <section style={containerStyle} className={styles['list']}>
         <div className={styles['list__container']}>
           <ListButtonGroup
