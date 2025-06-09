@@ -7,8 +7,8 @@ export const getColorFromCloudinaryImage = (url) => {
   const isHexColor = (str) => /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/.test(str);
   const fileName = parts[6];
   if (!fileName) return null;
-  const hexString = fileName.substring(0, 6); // public_id 시작 부분 (index 5)
-  if (isHexColor('#' + hexString)) {
+  const hexString = '#' + fileName.substring(0, 6); // public_id 시작 부분 (index 5)
+  if (isHexColor(hexString)) {
     return hexString;
   } else {
     return null; // 기본값
