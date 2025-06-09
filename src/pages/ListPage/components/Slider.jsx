@@ -10,13 +10,9 @@ const CARD_WIDTH = 275;
 const GAP = 16;
 const PAGE_SIZE = 4;
 
-const Slider = ({ cards }) => {
-  /* 무한 스크롤에서 스크롤 감지를 위함 */
+const Slider = ({ cards, hasNext, loadMore }) => {
+  /* 무한 스크롤: 스크롤 감지 ref 요소 전달 */
   const scrollObserverRef = useRef(null);
-  /* Api 요청 데이터에서 next값이 있는지 확인, true 일때만 데이터를 불러옴 */
-  const hasNext = true;
-  /* 추가 데이터 로드 */
-  const loadMore = () => {};
 
   const { wrapperRef, isDesktop, pageIndex, canPrev, canNext, goPrev, goNext } = useSliderPaging({
     totalItems: cards.length,
