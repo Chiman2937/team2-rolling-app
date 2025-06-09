@@ -218,9 +218,119 @@
   justify-content: center;
 }
 
-/** 2. Outlined 버튼들 (4가지) **/
+/** 2. Secondary 버튼들 (2가지) **/
 
-/* 2-1. Outlined 40px 텍스트 (157×40) - 롤링 페이퍼 만들기 */
+/* 2-1. Secondary Small (92×39) - Primary Small과 같은 크기, 다른 스타일 */
+.secondary-small {
+  background-color: var(--color-white);
+  color: var(--color-purple-600);
+  border: 1px solid var(--color-purple-600);
+  width: 92px;
+  height: 39px;
+  padding: 7px 16px;
+  border-radius: 6px;
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-regular);
+  font-family: var(--font-family-base);
+  letter-spacing: -0.16px;
+  line-height: 26px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.secondary-small:hover {
+  background-color: var(--color-purple-100);
+}
+
+.secondary-small:active {
+  background-color: var(--color-purple-100);
+}
+
+.secondary-small:focus {
+  border: 1px solid var(--color-purple-800);
+}
+
+.secondary-small-disabled {
+  background-color: var(--color-gray-300);
+  color: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  width: 92px;
+  height: 39px;
+  padding: 7px 16px;
+  border-radius: 6px;
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-regular);
+  font-family: var(--font-family-base);
+  letter-spacing: -0.16px;
+  line-height: 26px;
+  text-align: center;
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 2-2. Secondary Stretch (100%×39) - Secondary Small의 너비만 늘린 버전 */
+.secondary-stretch {
+  background-color: var(--color-white);
+  color: var(--color-purple-600);
+  border: 1px solid var(--color-purple-600);
+  width: 100%; /*  너비만 100%로 변경 */
+  height: 39px; /*  Secondary Small과 동일한 높이 유지 */
+  padding: 7px 16px;
+  border-radius: 6px;
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-regular);
+  font-family: var(--font-family-base);
+  letter-spacing: -0.16px;
+  line-height: 26px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.secondary-stretch:hover {
+  background-color: var(--color-purple-100);
+}
+
+.secondary-stretch:active {
+  background-color: var(--color-purple-100);
+}
+
+.secondary-stretch:focus {
+  border: 1px solid var(--color-purple-800);
+}
+
+.secondary-stretch-disabled {
+  background-color: var(--color-gray-300);
+  color: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  width: 100%; /*  너비만 100%로 변경 */
+  height: 39px; /*  Secondary Small과 동일한 높이 유지 */
+  padding: 7px 16px;
+  border-radius: 6px;
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-regular);
+  font-family: var(--font-family-base);
+  letter-spacing: -0.16px;
+  line-height: 26px;
+  text-align: center;
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/** 3. Outlined 버튼들 (4가지) **/
+
+/* 3-1. Outlined 40px 텍스트 (157×40) - 롤링 페이퍼 만들기 */
 .outlined-40-text {
   background-color: var(--color-white);
   color: var(--color-gray-900);
@@ -274,7 +384,7 @@
   justify-content: center;
 }
 
-/* 2-2. Outlined 36px 아이콘+텍스트 (88×36) - 이모티콘+추가 */
+/* 3-2. Outlined 36px 아이콘+텍스트 (89×36) - 이모티콘+추가 */
 .outlined-36-text {
   background-color: var(--color-white);
   color: var(--color-gray-900);
@@ -340,7 +450,7 @@
   }
 }
 
-/* 2-3. Outlined 36px 아이콘만 (56×36) - 헤더 아이콘들 */
+/* 3-3. Outlined 36px 아이콘만 (56×36) - 헤더 아이콘들 */
 .outlined-36-icon {
   background-color: var(--color-white);
   color: var(--color-gray-900);
@@ -391,7 +501,7 @@
   }
 }
 
-/* 2-4. Outlined 40px 아이콘만 (40×40) - 휴지통 삭제 */
+/* 3-4. Outlined 40px 아이콘만 (40×40) - 휴지통 삭제 */
 .outlined-40-icon {
   background-color: var(--color-white);
   color: var(--color-gray-900);
