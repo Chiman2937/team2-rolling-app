@@ -16,7 +16,7 @@ const HomePage = () => {
           <PointsContainer key={`${landingData.point}-${index}`} {...card} />
         ))}
         <Link to='/list'>
-          <Button>구경해보기</Button>
+          <Button className={styles['page-points__button']}>구경해보기</Button>
         </Link>
       </section>
     </main>
