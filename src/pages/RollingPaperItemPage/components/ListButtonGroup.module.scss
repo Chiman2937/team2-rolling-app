@@ -13,7 +13,7 @@
     bottom: 24px;
   }
 
-  @include desktop {
+  @media screen and (min-width: 1024px) {
     position: static;
   }
 }
