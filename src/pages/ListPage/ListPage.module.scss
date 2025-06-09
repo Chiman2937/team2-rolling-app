@@ -2,12 +2,12 @@
   padding: 24px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   width: var(--wrapper-width);
   min-height: 100dvh;
   gap: 48px;
   margin: 0 auto;
   padding-top: 50px;
+  overflow: visible;
 
   @media screen and (min-width: 768px) and (max-width: 1199px) {
     padding: 0 24px;
@@ -24,13 +24,12 @@
   &__section {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     gap: 16px;
+    overflow: visible;
   }
 
   &__title {
     margin: 0;
-
     font-size: var(--font-size-24);
     font-weight: var(--font-weight-bold);
     color: #333;

@@ -1,0 +1,88 @@
+.show-avatars {
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 28px;
+}
+
+.show-avatars--spinner {
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  animation: fade-in-spinner 2s forwards;
+}
+
+.show-avatars--error {
+  font-size: 14px;
+  color: #e53e3e;
+}
+
+.show-avatars--empty {
+  display: flex;
+  align-items: center;
+}
+
+.show-avatars__avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-white);
+  background-color: var(--color-blue-200);
+}
+
+.show-avatars__extra {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-left: -20px; /* 아바타와 동일하게 겹침 */
+  border-radius: 50%;
+  background-color: var(--color-white);
+  font-size: var(--font-size-12);
+  color: var(--color-gray-600);
+  border: 2px solid var(--color-gray-100);
+  z-index: 999;
+}
+
+.show-avatars__count {
+  margin-left: 8px;
+  font-size: var(--font-size-18);
+  color: var(--color-gray-900);
+}
+.show-avatars__count-number {
+  font-weight: bold;
+  color: var(--color-black);
+}
+
+.show-avatars__spinner-circle {
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background-color: var(--color-blue-500);
+  animation: show-avatars-pulse 2s infinite ease-in-out;
+}
+
+/* pulse 애니메이션 정의 */
+@keyframes show-avatars-pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-spinner {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

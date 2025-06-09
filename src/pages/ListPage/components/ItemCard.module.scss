@@ -1,8 +1,6 @@
-/* Link가 기본 밑줄이나 색상 없이 동작하도록 */
 .item-card__link {
   display: block;
   text-decoration: none;
-  color: inherit;
 }
 
 .item-card {
@@ -46,44 +44,6 @@
   &__meta {
     margin: 4px 0;
     font-size: var(--font-size-16);
-  }
-
-  &__avatars {
-    display: flex;
-    align-items: center;
-    position: relative;
-    height: 32px;
-    margin-top: 8px;
-    margin-left: 10px;
-    min-height: 24px;
-  }
-
-  &__avatar {
-    width: 32px;
-    height: 32px;
-    border: 2px solid var(--color-white);
-    border-radius: 50%;
-    background-color: var(--color-white);
-    overflow: hidden;
-    position: relative;
-    margin-left: -12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: var(--font-size-14);
-    color: var(--color-gray-500);
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
-
-  /* +n 텍스트 */
-  &__more {
-    font-size: var(--font-size-14);
-    font-weight: var(--font-weight-medium);
   }
 
   &__top-reactions {
