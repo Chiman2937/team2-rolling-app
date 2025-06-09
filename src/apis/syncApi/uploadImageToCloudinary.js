@@ -1,5 +1,5 @@
 export const uploadImageToCloudinary = async (imageFileObject) => {
-  const cloudName = import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME;
+  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
   const timestamp = Date.now();
   const baseName = imageFileObject.name.replace(/\.[^/.]+$/, ''); // 확장자 제거
   const formData = new FormData();
