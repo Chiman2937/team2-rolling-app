@@ -29,10 +29,6 @@
 
   &:disabled {
     cursor: not-allowed;
-    & img {
-      //opacity: 0.5;는 드롭다운이랑 겹침
-      display: none;
-    }
   }
 
   @include mobile {
