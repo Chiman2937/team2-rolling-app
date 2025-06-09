@@ -9,18 +9,25 @@
   &__arrow {
     &--left,
     &--right {
-      @include desktop {
-        // 데스크톱에서만 보이도록 (mobile은 글로벌 media로 숨김)
-        display: flex;
-      }
+      // 기본: 숨김
+      display: none;
+
+      // 공통 위치 및 스타일
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
       z-index: 2;
+
+      // 데스크톱에서만 보이도록
+      @media (min-width: 1200px) {
+        display: flex;
+      }
     }
+
     &--left {
       left: -20px;
     }
+
     &--right {
       right: -20px;
     }
@@ -41,11 +48,5 @@
     display: flex;
     gap: 16px;
     overflow: visible;
-  }
-}
-
-@mixin desktop {
-  @media (min-width: 1200px) {
-    @content;
   }
 }
