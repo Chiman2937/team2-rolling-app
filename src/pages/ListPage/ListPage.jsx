@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import Slider from './components/Slider';
 import styles from './ListPage.module.scss';
-import Button from '../../components/Button/Button';
+import Button from '@/components/Button/Button';
 import { Link } from 'react-router-dom';
 
-import { listRecipients } from '../../apis/recipientsApi';
-import { useApi } from '../../hooks/useApi';
+import { listRecipients } from '@/apis/recipientsApi';
+import { useApi } from '@/hooks/useApi';
 
 const ListPage = () => {
   // 1) useApi로 전체 Recipient 목록(fetch) 요청
