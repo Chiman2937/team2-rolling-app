@@ -18,6 +18,7 @@ import EmojiAdd from './EmojiAdd';
  */
 export default function EmojiGroup({ id }) {
   const [success, setSuccess] = useState(false);
+  const [open, setOpen] = useState(false); // 드롭다운 열림 상태 관리
   const { data, loading, error, refetch } = useApi(
     listRecipientReactions,
     { recipientId: id, limit: 8, offset: 0 },
@@ -37,6 +38,10 @@ export default function EmojiGroup({ id }) {
     setSuccess(true); // 이모지 추가 성공 시 상태 업데이트
   };
 
+  const handleDropdown = (isOpen) => {
+    setOpen(isOpen);
+  };
+
   //  로딩 / 에러 / 빈 상태 처리
   if (loading && !data) {
     return <Skeleton className={Style['emoji-group--loading']} width='225px' height='40px' />;
@@ -53,14 +58,15 @@ export default function EmojiGroup({ id }) {
     <div className={Style['emoji-group']}>
       <DropdownButton
         // ToggleComponent: 상위 3개 이모지
-        ToggleComponent={<ToggleEmoji emojis={topEmojis} />}
+        ToggleComponent={<ToggleEmoji emojis={topEmojis} open={open} />}
         // ListComponent: 상위 8개 이모지를 나열
         ListComponent={<EmojiList emojis={topEmojis} />}
         layout='row'
         ButtonClassName={Style['emoji-group__toggle']}
         MenuClassName={Style['emoji-group__menu']}
         trigger='always'
-        offset={18}
+        offset={20}
+        onToggle={handleDropdown}
       />
       <EmojiAdd id={id} onSuccess={handleAddSuccess} />
     </div>

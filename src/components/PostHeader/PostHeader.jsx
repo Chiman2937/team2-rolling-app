@@ -29,7 +29,7 @@ export default function PostHeader({ id, name }) {
       <div className={Style['post-header__container']}>
         <h3 className={Style['post-header__title']}>To. {name}</h3>
 
-        <nav className={Style['post-header__profile-container']}>
+        <section className={Style['post-header__menu-container']}>
           {/* 데스크톱에서만 ProfileGroup 표시 */}
           {isDesktop && (
             <>
@@ -37,15 +37,16 @@ export default function PostHeader({ id, name }) {
               <div className={Style['post-header__divider']} />
             </>
           )}
+          <div className={Style['post-header__reaction-container']}>
+            <div className={Style['post-header__emoji-container']}>
+              <EmojiGroup id={id} />
+            </div>
 
-          <div className={Style['post-header__emoji-container']}>
-            <EmojiGroup id={id} />
+            <div className={Style['post-header__divider']} />
+
+            <ShareMenu onKakaoClick={handleKakaoShare} />
           </div>
-
-          <div className={Style['post-header__divider']} />
-
-          <ShareMenu onKakaoClick={handleKakaoShare} />
-        </nav>
+        </section>
       </div>
     </header>
   );

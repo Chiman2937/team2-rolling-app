@@ -7,5 +7,5 @@
      - 총 8개라면 자동으로 두 번째 행으로 넘어감 */
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
-  padding: 24px;
+  padding: 10px;
 }
