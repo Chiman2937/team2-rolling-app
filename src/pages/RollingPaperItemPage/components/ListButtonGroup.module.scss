@@ -1,0 +1,24 @@
+.list__button-group {
+  display: flex;
+  gap: 8px;
+  position: fixed;
+  z-index: 10; // 논의 필요
+  left: 20px;
+  right: 20px;
+  bottom: 24px;
+
+  @include tablet {
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    position: static;
+  }
+}
+
+.list__button {
+  display: flex;
+  flex: 1;
+}

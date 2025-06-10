@@ -1,8 +1,7 @@
 import Routes from '@/routes/AppRouter';
 import Style from '@/assets/styles/App.module.scss';
-import GlobalHeader from '@/components/Header/GlobalHeader';
 
-function App() {
+const App = () => {
   return (
     <div className={Style['app']}>
       <main>
@@ -11,6 +10,6 @@ function App() {
       </main>
     </div>
   );
-}
+};
 
 export default App;

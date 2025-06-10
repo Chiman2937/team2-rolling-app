@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: Pretendard;
-  src: url('../fonts/Pretendard-Regular.woff2') format('woff2');
+  src: url('@/assets/fonts/Pretendard-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -10,8 +10,35 @@
 
 @font-face {
   font-family: Pretendard;
-  src: url('../fonts/Pretendard-Bold.woff2') format('woff2');
+  src: url('@/assets/fonts/Pretendard-Bold.woff2') format('woff2');
   font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Noto Sans */
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('@/assets/fonts/NotoSans.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Nanum Myeongjo */
+@font-face {
+  font-family: 'Nanum Myeongjo';
+  src: url('@/assets/fonts/NanumMyeongjo.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Nanum Son Pyeonji (손편지체) */
+@font-face {
+  font-family: 'Nanum Son Pyeonji';
+  src: url('@/assets/fonts/NanumSonPyeonji.ttf') format('truetype');
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }

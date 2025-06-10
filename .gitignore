@@ -7,10 +7,26 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
+# Runtime
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Build output
 dist
 dist-ssr
-*.local
+.next
+out
+build
+coverage
+
+# Dependency directories
+node_modules/
+
+# Environment files
+.env
+.env.*          # 이 줄이 있으면 .env.local, .env.production 등 모두 포함됨 (더 일반적)
 
 # Editor directories and files
 .vscode/*
@@ -22,3 +38,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Optional: OS-specific
+Thumbs.db
+ehthumbs.db

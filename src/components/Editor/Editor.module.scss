@@ -1,0 +1,41 @@
+// src/components/Editor/Editor.module.scss
+
+.editor__content {
+  /* 에디터 입력 영역(콘텐츠Editable) 스타일 */
+  min-height: 260px;
+  padding: 12px;
+  outline: none;
+  font-family: inherit !important; /* 부모에서 상속받은 폰트 사용 */
+  font-size: var(--font-size-16);
+  color: var(--color-gray-900);
+
+  /* 롤링페이퍼 폰트는 부모에서 전달받음 */
+  /* 혹시 모를 리셋(reset.css) 덮어쓰기 방지 */
+  u {
+    text-decoration: underline;
+  }
+  s,
+  strike {
+    text-decoration: line-through !important;
+  }
+}
+
+.editor__placeholder {
+  /* 내용이 비어 있을 때 보여줄 플레이스홀더 문구 스타일 */
+  color: var(--color-gray-400);
+  padding: 12px;
+  font-size: var(--font-size-16);
+}
+/* text 포맷용 클래스 */
+.editor__textBold {
+  font-weight: bold;
+}
+.editor__textItalic {
+  font-style: italic;
+}
+.editor__textUnderline {
+  text-decoration: underline;
+}
+.editor__textStrikethrough {
+  text-decoration: line-through;
+}

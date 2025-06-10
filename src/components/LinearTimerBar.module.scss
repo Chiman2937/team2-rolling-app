@@ -1,0 +1,27 @@
+.background {
+	background-color: var(--color-gray-200);
+	height: 3px;
+	width: 100%;
+	border-radius: 4px;
+}
+
+.progress {
+	background-color: var(--color-purple-400);
+	max-width: 100%;
+	height: 100%;
+	border-radius: 4px;
+	animation-name: loadingBar;
+	animation-duration: var(--timer,3s);
+	animation-timing-function: linear;
+	animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes loadingBar {
+	0% {
+		width: 0%;
+	}
+	100% {
+		width: 100%;
+	}
+}

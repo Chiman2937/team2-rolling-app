@@ -1,7 +1,35 @@
+$wrapper-margin-x: 20px;
+
+$wrapper-width-mobile: calc(100vw - calc($wrapper-margin-x * 2));
+$wrapper-width-tablet: 600px;
+$wrapper-width-desktop: 600px;
+
+.modal-styler {
+	padding: 40px;
+	@include responsive-width($wrapper-width-mobile, $wrapper-width-tablet, $wrapper-width-desktop);
+}
+
+.header-area {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
 .content {
+	margin-top: 16px;
+	margin-bottom: 24px;
 	display: inline-block;
 	height: 240px;
 	width: 100%;
 	overflow-y: auto;
+	font-weight: 400;
+	font-size: 18px;
 	line-height: 28px;
+	color: #5A5A5A;
+}
+
+.button-area {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }

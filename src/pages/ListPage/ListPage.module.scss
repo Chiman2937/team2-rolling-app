@@ -2,24 +2,37 @@
   padding: 24px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   width: var(--wrapper-width);
+  min-height: 100dvh;
   gap: 48px;
   margin: 0 auto;
+  padding-top: 50px;
+  overflow: visible;
 
+  @media screen and (min-width: 768px) and (max-width: 1199px) {
+    padding: 0 24px;
+    width: 100%;
+    min-height: 100dvh;
+  }
+
+  @media screen and (max-width: 767px) {
+    padding: 0 20px;
+    width: 100%;
+    padding-top: 40px;
+    min-height: 100dvh;
+  }
   &__section {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    gap: 16px;
+    overflow: visible;
   }
 
   &__title {
     margin: 0;
-
     font-size: var(--font-size-24);
     font-weight: var(--font-weight-bold);
     color: #333;
+    padding: 8px; // 슬라이더 padding 추가 후 정렬 맞추기 위함
   }
 
   &__status {
@@ -27,5 +40,25 @@
     font-size: var(--font-size-18);
     text-align: center;
     color: var(--color-gray-500);
+  }
+
+  &__createButton {
+    width: 280px;
+    height: 56px;
+    padding: 14px 24px;
+    background-color: var(--color-purple-600);
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 28px;
+    color: var(--color-white);
+    align-self: center;
+    display: block; // inline → block으로 바꿔서 margin:auto 적용
+    margin: 0 auto;
+
+    @media screen and (min-width: 355px) and (max-width: 1199px) {
+      width: 100%;
+    }
   }
 }

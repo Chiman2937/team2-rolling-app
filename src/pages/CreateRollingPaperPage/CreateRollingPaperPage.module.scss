@@ -10,7 +10,18 @@ $wrapper-desktop-width: 720px;
 	padding: 0 24px;
 	margin: 57px auto;
 
+	&__button-area {
+		display: flex;
+		flex-direction: row;
+		gap: 20px;
+	}
+
 	&__submit {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
 		width: 100%;
 		padding: 14px 0;
 		background-color: var(--color-purple-600);
@@ -20,9 +31,42 @@ $wrapper-desktop-width: 720px;
 		font-size: 18px;
 		line-height: 28px;
 		color: var(--color-white);
+		cursor: pointer;
+
+		&:hover {
+			background-color: var(--color-purple-700);
+		}
 
 		&:disabled {
 			background-color: var(--color-gray-300);
+			cursor: auto;
 		}
+	}
+
+	&__back {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		width: 20%;
+		padding: 14px 0;
+		background-color: var(--color-white);
+		border: 1px solid var(--color-purple-600);
+		border-radius: 12px;
+		font-weight: 700;
+		font-size: 18px;
+		line-height: 28px;
+		color: var(--color-purple-600);
+		cursor: pointer;
+
+		&:hover {
+			background-color: var(--color-purple-100);
+		}
+	}
+
+	&__button-logo {
+		aspect-ratio: 1;
+		width: 18px;
 	}
 }
