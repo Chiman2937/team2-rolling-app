@@ -1,8 +1,8 @@
 import { useRef } from 'react';
 import styles from './Slider.module.scss';
 import ItemCard from './ItemCard';
-import ArrowButton from '../../../components/Button/ArrowButton';
-import HorizontalScrollContainer from '../../../components/HorizontalScrollContainer/HorizontalScrollContainer';
+import ArrowButton from '@/components/Button/ArrowButton';
+import HorizontalScrollContainer from '@/components/HorizontalScrollContainer/HorizontalScrollContainer';
 import { useSliderPaging } from '@/hooks/useSliderPaging';
 import InfinityScrollWrapper from '@/components/InfinityScrollWrapper/InfinityScrollWrapper';
 

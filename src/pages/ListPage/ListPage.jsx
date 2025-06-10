@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import Slider from './components/Slider';
 import styles from './ListPage.module.scss';
 import { Link } from 'react-router-dom';
+import Button from '@/components/Button/Button';
 
-import { listRecipients } from '../../apis/recipientsApi';
-import { useApi } from '../../hooks/useApi';
+import { listRecipients } from '@/apis/recipientsApi';
+import { useApi } from '@/hooks/useApi';
 
 const ListPage = () => {
   // 인기/최신 각각 오프셋·hasNext 관리
@@ -91,8 +92,8 @@ const ListPage = () => {
         <Slider cards={recentCards} hasNext={recentHasNext} loadMore={loadMoreRecent} />
       </section>
 
-      <Link to='/post' style={{ textDecoration: 'none', textAlign: 'center' }}>
-        <button className={styles['list-page__createButton']}>나도 만들어보기</button>
+      <Link to='/post'>
+        <Button className={styles['list-page__createButton']}>나도 만들어보기</Button>
       </Link>
     </div>
   );
