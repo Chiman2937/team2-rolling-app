@@ -33,7 +33,7 @@ const Textfield = ({
     true: 'textfield__message--success',
   };
 
-  const showMessage = !disabled && message;
+  const showMessage = !disabled && message && isValid === false;
 
   return (
     <>
