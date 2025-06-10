@@ -1,6 +1,5 @@
 // src/components/PostHeader/PostHeader.jsx
 
-import React, { useState } from 'react';
 import Style from './PostHeader.module.scss';
 
 import ProfileGroup from '@/components/PostHeader/ProfileGroup/ProfileGroup';
@@ -18,10 +17,6 @@ import { useKakaoShare } from '../../hooks/useKakaoShare';
  * @param {{ id: number|string, name: string }} props
  */
 export default function PostHeader({ id, name }) {
-  // 이모지 추가 성공 시 EmojiGroup 새로고침을 위한 state
-  const [refreshKey, setRefreshKey] = useState(0);
-  const handleAddSuccess = () => setRefreshKey((prev) => prev + 1);
-
   // 현재 디바이스 타입을 가져옴
   const deviceType = useDeviceType();
   const isDesktop = deviceType === DEVICE_TYPES.DESKTOP;
@@ -34,7 +29,7 @@ export default function PostHeader({ id, name }) {
       <div className={Style['post-header__container']}>
         <h3 className={Style['post-header__title']}>To. {name}</h3>
 
-        <nav className={Style['post-header__menu-container']}>
+        <nav className={Style['post-header__profile-container']}>
           {/* 데스크톱에서만 ProfileGroup 표시 */}
           {isDesktop && (
             <>
@@ -44,8 +39,7 @@ export default function PostHeader({ id, name }) {
           )}
 
           <div className={Style['post-header__emoji-container']}>
-            <EmojiGroup id={id} refreshKey={refreshKey} />
-            <EmojiAdd id={id} onSuccess={handleAddSuccess} />
+            <EmojiGroup id={id} />
           </div>
 
           <div className={Style['post-header__divider']} />

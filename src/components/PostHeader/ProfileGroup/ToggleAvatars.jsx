@@ -1,6 +1,8 @@
 // src/components/ProfileGroup/ToggleAvatars.jsx
 import React from 'react';
 import Style from './ToggleAvatars.module.scss';
+import GradientImage from '@/components/GradientImage/GradientImage';
+import CountUp from '@/components/CountUp';
 
 /**
  * ToggleAvatars 컴포넌트
@@ -11,34 +13,13 @@ import Style from './ToggleAvatars.module.scss';
  * @param {boolean} props.loading
  * @param {Error|null} props.error
  */
-export default function ToggleAvatars({ profiles, totalCount, loading, error }) {
+export default function ToggleAvatars({ profiles, totalCount, error }) {
   // totalCount를 최대 999로 제한
   const displayCount = totalCount > 999 ? '999+' : totalCount;
-
-  // 로딩 상태
-  if (loading) {
-    return (
-      <div className={Style['toggle-avatars--spinner']}>
-        <div className={Style['toggle-avatars__spinner-circle']} />
-        <div className={Style['toggle-avatars__spinner-circle']} />
-        <div className={Style['toggle-avatars__spinner-circle']} />
-        <span className={Style['toggle-avatars__count']}>0명이 작성했어요!</span>
-      </div>
-    );
-  }
 
   // 에러 상태
   if (error) {
     return <div className={Style['toggle-avatars--error']}>오류 발생</div>;
-  }
-
-  // 작성자 수가 0명일 때
-  if (totalCount === 0) {
-    return (
-      <div className={Style['toggle-avatars--empty']}>
-        <span className={Style['toggle-avatars__count']}>0명이 작성했어요!</span>
-      </div>
-    );
   }
 
   // 실제 프로필이 1명 이상일 때
@@ -57,7 +38,18 @@ export default function ToggleAvatars({ profiles, totalCount, loading, error }) 
         const marginRight = idx === visibleCount - 1 ? 0 : -16;
         const zIndex = idx + 1;
         return (
-          <img
+          // <img
+          //   key={profile.id}
+          //   src={profile.profileImageURL}
+          //   alt={profile.sender}
+          //   className={Style['toggle-avatars__avatar']}
+          //   style={{
+          //     marginRight: `${marginRight}px`,
+          //     zIndex: zIndex,
+          //   }}
+          // />
+
+          <GradientImage
             key={profile.id}
             src={profile.profileImageURL}
             alt={profile.sender}
@@ -71,11 +63,19 @@ export default function ToggleAvatars({ profiles, totalCount, loading, error }) 
       })}
 
       {extraCount > 0 && <div className={Style['toggle-avatars__extra']}>+{displayExtra}</div>}
-
-      <span className={Style['toggle-avatars__count']}>
-        <span className={Style['toggle-avatars__count-number']}>{displayCount}</span>명이
-        작성했어요!
-      </span>
+      {totalCount === 0 ? (
+        <div className={Style['toggle-avatars__empty']}>아직 프로필이 없어요</div>
+      ) : (
+        <span className={Style['toggle-avatars__count']}>
+          <CountUp
+            className={Style['toggle-avatars__count-number']}
+            start={0}
+            end={displayCount}
+            duration={500}
+          />
+          명이 작성했어요!
+        </span>
+      )}
     </div>
   );
 }

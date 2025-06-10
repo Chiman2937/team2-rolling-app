@@ -5,7 +5,9 @@ import DropdownButton from '@/components/DropdownButton/DropdownButton';
 import ToggleEmoji from './ToggleEmoji';
 import EmojiList from './EmojiList';
 import Style from './EmojiGroup.module.scss';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import Skeleton from '../../Skeleton/Skeleton';
+import EmojiAdd from './EmojiAdd';
 
 /**
  * EmojiGroup 컴포넌트
@@ -14,7 +16,8 @@ import { useEffect } from 'react';
  * @param {number|string} props.id
  *       - 수신자(롤링페이퍼) ID
  */
-export default function EmojiGroup({ id, refreshKey }) {
+export default function EmojiGroup({ id }) {
+  const [success, setSuccess] = useState(false);
   const { data, loading, error, refetch } = useApi(
     listRecipientReactions,
     { recipientId: id, limit: 8, offset: 0 },
@@ -25,12 +28,18 @@ export default function EmojiGroup({ id, refreshKey }) {
 
   // 이모지 반응 목록을 새로고침하기 위한 useEffect
   useEffect(() => {
+    if (!success) return; // 이모지 추가 성공 상태가 아닐 때는 refetch 하지 않음
     refetch();
-  }, [refreshKey, refetch]);
+    setSuccess(false); // refetch 후 success 상태 초기화
+  }, [success, refetch]);
+
+  const handleAddSuccess = () => {
+    setSuccess(true); // 이모지 추가 성공 시 상태 업데이트
+  };
 
   //  로딩 / 에러 / 빈 상태 처리
-  if (loading) {
-    return <div className={Style['emoji-group--loading']}>이모지 로딩 중...</div>;
+  if (loading && !data) {
+    return <Skeleton className={Style['emoji-group--loading']} width='225px' height='40px' />;
   }
   if (error) {
     return <div className={Style['emoji-group--error']}> 이모지 불러오기 실패 ㅠㅠ</div>;
@@ -52,6 +61,7 @@ export default function EmojiGroup({ id, refreshKey }) {
         MenuClassName={Style['emoji-group__menu']}
         openOnHover={true}
       />
+      <EmojiAdd id={id} onSuccess={handleAddSuccess} />
     </div>
   );
 }

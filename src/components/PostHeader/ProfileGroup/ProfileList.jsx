@@ -24,7 +24,7 @@ export default function ProfileList({ profiles, loading, error }) {
       {top10.map((profile) => {
         // 이름이 10자를 넘으면 잘라서 "..." 붙이기
         const displayName =
-          profile.sender.length > 10 ? profile.sender.slice(0, 10) + '...' : profile.sender;
+          profile.sender.length > 6 ? profile.sender.slice(0, 6) + '...' : profile.sender;
 
         // getDaysAgo 유틸 함수로 “n일 전” 또는 “오늘” 계산
         const timeLabel = getDaysAgo(profile.createdAt);

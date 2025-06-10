@@ -1,6 +1,9 @@
 /* src/components/EmojiGroup/EmojiGroup.module.scss */
 
 .emoji-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   display: inline-block;
   position: relative;
 }

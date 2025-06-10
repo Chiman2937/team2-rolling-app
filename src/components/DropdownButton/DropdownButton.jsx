@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDropdownPosition } from '@/hooks/useDropdownPosition';
 import styles from './DropdownButton.module.scss';
+import classnames from 'classnames';
 
 /**
  * DropdownButton 컴포넌트
@@ -19,8 +20,12 @@ import styles from './DropdownButton.module.scss';
  *        - 메뉴 컨테이너 영역에 추가할 클래스 이름
  * @param {function} [props.onToggle]
  *        - 열기/닫기 상태 변화 시 호출되는 콜백 (인자로 (isOpen: boolean))
- * @param {boolean} [props.openOnHover=false]
- *        - 토글 위에 마우스가 올라갈 때 드롭다운이 열리도록 할지 여부
+ * @param {trigger} [props.trigger='click']
+ *        - 드롭다운 열기/닫기 트리거 방식 ('click' 또는 'hover', 'always')
+ * @param {number} [props.offset=4]
+ *        - 드롭다운 메뉴 위치가 보일 간격 (px 단위)
+ * @param {number} [props.animationDuration=200]
+ *        - 드롭다운 애니메이션 지속 시간 (ms 단위)
  */
 function DropdownButton({
   ToggleComponent,
@@ -29,73 +34,103 @@ function DropdownButton({
   ButtonClassName = '',
   MenuClassName = '',
   onToggle,
-  openOnHover = false,
+  trigger = 'click',
+  offset = 4,
+  animationDuration = 200,
 }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); // 드롭다운 열림 상태
+  const [locked, setLocked] = useState(false); // 클릭 고정인지 여부
 
   // 밖을 클릭했을 때 닫기 위한 ref
   const containerRef = useRef(null);
   const menuRef = useRef(null);
   // 드롭다운 위치 보정 훅
-  //커스텀 훅 호출: isOpen이 true일 때마다 위치 보정값(adjustX)을 계산
   const adjustXValue = useDropdownPosition(containerRef, menuRef, isOpen);
 
-  const openDropdown = () => {
+  /* ---------- 열고/닫기 헬퍼 ---------- */
+  const open = () => {
     setIsOpen(true);
-
-    onToggle && onToggle(true);
+    onToggle?.(true);
   };
-
-  const closeDropdown = () => {
+  const close = () => {
     setIsOpen(false);
-
-    onToggle && onToggle(false);
+    onToggle?.(false);
   };
 
+  /* ---------- 토글 처리 ---------- */
   const handleToggleClick = () => {
-    setIsOpen((prev) => {
-      const next = !prev;
-      onToggle && onToggle(next);
-      return next;
-    });
+    /* ───────── 1) hover 모드 : 클릭 무시 ───────── */
+    if (trigger === 'hover') {
+      return; // 아무 동작 없음
+    }
+
+    /* ───────── 2) click 모드 : 단순 토글 ───────── */
+    if (trigger === 'click') {
+      if (isOpen) {
+        close(); // 이미 열려 있으면 닫기
+      } else if (!isOpen) {
+        open(); // 닫혀 있으면 열기
+      }
+      return;
+    }
+
+    /* ───────── 3) always 모드 ───────── */
+    if (trigger === 'always') {
+      /* 3-1. 닫혀 있으면 : 무조건 열고 lock 해제 */
+      if (!isOpen) {
+        setLocked(false);
+        open();
+        return;
+      }
+
+      /* 3-2. 열려 있고 lock이 해제되어 있으면 : lock 활성화 */
+      if (isOpen && !locked) {
+        setLocked(true); // 고정
+        return;
+      }
+
+      /* 3-3. 열려 있고 lock이 걸려 있으면 : lock 해제 + 닫기 */
+      if (isOpen && locked) {
+        setLocked(false);
+        close();
+        return;
+      }
+    }
   };
 
-  // 외부 클릭 시 닫기
+  /* ---------- hover 처리 ---------- */
+  const handleMouseEnter = () => {
+    if (trigger === 'hover' || (trigger === 'always' && !locked)) open();
+  };
+  const handleMouseLeave = () => {
+    if (trigger === 'hover' || (trigger === 'always' && !locked)) close();
+  };
+
+  /* ---------- 외부 클릭 시 닫기 ---------- */
   useEffect(() => {
-    if (!isOpen) return;
-    const handleClickOutside = (e) => {
-      if (containerRef.current && !containerRef.current.contains(e.target)) {
+    if (!isOpen || (trigger === 'always' && locked)) return;
+
+    const handleOutside = (e) => {
+      if (!containerRef.current?.contains(e.target)) {
         setIsOpen(false);
-        onToggle && onToggle(false);
+        onToggle?.(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [isOpen, onToggle]);
+    document.addEventListener('mousedown', handleOutside);
+    return () => document.removeEventListener('mousedown', handleOutside);
+  }, [isOpen, locked, trigger, onToggle]);
 
-  // 호버 동작: openOnHover가 true일 때만 처리
-  const handleMouseEnter = () => {
-    if (openOnHover) {
-      openDropdown();
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (openOnHover) {
-      closeDropdown();
-    }
-  };
-
-  const wrapperClass = [
-    styles.dropdown,
-    styles[`dropdown--${layout}`],
-    isOpen ? styles['dropdown--open'] : '',
-  ]
-    .filter(Boolean)
-    .join(' ');
-
-  const toggleClass = [styles['dropdown__toggle'], ButtonClassName].filter(Boolean).join(' ');
-  const menuClass = [styles['dropdown__menu'], MenuClassName].filter(Boolean).join(' ');
+  /* ---------- 애니메이션 시간 계산 ---------- */
+  const duration =
+    typeof animationDuration === 'number'
+      ? { open: animationDuration, close: animationDuration }
+      : { open: animationDuration.open, close: animationDuration.close };
+  /* ---------- 클래스 이름 설정 ---------- */
+  const wrapperClass = classnames(styles.dropdown, styles[`dropdown--${layout}`], {
+    [styles['dropdown--open']]: isOpen,
+  });
+  const toggleClass = classnames(styles['dropdown__toggle'], ButtonClassName);
+  const menuClass = classnames(styles['dropdown__menu'], MenuClassName);
 
   return (
     <div
@@ -111,9 +146,13 @@ function DropdownButton({
         ref={menuRef}
         className={menuClass}
         style={{
+          marginTop: `${offset}px`,
+          transition: `transform ${duration.open}ms ease, opacity ${duration.open}ms ease`,
           transform: isOpen
             ? `scaleY(1) translateX(calc(-50% + ${adjustXValue}px))`
             : `scaleY(0) translateX(calc(-50% + ${adjustXValue}px))`,
+          opacity: isOpen ? 1 : 0,
+          pointerEvents: isOpen ? 'auto' : 'none',
         }}
       >
         {ListComponent}

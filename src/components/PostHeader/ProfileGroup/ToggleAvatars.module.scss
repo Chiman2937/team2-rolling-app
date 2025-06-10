@@ -10,15 +10,12 @@
   opacity: 0;
   animation: fade-in-spinner 2s forwards;
 }
-
+.toggle-avatars--loading {
+  display: flex;
+}
 .toggle-avatars--error {
   font-size: 14px;
   color: #e53e3e;
-}
-
-.toggle-avatars--empty {
-  display: flex;
-  align-items: center;
 }
 
 .toggle-avatars__avatar {
@@ -47,6 +44,12 @@
 
 .toggle-avatars__count {
   margin-left: 8px;
+  font-size: var(--font-size-18);
+  color: var(--color-gray-900);
+}
+.toggle-avatars--empty {
+  display: flex;
+  align-items: center;
   font-size: var(--font-size-18);
   color: var(--color-gray-900);
 }

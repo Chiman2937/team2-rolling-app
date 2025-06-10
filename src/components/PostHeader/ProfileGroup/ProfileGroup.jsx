@@ -24,13 +24,6 @@ export default function ProfileGroup({ id }) {
     return [...messages].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   }, [data]);
 
-  // 프로필 이미지 업데이트(..굳이인가?)
-  // const handleToggle = (open) => {
-  //   if (open) {
-  //     refetch();
-  //   }
-  // };
-
   return (
     <div className={Style['profile-group']}>
       <DropdownButton
@@ -44,7 +37,8 @@ export default function ProfileGroup({ id }) {
         }
         ListComponent={<ProfileList profiles={sortedProfiles} loading={loading} error={error} />}
         layout='column'
-        openOnHover={true}
+        trigger='always'
+        offset={20}
         ButtonClassName={Style['profile-group__toggle-button']}
         MenuClassName={Style['profile-group__menu-container']}
         //onToggle={handleToggle}
