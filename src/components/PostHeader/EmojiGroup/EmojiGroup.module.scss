@@ -26,8 +26,9 @@
 .emoji-group--loading,
 .emoji-group--error,
 .emoji-group--empty {
-  padding: 12px;
-  font-size: 14px;
-  color: #555;
-  text-align: center;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-18);
+  color: var(--color-gray-900);
 }

@@ -22,7 +22,7 @@ import { useDeviceType } from '@/hooks/useDeviceType';
  * @param {object} props
  * @param {number|string} props.id
  *        - 이모지를 추가할 대상 Recipient ID
- * @param {() => void} [props.onSuccess]
+ * @param {(emoji: string) => void} [props.onSuccess]
  *        - 이모지 추가 API 호출이 성공했을 때 실행할 콜백 (예: 반응 목록을 다시 불러오기)
  */
 export default function EmojiAdd({ id, onSuccess }) {
