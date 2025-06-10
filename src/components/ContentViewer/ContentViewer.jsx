@@ -37,7 +37,6 @@ export default function ContentViewer({
       className={className}
       style={{
         width: '100%',
-        overflow: 'auto',
         whiteSpace: 'pre-wrap',
         wordBreak: 'break-word',
 
