@@ -35,7 +35,11 @@ export default function ProfileGroup({ id }) {
             error={error}
           />
         }
-        ListComponent={<ProfileList profiles={sortedProfiles} loading={loading} error={error} />}
+        ListComponent={
+          totalCount > 0 ? (
+            <ProfileList profiles={sortedProfiles} loading={loading} error={error} />
+          ) : null
+        }
         layout='column'
         trigger='always'
         offset={20}

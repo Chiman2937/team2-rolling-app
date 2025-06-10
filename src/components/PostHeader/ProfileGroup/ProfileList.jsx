@@ -2,6 +2,7 @@
 import React from 'react';
 import Style from './ProfileList.module.scss';
 import { getDaysAgo } from '@/utils/getDaysAgo.js';
+import GradientImage from '@/components/GradientImage/GradientImage';
 
 /**
  * ProfileList 컴포넌트
@@ -31,7 +32,7 @@ export default function ProfileList({ profiles, loading, error }) {
         return (
           <li key={profile.id} className={Style['profile-list__item']}>
             <div className={Style['profile-list__item-container']}>
-              <img
+              <GradientImage
                 src={profile.profileImageURL}
                 alt={profile.sender}
                 className={Style['profile-list__avatar']}

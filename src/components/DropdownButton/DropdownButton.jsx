@@ -142,21 +142,24 @@ function DropdownButton({
       <div className={toggleClass} onClick={handleToggleClick}>
         {ToggleComponent}
       </div>
-      <div
-        ref={menuRef}
-        className={menuClass}
-        style={{
-          marginTop: `${offset}px`,
-          transition: `transform ${duration.open}ms ease, opacity ${duration.open}ms ease`,
-          transform: isOpen
-            ? `scaleY(1) translateX(calc(-50% + ${adjustXValue}px))`
-            : `scaleY(0) translateX(calc(-50% + ${adjustXValue}px))`,
-          opacity: isOpen ? 1 : 0,
-          pointerEvents: isOpen ? 'auto' : 'none',
-        }}
-      >
-        {ListComponent}
-      </div>
+      {/* 드롭다운 메뉴: null 또는 undefined 경우 표시 안함 */}
+      {ListComponent && (
+        <div
+          ref={menuRef}
+          className={menuClass}
+          style={{
+            marginTop: `${offset}px`,
+            transition: `transform ${duration.open}ms ease, opacity ${duration.open}ms ease`,
+            transform: isOpen
+              ? `scaleY(1) translateX(calc(-50% + ${adjustXValue}px))`
+              : `scaleY(0) translateX(calc(-50% + ${adjustXValue}px))`,
+            opacity: isOpen ? 1 : 0,
+            pointerEvents: isOpen ? 'auto' : 'none',
+          }}
+        >
+          {ListComponent}
+        </div>
+      )}
     </div>
   );
 }

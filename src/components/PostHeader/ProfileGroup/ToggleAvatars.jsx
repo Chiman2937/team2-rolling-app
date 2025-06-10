@@ -3,17 +3,18 @@ import React from 'react';
 import Style from './ToggleAvatars.module.scss';
 import GradientImage from '@/components/GradientImage/GradientImage';
 import CountUp from '@/components/CountUp';
-
+import { Link } from 'react-router-dom';
 /**
  * ToggleAvatars 컴포넌트
  *
  * @param {object} props
+ * @param {string|number} props.id - 게시글 ID
  * @param {Array}  props.profiles    - 정렬된 프로필 메시지 배열
  * @param {number} props.totalCount  - data.count (전체 메시지 수)
  * @param {boolean} props.loading
  * @param {Error|null} props.error
  */
-export default function ToggleAvatars({ profiles, totalCount, error }) {
+export default function ToggleAvatars({ id, profiles, totalCount, error }) {
   // totalCount를 최대 999로 제한
   const displayCount = totalCount > 999 ? '999+' : totalCount;
 
@@ -64,7 +65,9 @@ export default function ToggleAvatars({ profiles, totalCount, error }) {
 
       {extraCount > 0 && <div className={Style['toggle-avatars__extra']}>+{displayExtra}</div>}
       {totalCount === 0 ? (
-        <div className={Style['toggle-avatars__empty']}>아직 프로필이 없어요</div>
+        <Link to={`/post/${id}/message`} className={Style['toggle-avatars__empty']}>
+          마음을 담은 메시지를 보내주세요!
+        </Link>
       ) : (
         <span className={Style['toggle-avatars__count']}>
           <CountUp
