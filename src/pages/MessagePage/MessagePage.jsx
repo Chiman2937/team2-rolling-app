@@ -42,7 +42,10 @@ function MessagePage() {
     },
   };
   // useForm 훅으로 모든 필드(특히 content) 값을 관리
-  const { values, handleChange, resetForm, isFormValid } = useForm(initialValues, validationRules);
+  const { values, validity, touched, handleChange, handleBlur, resetForm, isFormValid } = useForm(
+    initialValues,
+    validationRules,
+  );
 
   // 메시지 생성 API 호출을 위한 useApi 훅 사용
   const { data, loading, refetch } = useApi(createRecipientMessage, null, {
@@ -91,7 +94,8 @@ function MessagePage() {
             value={values.sender}
             placeholder='이름을 입력해 주세요.'
             onChange={handleChange('sender')}
-            isValid={true}
+            onBlur={handleBlur('sender')}
+            isValid={touched.sender ? validity.sender : null}
             message='이름은 필수 입력 사항입니다.'
             disabled={loading}
           />

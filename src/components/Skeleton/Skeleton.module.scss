@@ -1,0 +1,10 @@
+.skeleton {
+  display: inline-block;
+  // mixin 적용
+  @include skeleton-style;
+}
+
+.circle {
+  // 원형 옵션
+  border-radius: 50% !important;
+}
