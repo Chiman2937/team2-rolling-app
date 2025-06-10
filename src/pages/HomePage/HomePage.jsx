@@ -6,6 +6,7 @@ import imgPaperLg from '@/assets/images/home_makepaper_lg.webp';
 import imgPaperSm from '@/assets/images/home_makepaper_sm.webp';
 import imgImojiLg from '@/assets/images/home_addimoji_lg.webp';
 import imgImojiSm from '@/assets/images/home_addimoji_sm.webp';
+import Button from '../../components/Button/Button';
 
 //import Button from '@/components/Button/Button';
 
@@ -47,8 +48,8 @@ const HomePage = () => (
           />
         </div>
       </article>
-      <Link to='/list' style={{ textDecoration: 'none', textAlign: 'center' }}>
-        <button className={styles['page-points__view-button']}>구경해보기</button>
+      <Link to='/list'>
+        <Button className={styles['page-points__view']}>구경해보기</Button>
       </Link>
     </section>
   </main>
