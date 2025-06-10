@@ -11,11 +11,17 @@ import styles from './HorizontalScrollContainer.module.scss';
  *
  * @param {{
  *   children: React.ReactNode,
+ *   hideScroll: boolean          // 스크롤 표시 여부
  *   className?: string,          // 추가적인 클래스 네임 (선택)
  *   style?: React.CSSProperties, // inline style (선택)
  * }} props
  */
-export default function HorizontalScrollContainer({ children, className = '', style = {} }) {
+export default function HorizontalScrollContainer({
+  children,
+  hideScroll = true,
+  className = '',
+  style = {},
+}) {
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -38,7 +44,11 @@ export default function HorizontalScrollContainer({ children, className = '', st
   }, []);
 
   return (
-    <div ref={containerRef} className={`${styles['horizontal-scroll']} ${className}`} style={style}>
+    <div
+      ref={containerRef}
+      className={`${styles['horizontal-scroll']} ${hideScroll ? styles['horizontal-scroll--hide-scrollbar'] : ''} ${className}`}
+      style={style}
+    >
       {children}
     </div>
   );

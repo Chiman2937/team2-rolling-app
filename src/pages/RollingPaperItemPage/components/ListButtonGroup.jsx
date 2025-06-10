@@ -1,25 +1,26 @@
 import styles from './ListButtonGroup.module.scss';
 import Button from '@/components/Button/Button';
+import { useDeviceType } from '@/hooks/useDeviceType';
 
 const ListButtonGroup = ({ showDelete, onClickEdit, onClickPrev, onClickGoList }) => {
+  const deviceType = useDeviceType();
+  const buttonSize = deviceType !== 'desktop' ? 'stretch' : 'small';
+
   return (
     <>
       <div className={styles['list__button-group']}>
-        <button
-          className={`${styles['list__button']} ${styles['list__button--border']}`}
-          onClick={onClickGoList}
-        >
+        <Button size={buttonSize} onClick={onClickGoList}>
           목록으로
-        </button>
+        </Button>
         {!showDelete && (
-          <button className={styles['list__button']} onClick={onClickEdit}>
+          <Button size={buttonSize} onClick={onClickEdit}>
             편집하기
-          </button>
+          </Button>
         )}
         {showDelete && (
-          <button className={styles['list__button']} onClick={onClickPrev}>
+          <Button size={buttonSize} onClick={onClickPrev}>
             돌아가기
-          </button>
+          </Button>
         )}
       </div>
     </>

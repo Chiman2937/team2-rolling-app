@@ -10,6 +10,7 @@ import ShareMenu from '@/components/PostHeader/ShareMenu/ShareMenu';
 
 import { useDeviceType } from '@/hooks/useDeviceType';
 import { DEVICE_TYPES } from '@/constants/deviceType';
+import { useKakaoShare } from '../../hooks/useKakaoShare';
 
 /**
  * PostHeader 컴포넌트
@@ -24,6 +25,9 @@ export default function PostHeader({ id, name }) {
   // 현재 디바이스 타입을 가져옴
   const deviceType = useDeviceType();
   const isDesktop = deviceType === DEVICE_TYPES.DESKTOP;
+
+  // 카카오 공유 이벤트 핸들러
+  const { handleKakaoShare } = useKakaoShare();
 
   return (
     <header className={Style['post-header']}>
@@ -46,11 +50,7 @@ export default function PostHeader({ id, name }) {
 
           <div className={Style['post-header__divider']} />
 
-          <ShareMenu
-            onKakaoClick={() => {
-              /* 공유 로직 */
-            }}
-          />
+          <ShareMenu onKakaoClick={handleKakaoShare} />
         </nav>
       </div>
     </header>

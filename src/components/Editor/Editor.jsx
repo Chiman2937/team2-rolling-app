@@ -11,7 +11,7 @@ import { $generateHtmlFromNodes, $generateNodesFromDOM } from '@lexical/html';
 import { $getRoot } from 'lexical';
 import ToolbarPlugin from './Toolbar';
 import styles from './Editor.module.scss';
-import { getFontStyle } from '@/constants/fontMap';
+import { getFontFamily } from '@/constants/fontMap';
 
 /**
  * 에디터 내용 변경 시 HTML을 상위(onUpdate)로 전달
@@ -58,6 +58,7 @@ export default function Editor({
       strikethrough: styles.editor__textStrikethrough,
     },
   };
+  console.log('foooont', font, 'getFontFamily(font)', getFontFamily(font));
 
   // 2) initialEditorState: content가 있으면 파싱해서 DOM => 노드 트리로 초기화
   const initialEditorState = useMemo(() => {
@@ -84,14 +85,12 @@ export default function Editor({
       console.error('Lexical Error:', error);
     },
   };
-  // 4) 폰트 스타일 가져오기
-  const fontStyles = getFontStyle(font);
 
   return (
     <div
       className={className}
       style={{
-        ...fontStyles,
+        fontFamily: getFontFamily(font),
         ...style,
       }}
     >
@@ -100,7 +99,12 @@ export default function Editor({
 
         {/* RichTextPlugin 하나로 bold/italic/underline/strikethrough 지원 */}
         <RichTextPlugin
-          contentEditable={<ContentEditable className={styles.editor__content} />}
+          contentEditable={
+            <ContentEditable
+              style={{ fontFamily: getFontFamily(font) }}
+              className={styles.editor__content}
+            />
+          }
           placeholder={
             readOnly ? null : (
               <div className={styles.editor__placeholder}>내용을 입력해 주세요…</div>

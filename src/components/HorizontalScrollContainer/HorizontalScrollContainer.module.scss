@@ -7,7 +7,9 @@
   align-items: center;
   overflow-x: auto;
   overflow-y: hidden;
+}
 
+.horizontal-scroll--hide-scrollbar {
   /* Firefox 스크롤바 숨김 */
   @supports (scrollbar-width: none) {
     scrollbar-width: none; /* Firefox 에서만 스크롤바 숨김 */
