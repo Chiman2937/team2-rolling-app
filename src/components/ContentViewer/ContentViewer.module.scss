@@ -6,8 +6,9 @@
 
 .viewer-content {
   /* 편집기 포맷을 최대한 살리기 위한 기본값 */
-  font-family: inherit; // 상위에서 지정한 폰트 상속
+
   line-height: 1.6;
+  font-family: inherit;
 
   /* 태그별 스타일을 복원 */
   b,

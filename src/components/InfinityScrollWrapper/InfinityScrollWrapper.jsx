@@ -1,7 +1,20 @@
 import styles from './InfinityScrollWrapper.module.scss';
 import { useEffect, useRef } from 'react';
 
-const InfinityScrollWrapper = ({ children, hasNext, callback }) => {
+/*
+  children: 자식 요소
+  hasNext: 다음 데이터가 있는 지 여부 (true, false)
+  callback: 스크롤 끝에 도달했을 때 수행할 메소드
+  isHorizontal: 무한 스크롤 가로 여부
+  scrollObserverRef: 스크롤 대상
+*/
+const InfinityScrollWrapper = ({
+  children,
+  hasNext,
+  callback,
+  isHorizontal = false,
+  scrollObserverRef,
+}) => {
   const observerRef = useRef(null);
 
   useEffect(() => {
@@ -14,7 +27,10 @@ const InfinityScrollWrapper = ({ children, hasNext, callback }) => {
     };
 
     /* 무한 스크롤 감시 */
-    const observer = new IntersectionObserver(onScroll, { threshold: 0.5 });
+    const observer = new IntersectionObserver(onScroll, {
+      threshold: 0.5,
+      root: scrollObserverRef?.current ?? null,
+    });
     const currentRef = observerRef.current;
     if (currentRef) {
       observer.observe(currentRef);
@@ -26,10 +42,10 @@ const InfinityScrollWrapper = ({ children, hasNext, callback }) => {
       }
       observer.disconnect();
     };
-  }, [observerRef, hasNext, callback]);
+  }, [observerRef, hasNext, callback, isHorizontal, scrollObserverRef]);
 
   return (
-    <div className={styles['container']}>
+    <div className={isHorizontal ? styles['container--horizontal'] : styles['container--vertical']}>
       {children}
       <div ref={observerRef} className={styles['container__observer']} />
     </div>

@@ -1,10 +1,16 @@
-import styles from './ListCard.module.scss';
+import styles from '@/pages/RollingPaperItemPage/components/ListCard.module.scss';
 import DeleteIcon from './DeleteIcon';
+import Button from '@/components/Button/Button';
 import SenderProfile from '@/components/SenderProfile';
+import ContentViewer from '@/components/ContentViewer/ContentViewer';
 
 const ListCard = ({ cardData, showDelete, onClick, onDelete }) => {
   /* 폰트 확인 후 해당 폰트로 보여줘야 함 */
-  const { id, sender, profileImageURL, content, createdAt, relationship } = cardData;
+  const { id, sender, profileImageURL, content, createdAt, relationship, font } = cardData;
+
+  const deleteIconStyle = {
+    color: 'var(--color-gray-500)',
+  };
 
   const formatDateKRW = (isoString) => {
     const date = new Date(isoString);
@@ -20,6 +26,7 @@ const ListCard = ({ cardData, showDelete, onClick, onDelete }) => {
       imageUrl: profileImageURL,
       createdAt: formatDateKRW(createdAt),
       content: content,
+      font: font,
     });
   };
 
@@ -35,13 +42,21 @@ const ListCard = ({ cardData, showDelete, onClick, onDelete }) => {
           <header className={styles['card__sender']}>
             <SenderProfile sender={sender} imageUrl={profileImageURL} relationship={relationship} />
             {showDelete && (
-              <button className={styles['card__button--delete']} onClick={onClickDeleteBtn}>
+              <Button
+                variant={'outlined'}
+                size={'40'}
+                iconOnly={true}
+                style={deleteIconStyle}
+                onClick={onClickDeleteBtn}
+              >
                 <DeleteIcon />
-              </button>
+              </Button>
             )}
           </header>
           <hr className={styles['card__divider']} />
-          <section className={styles['card__content']}>{content}</section>
+          <section className={styles['card__content']}>
+            <ContentViewer content={content} font={font} />
+          </section>
         </div>
         <footer className={styles['card__date']}>{formatDateKRW(createdAt)}</footer>
       </div>
