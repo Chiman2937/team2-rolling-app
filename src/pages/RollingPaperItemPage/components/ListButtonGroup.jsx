@@ -9,7 +9,7 @@ const ListButtonGroup = ({ showDelete, onClickEdit, onClickPrev, onClickGoList }
   return (
     <>
       <div className={styles['list__button-group']}>
-        <Button size={buttonSize} onClick={onClickGoList}>
+        <Button size={buttonSize} variant={'secondary'} onClick={onClickGoList}>
           목록으로
         </Button>
         {!showDelete && (
