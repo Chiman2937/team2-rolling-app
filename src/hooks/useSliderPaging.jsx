@@ -35,19 +35,6 @@ export function useSliderPaging({ totalItems, pageSize, cardWidth, gap, breakpoi
   const goPrev = () => canPrev && slideTo(pageIndex - 1);
   const goNext = () => canNext && slideTo(pageIndex + 1);
 
-  // 5) 모바일·태블릿: 직접 스크롤 → 페이지 인덱스 동기화
-  useEffect(() => {
-    if (isDesktop) return;
-    const el = wrapperRef.current;
-    if (!el) return;
-    const onScroll = () => {
-      const idx = Math.round(el.scrollLeft / offset);
-      setPageIndex(Math.min(Math.max(idx, 0), totalPage));
-    };
-    el.addEventListener('scroll', onScroll, { passive: true });
-    return () => el.removeEventListener('scroll', onScroll);
-  }, [isDesktop, offset, totalPage]);
-
   return {
     wrapperRef,
     isDesktop,
@@ -56,5 +43,6 @@ export function useSliderPaging({ totalItems, pageSize, cardWidth, gap, breakpoi
     canNext,
     goPrev,
     goNext,
+    totalPage,
   };
 }
