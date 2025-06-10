@@ -1,0 +1,64 @@
+/* src/components/GradientImage/GradientImage.module.scss */
+
+@keyframes glowPlaceholder {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gradient-image {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  border: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    /* 그라디언트 색상 움직임 */
+    background: linear-gradient(
+      90deg,
+      rgba(127, 0, 255, 0.6),
+      rgba(0, 255, 193, 0.6),
+      rgba(127, 0, 255, 0.6)
+    );
+    background-size: 300% 300%;
+    animation: glowPlaceholder 8s ease infinite;
+
+    /* 더 크게, 더 번지게, 더 은은하게 */
+    transform: scale(1.5);
+    filter: blur(60px);
+    opacity: 0.5;
+
+    transition: opacity 1s ease-in-out;
+    z-index: 1;
+  }
+
+  &__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out 0.2s;
+    will-change: opacity;
+    position: relative;
+    z-index: 2;
+  }
+
+  &--loaded {
+    &::before {
+      opacity: 0;
+    }
+    .gradient-image__img {
+      opacity: 1;
+    }
+  }
+}

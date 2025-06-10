@@ -5,15 +5,27 @@ import ImagePreloader from '@/components/ImagePreloader';
 import styles from './ProfileSelector.module.scss';
 import AVATAR_PLACEHOLDER from '@/assets/images/image_profile_default.svg';
 import HorizontalScrollContainer from '@/components/HorizontalScrollContainer/HorizontalScrollContainer';
+import GradientImage from '@/components/GradientImage/GradientImage';
 
 function ProfileSelector({ onSelectImage }) {
   //  프로필 이미지 목록 가져오기 (API 호출)
   const { data: imageData, loading } = useApi(getProfileImages);
 
+  useEffect(() => {
+    if (!loading && imageData) {
+      console.log('🌐 [FETCH] 프로필 이미지 URL 목록 도착', imageData);
+    }
+  }, [loading, imageData]);
   // imageData가 배열이 아닐 경우 빈 배열로 초기화
   const imageUrls = useMemo(() => {
     return Array.isArray(imageData?.imageUrls) ? imageData.imageUrls : [];
   }, [imageData]);
+
+  useEffect(() => {
+    if (imageUrls.length) {
+      console.log('🖼️ [RENDER] <img> 요소 렌더링 시작', imageUrls);
+    }
+  }, [imageUrls]);
   // 선택된 이미지 URL 상태
   const [selectedUrl, setSelectedUrl] = useState('');
 
@@ -31,16 +43,13 @@ function ProfileSelector({ onSelectImage }) {
     onSelectImage && onSelectImage(url);
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
   return (
     <div className={styles['profile-selector']}>
       {/* 백그라운드에서 모든 이미지 미리 로드 */}
       <ImagePreloader imageUrls={imageUrls} />
       {/* 현재 선택된 이미지를 보여주는 영역 */}
       <div className={styles['profile-selector__preview-container']}>
-        <img
+        <GradientImage
           src={selectedUrl || AVATAR_PLACEHOLDER}
           alt='선택된 프로필'
           className={styles['profile-selector__preview']}
@@ -55,17 +64,17 @@ function ProfileSelector({ onSelectImage }) {
             const isSelected = url === selectedUrl;
 
             return (
-              <img
+              <GradientImage
+                key={url}
                 src={url}
                 alt={`프로필 썸네일 ${idx + 1}`}
-                draggable='false'
                 className={
                   isSelected
                     ? styles['profile-selector__image-selected']
                     : styles['profile-selector__image']
                 }
                 onClick={() => handleImageSelect(url)}
-                key={url}
+                draggable='false'
               />
             );
           })}
