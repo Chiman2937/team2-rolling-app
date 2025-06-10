@@ -5,7 +5,7 @@ export const useKakaoShare = () => {
     if (!window.Kakao || !window.Kakao.isInitialized()) return;
     const currentUrl = window.location.href;
     const origin = window.location.origin;
-    const imageUrl = `${origin}/images/image_opengraph.png`;
+    const imageUrl = `${origin}/images/image_opengraph_narrow.png`;
     window.Kakao.Share.sendDefault({
       objectType: 'feed',
       content: {
