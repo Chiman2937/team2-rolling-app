@@ -15,14 +15,15 @@ export default function ProfileList({ profiles, loading, error }) {
     return <div className={Style['profile-list--error']}>에러 발생: {error.message}</div>;
   }
 
-  const top10 = profiles.slice(0, 10);
-  if (top10.length === 0) {
+  const top5 = profiles.slice(0, 5);
+  if (top5.length === 0) {
     return <div className={Style['profile-list--empty']}>등록된 프로필이 없습니다.</div>;
   }
 
   return (
     <ul className={Style['profile-list__container']}>
-      {top10.map((profile) => {
+      <span className={Style['profile-list__title']}>최근 메시지 프로필</span>
+      {top5.map((profile) => {
         // 이름이 10자를 넘으면 잘라서 "..." 붙이기
         const displayName =
           profile.sender.length > 6 ? profile.sender.slice(0, 6) + '...' : profile.sender;

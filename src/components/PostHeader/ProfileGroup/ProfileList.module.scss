@@ -30,6 +30,12 @@
     flex-direction: column;
     justify-content: center;
   }
+  &__title {
+    padding: 5px;
+    text-align: center;
+    font-size: var(--font-size-16);
+    font-weight: var(--font-weight-bold);
+  }
 
   &__item {
     display: flex;
