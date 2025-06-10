@@ -6,7 +6,14 @@ import styles from './ProfileSelector.module.scss';
 import AVATAR_PLACEHOLDER from '@/assets/images/image_profile_default.svg';
 import HorizontalScrollContainer from '@/components/HorizontalScrollContainer/HorizontalScrollContainer';
 import GradientImage from '@/components/GradientImage/GradientImage';
-import LoadingLabel from '@/components/loadingLabel/LoadingLabel';
+import LoadingLabel from '@/components/LoadingLabels/LoadingLabel';
+
+/**
+ * 프로필 이미지 선택기
+ * @param {Object} param0
+ * @param {Function} param0.onSelectImage - 이미지 선택 시 호출되는 콜백
+ * @returns {JSX.Element}
+ */
 
 function ProfileSelector({ onSelectImage }) {
   //  프로필 이미지 목록 가져오기 (API 호출)
