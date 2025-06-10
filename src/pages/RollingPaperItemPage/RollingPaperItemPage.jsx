@@ -131,9 +131,13 @@ const RollingPaperItemPage = () => {
         <DeletePaperSuccessModal
           onClose={() => {
             closeModal();
-            navigate('/list');
           }}
         />,
+        {
+          onModalClose: () => {
+            navigate('/list');
+          },
+        },
       ),
     );
   };
