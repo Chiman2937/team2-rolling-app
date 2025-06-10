@@ -2,45 +2,32 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './ItemCard.module.scss';
-import { COLOR_STYLES } from '@/constants/colorThemeStyle';
 import ShowAvatars from './ShowAvatars';
 import ShowEmoji from './ShowEmoji';
+import { getBackgroundStylesFromPostData } from '@/utils/getBackgroundStylesFromPostData';
+import { getContentStylesFromPostData } from '@/utils/getContentStylesFromPostData';
 
 const ItemCard = ({
-  data: {
-    id,
-    name,
-    backgroundColor,
-    backgroundImageURL,
-    messageCount,
-    recentMessages = [],
-    topReactions = [],
-  },
+  id,
+  name,
+  backgroundColor,
+  backgroundImageURL,
+  messageCount,
+  recentMessages = [],
+  topReactions = [],
 }) => {
-  const { primary, border, accent } = COLOR_STYLES[backgroundColor] || {};
-  const backgroundStyle = backgroundImageURL
-    ? {
-        backgroundImage: `url(${backgroundImageURL})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }
-    : { backgroundColor: primary, borderColor: border };
+  // 배경 설정: 이미지가 있으면 이미지, 없으면 컬러
+  const backgroundStyle = getBackgroundStylesFromPostData({ backgroundColor, backgroundImageURL });
 
-  const contentClass = backgroundImageURL
-    ? `${styles['item-card__content']} ${styles['item-card__content--image']}`
-    : styles['item-card__content'];
+  // 밝은 색: 검정 텍스트
+  // 어두운 색: 하얀색 텍스트
+  // 이미지: 하얀색 텍스트 / 어두운색 overlay 적용
+  const contentStyle = getContentStylesFromPostData(backgroundImageURL);
 
   return (
     <Link to={`/post/${id}`} className={styles['item-card__link']}>
       <div className={styles['item-card']} style={backgroundStyle}>
-        {backgroundImageURL && (
-          <div
-            className={styles['item-card__overlay']}
-            style={{ background: `linear-gradient(180deg, ${accent} 0%, rgba(0,0,0,0) 100%)` }}
-          />
-        )}
-
-        <div className={contentClass}>
+        <div className={styles['item-card__content']} style={contentStyle}>
           <h3 className={styles['item-card__title']}>To. {name}</h3>
           <p className={styles['item-card__meta']}>{messageCount}명이 작성했어요!</p>
 
