@@ -20,8 +20,10 @@ import {
 } from 'lexical';
 
 // SVG 아이콘을 import (Vite, CRA 환경에서 URL 형태로 반환됨)
-import UndoIcon from '@/assets/editorIcons/arrow-counterclockwise.svg';
-import RedoIcon from '@/assets/editorIcons/arrow-clockwise.svg';
+import UndoIcon from '@/assets/editorIcons/icon_undo_active.svg';
+import UndoInactiveIcon from '@/assets/editorIcons/icon_undo_inactive.svg';
+import RedoIcon from '@/assets/editorIcons/icon_redo_active.svg';
+import RedoInactiveIcon from '@/assets/editorIcons/icon_redo_inactive.svg';
 import BoldIcon from '@/assets/editorIcons/type-bold.svg';
 import ItalicIcon from '@/assets/editorIcons/type-italic.svg';
 import UnderlineIcon from '@/assets/editorIcons/type-underline.svg';
@@ -118,21 +120,25 @@ export default function ToolbarPlugin() {
       {/** Undo 버튼 **/}
       <ToolbarButton
         icon={UndoIcon}
+        inactiveIcon={UndoInactiveIcon}
         label='Undo'
         disabled={!canUndo}
         editor={editor}
         command={UNDO_COMMAND}
         commandArg={undefined}
+        style={{ padding: '7px 0' }}
       />
 
       {/** Redo 버튼 **/}
       <ToolbarButton
         icon={RedoIcon}
+        inactiveIcon={RedoInactiveIcon}
         label='Redo'
         disabled={!canRedo}
         editor={editor}
         command={REDO_COMMAND}
         commandArg={undefined}
+        style={{ padding: '7px 0' }}
       />
 
       <Divider />

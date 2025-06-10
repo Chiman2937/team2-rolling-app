@@ -32,7 +32,6 @@ export default function ContentViewer({
     return truncate(sanitizedHtml, maxLength, { ellipsis: '…' });
   }, [sanitizedHtml, maxLength]);
 
-  const fontStyle = getFontStyle(font);
   return (
     <div
       className={className}
@@ -41,12 +40,16 @@ export default function ContentViewer({
         overflow: 'auto',
         whiteSpace: 'pre-wrap',
         wordBreak: 'break-word',
-        ...fontStyle,
+
         ...style,
       }}
     >
       {/* sanitize → truncate된 HTML만 주입 */}
-      <div className='viewer-content' dangerouslySetInnerHTML={{ __html: displayedHtml }} />
+      <div
+        className='viewer-content'
+        style={getFontStyle(font)}
+        dangerouslySetInnerHTML={{ __html: displayedHtml }}
+      />
     </div>
   );
 }
