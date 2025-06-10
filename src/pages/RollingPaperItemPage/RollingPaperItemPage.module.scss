@@ -46,3 +46,20 @@
     }
   }
 }
+
+.skeleton-list {
+	@include skeleton-style;
+	min-height: 100dvh;
+  padding: 24px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+	
+  @include tablet {
+    padding: 92px 24px;
+  }
+
+  @include desktop {
+    padding: 113px 24px;
+  }
+}
