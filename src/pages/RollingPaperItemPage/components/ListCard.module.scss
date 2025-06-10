@@ -16,20 +16,22 @@
   transform: translateZ(0);
   cursor: pointer;
 
-  &:hover {
-    transform: scale(1.05);
+  @media (hover: hover) {
+    &:hover {
+      transform: scale(1.05);
+    }
   }
 
   &:active {
     transform: scale(1.05);
   }
 
-  @media screen and (min-width: 768px) {
+  @include tablet {
     aspect-ratio: 352 / 284;
     max-width: none;
   }
 
-  @media screen and (min-width: 1200px) {
+  @include desktop {
     aspect-ratio: 384 / 280;
   }
 }
@@ -70,7 +72,12 @@
   -webkit-box-orient: vertical;
   line-height: 28px;
 
-  @media screen and (min-width: 768px) {
+  @include tablet {
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+  }
+
+  @include desktop {
     -webkit-line-clamp: 4;
     line-clamp: 4;
   }

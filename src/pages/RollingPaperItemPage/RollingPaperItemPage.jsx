@@ -1,18 +1,18 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useApi } from '@/hooks/useApi.jsx';
+
 import { useModal } from '@/hooks/useModal';
-import { getRecipient } from '@/apis/recipientsApi';
 import { useMessageItemsList } from '@/hooks/useMessageItemsList';
-import { COLOR_STYLES } from '../../constants/colorThemeStyle';
-import styles from '@/pages/RollingPaperItemPage/RollingPaperItemPage.module.scss';
-import ListButtonGroup from './components/ListButtonGroup';
-import ListCard from './components/ListCard';
-import ActionCard from './components/ActionCard';
-import CardModal from '../../components/CardModal';
-import RequestDeletePaperModal from './components/RequestDeletePaperModal';
-import DeletePaperSuccessModal from './components/DeletePaperSuccessModal';
+import { COLOR_STYLES } from '@/constants/colorThemeStyle';
+import CardModal from '@/components/CardModal';
 import PostHeader from '@/components/PostHeader/PostHeader';
+import LoadingOverlay from '@/components/LoadingOverlay';
+import styles from '@/pages/RollingPaperItemPage/RollingPaperItemPage.module.scss';
+import ListCard from '@/pages/RollingPaperItemPage/components/ListCard';
+import ActionCard from '@/pages/RollingPaperItemPage/components/ActionCard';
+import ListButtonGroup from '@/pages/RollingPaperItemPage/components/ListButtonGroup';
+import RequestDeletePaperModal from '@/pages/RollingPaperItemPage/components/RequestDeletePaperModal';
+import DeletePaperSuccessModal from '@/pages/RollingPaperItemPage/components/DeletePaperSuccessModal';
 import InfinityScrollWrapper from '@/components/InfinityScrollWrapper/InfinityScrollWrapper';
 
 const RollingPaperItemPage = () => {
@@ -21,24 +21,67 @@ const RollingPaperItemPage = () => {
   const { showModal, closeModal } = useModal();
   const [isEditMode, setIsEditMode] = useState(false);
 
-  /* useApi 사용하여 API 불러오는 영역  */
-  const { data: recipientData } = useApi(getRecipient, { id }, { immediate: true });
-
   /* 커스텀훅 영역 */
-  const { itemList, hasNext, loadMore, onClickDeleteMessage, onDeletePaperConfirm } =
-    useMessageItemsList(id); // 리스트 데이터 API 및 동작
+  const {
+    recipientData,
+    itemList,
+    hasNext,
+    showOverlay,
+    isLoading,
+    loadingDescription,
+    loadMore,
+    onClickDeleteMessage,
+    onDeletePaperConfirm,
+  } = useMessageItemsList(id); // 리스트 데이터 API 및 동작
 
   /* 전체 배경 스타일 적용 */
-  const containerStyle = {
-    backgroundColor: !recipientData?.backgroundImageURL
-      ? COLOR_STYLES[recipientData?.backgroundColor]?.primary
-      : '',
-    backgroundImage: recipientData?.backgroundImageURL
-      ? `url(${recipientData?.backgroundImageURL})`
-      : 'none',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
+  const containerStyle = recipientData
+    ? {
+        backgroundColor: !recipientData?.backgroundImageURL
+          ? COLOR_STYLES[recipientData?.backgroundColor]?.primary
+          : '',
+        backgroundImage: recipientData?.backgroundImageURL
+          ? `url(${recipientData?.backgroundImageURL})`
+          : 'none',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+      }
+    : {};
+
+  const paperDeleteModalData = {
+    title: (
+      <>
+        정말 이 롤링페이퍼를
+        <br />
+        <strong style={{ color: 'var(--color-purple-600)' }}>{' 삭제'}</strong>
+        하시겠습니까?
+      </>
+    ),
+    content: (
+      <>
+        삭제하면 모든 메시지가 함께 삭제되며
+        <br />
+        복구할 수 없습니다.
+      </>
+    ),
+  };
+
+  const messageDeleteModalData = {
+    title: (
+      <>
+        메시지를
+        <strong style={{ color: 'var(--color-purple-600)' }}>{' 삭제'}</strong>
+        하시겠습니까?
+      </>
+    ),
+    content: (
+      <>
+        삭제하면 메시지가 삭제되며
+        <br />
+        복구할 수 없습니다.
+      </>
+    ),
   };
 
   /* 버튼, 카드 클릭 시 동작  */
@@ -63,8 +106,19 @@ const RollingPaperItemPage = () => {
   };
 
   /* 메세지 삭제 */
-  const handleOnClickDeleteMessage = () => {
-    onClickDeleteMessage();
+  const handleOnClickDeleteMessage = (messageId) => {
+    showModal(
+      <RequestDeletePaperModal
+        onConfirm={() => handleOnDeleteMessageConfirm(messageId)}
+        onCancel={closeModal}
+        modalItems={messageDeleteModalData}
+      />,
+    );
+  };
+
+  const handleOnDeleteMessageConfirm = async (messageId) => {
+    onClickDeleteMessage(messageId);
+    closeModal();
   };
 
   /* 롤링페이퍼 페이퍼 삭제 */
@@ -73,6 +127,7 @@ const RollingPaperItemPage = () => {
       <RequestDeletePaperModal
         onConfirm={() => handleOnDeletePaperConfirm()}
         onCancel={closeModal}
+        modalItems={paperDeleteModalData}
       />,
     );
   };
@@ -90,6 +145,9 @@ const RollingPaperItemPage = () => {
     );
   };
 
+  if (showOverlay || isLoading) {
+    return <LoadingOverlay description={loadingDescription} />;
+  }
   return (
     <>
       {/* 헤더 영역 */}

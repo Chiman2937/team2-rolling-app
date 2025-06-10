@@ -13,7 +13,7 @@ export const TEAM = '2';
  * @param {Object}  [params]             - 페이지네이션 옵션 객체
  * @param {number}  [params.limit=20]    - **가져올 개수** (page size)
  * @param {number}  [params.offset=0]    - **시작 인덱스** (0부터)
- *
+ * @param {boolean} [params.sortLike=false]  - `true`면 reactionCount 순으로 정렬 (`sort=like`)
  * @returns {Promise<{
  *   count: number,                // 총 Recipient 개수
  *   next: string|null,            // 다음 페이지 URL (없으면 null)
@@ -31,9 +31,9 @@ export const TEAM = '2';
  *   }>
  * }>}
  */
-export const listRecipients = ({ limit = 20, offset = 0 } = {}) =>
+export const listRecipients = ({ limit = 20, offset = 0, sortLike = false } = {}) =>
   httpClient.get(`/${TEAM}/recipients/`, {
-    params: { limit, offset },
+    params: { limit, offset, ...(sortLike && { sort: 'like' }) },
   });
 
 /**

@@ -14,13 +14,13 @@
     background-color: var(--color-white);
 
     &:hover {
-      border: 1px solid var(--color-gray-500);
+      border: 1px solid var(--color-purple-600);
       color: var(--color-gray-500);
     }
 
     &:focus,
     &:active {
-      border: 2px solid var(--color-gray-500);
+      border: 2px solid var(--color-purple-600);
       color: var(--color-gray-900);
     }
 

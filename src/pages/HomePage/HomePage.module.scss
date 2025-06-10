@@ -1,5 +1,4 @@
-/* 글로벌 설정 */
-* {
+body {
   box-sizing: border-box;
   font-family: var(--font-family-base);
 }
@@ -12,6 +11,13 @@
   gap: 30px;
   padding: 0 120px;
   min-height: 100dvh;
+
+  &__viewButon {
+    @media screen and (max-width: 1199px) {
+      margin-bottom: 10px;
+      width: 100%;
+    }
+  }
 }
 
 /* 포인트 컨테이너 */
