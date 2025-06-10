@@ -13,6 +13,8 @@ export const ModalProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
+  const onModalCloseEventRef = useRef(null);
+
   const modalWrapperRef = useRef(null);
   const isMouseDownInsideModal = useRef(false);
 
@@ -27,17 +29,20 @@ export const ModalProvider = ({ children }) => {
 
   const pendingForClosingAnimation = () => {
     closeTimeoutRef.current = setTimeout(() => {
-      setIsOpen(false);
-      setIsClosing(false);
-      closeTimeoutRef.current = null;
+      if (isClosing) {
+        setIsOpen(false);
+        setIsClosing(false);
+        closeTimeoutRef.current = null;
+      }
     }, MODAL_CLOSE_DELAY);
   };
 
-  const showModal = (ModalComponent) => {
+  const showModal = (ModalComponent, { onModalClose } = {}) => {
     resetTimer();
     setModal(ModalComponent);
     setIsOpen(true);
     setIsClosing(false);
+    onModalCloseEventRef.current = onModalClose;
   };
 
   const closeModal = () => {
@@ -64,7 +69,12 @@ export const ModalProvider = ({ children }) => {
         !modalWrapperRef.current?.contains(e.target) &&
         isMouseDownInsideModal.current === false
       ) {
-        closeModal();
+        if (typeof onModalCloseEventRef.current === 'function') {
+          onModalCloseEventRef.current();
+          closeModal();
+        } else {
+          closeModal();
+        }
       }
     };
 
