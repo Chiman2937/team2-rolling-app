@@ -11,9 +11,7 @@ const GAP = 16;
 const PAGE_SIZE = 4;
 
 const Slider = ({ cards, hasNext, loadMore }) => {
-  /* 무한 스크롤: 스크롤 감지 ref 요소 전달 */
   const scrollObserverRef = useRef(null);
-
   const { wrapperRef, isDesktop, pageIndex, canPrev, canNext, goPrev, goNext } = useSliderPaging({
     totalItems: cards.length,
     pageSize: PAGE_SIZE,
@@ -27,6 +25,22 @@ const Slider = ({ cards, hasNext, loadMore }) => {
     ? cards.slice(pageIndex * PAGE_SIZE, pageIndex * PAGE_SIZE + PAGE_SIZE)
     : cards;
 
+  // 오른쪽 화살표 클릭 핸들러
+  const handleNext = () => {
+    if (isDesktop) {
+      const totalPage = Math.max(0, Math.ceil(cards.length / PAGE_SIZE) - 1);
+      if (pageIndex < totalPage) {
+        goNext();
+      } else if (pageIndex === totalPage && hasNext) {
+        // 마지막 페이지이면서 서버에 더 있으면 추가 로드
+        loadMore();
+      }
+    } else {
+      // 모바일에서는 그냥 loadMore()로 충분
+      loadMore();
+    }
+  };
+
   return (
     <div className={styles.slider}>
       {isDesktop && canPrev && (
@@ -37,7 +51,12 @@ const Slider = ({ cards, hasNext, loadMore }) => {
 
       <div ref={wrapperRef} className={styles['slider__container']}>
         <HorizontalScrollContainer ref={scrollObserverRef} hideScroll={false}>
-          <InfinityScrollWrapper hasNext={hasNext} callback={loadMore} isHorizontal>
+          <InfinityScrollWrapper
+            hasNext={hasNext}
+            callback={loadMore}
+            isHorizontal
+            scrollObserverRef={scrollObserverRef}
+          >
             <div className={styles['slider__track']}>
               {visibleCards.map((c) => (
                 <ItemCard key={c.id} data={c} />
@@ -47,9 +66,9 @@ const Slider = ({ cards, hasNext, loadMore }) => {
         </HorizontalScrollContainer>
       </div>
 
-      {isDesktop && canNext && (
+      {isDesktop && (canNext || hasNext) && (
         <div className={styles['slider__arrow--right']}>
-          <ArrowButton direction='right' onClick={goNext} />
+          <ArrowButton direction='right' onClick={handleNext} />
         </div>
       )}
     </div>

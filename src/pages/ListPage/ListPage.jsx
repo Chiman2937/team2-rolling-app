@@ -1,64 +1,94 @@
 import { useEffect, useState } from 'react';
 import Slider from './components/Slider';
 import styles from './ListPage.module.scss';
-import Button from '../../components/Button/Button';
 import { Link } from 'react-router-dom';
 
 import { listRecipients } from '../../apis/recipientsApi';
 import { useApi } from '../../hooks/useApi';
 
 const ListPage = () => {
-  /* 무한스크롤: Api 요청 데이터에서 next값이 있는지 확인, true 일때만 데이터를 불러옴 */
-  const hasNext = false;
-  /* 무한스크롤: 추가 데이터 로드 */
-  const loadMore = () => {};
+  // 인기/최신 각각 오프셋·hasNext 관리
+  const [popularOffset, setPopularOffset] = useState(0);
+  const [recentOffset, setRecentOffset] = useState(0);
+  const [popularHasNext, setPopularHasNext] = useState(false);
+  const [recentHasNext, setRecentHasNext] = useState(false);
 
-  // 1) useApi로 전체 Recipient 목록(fetch) 요청
+  // useApi 훅으로 인기순 데이터 페칭
   const {
-    data: listData,
-    // refetch 필요 시 사용 가능
+    data: popularData,
+    loading: popularLoading,
+    refetch: getPopularList,
   } = useApi(
     listRecipients,
-    { limit: 20, offset: 0 },
+    { limit: 10, offset: popularOffset, sortLike: true },
     {
-      errorMessage: '롤링페이퍼 목록을 불러오는 데 실패했습니다.',
+      errorMessage: '인기 롤링페이퍼 목록을 불러오는 데 실패했습니다.',
       retry: 1,
-      immediate: true, // 마운트 시 자동 호출
+      immediate: true,
     },
   );
 
-  // 2) 정렬된 두 배열을 상태로 관리
-  const [popularCards, setPopularCards] = useState([]); // reactionCount 내림차순
-  const [recentCards, setRecentCards] = useState([]); // createdAt 최신순
+  // useApi 훅으로 최신순 데이터 페칭
+  const {
+    data: recentData,
+    loading: recentLoading,
+    refetch: getRecentList,
+  } = useApi(
+    listRecipients,
+    { limit: 10, offset: recentOffset, sortLike: false },
+    {
+      errorMessage: '최근 롤링페이퍼 목록을 불러오는 데 실패했습니다.',
+      retry: 1,
+      immediate: true,
+    },
+  );
 
-  // 3) listData.results가 들어오는 시점에 한 번만 정렬
+  // 인기Cards 상태
+  const [popularCards, setPopularCards] = useState([]);
   useEffect(() => {
-    if (!listData || !Array.isArray(listData.results)) {
-      return;
-    }
-    const arr = listData.results;
+    if (popularLoading || !popularData) return;
+    const { results, next } = popularData;
+    setPopularCards((prev) => (popularOffset === 0 ? results : [...prev, ...results]));
+    setPopularHasNext(!!next);
+  }, [popularData, popularLoading, popularOffset]);
 
-    // 인기순 (reactionCount 내림차순)
-    const byPopular = [...arr].sort((a, b) => b.reactionCount - a.reactionCount);
-    setPopularCards(byPopular);
+  // 최근Cards 상태
+  const [recentCards, setRecentCards] = useState([]);
+  useEffect(() => {
+    if (recentLoading || !recentData) return;
+    const { results, next } = recentData;
+    setRecentCards((prev) => (recentOffset === 0 ? results : [...prev, ...results]));
+    setRecentHasNext(!!next);
+  }, [recentData, recentLoading, recentOffset]);
 
-    // 최신순 (createdAt 최신순)
-    const byRecent = [...arr].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    setRecentCards(byRecent);
-  }, [listData]);
+  // 인기 무한스크롤 로드
+  const loadMorePopular = () => {
+    if (popularLoading || !popularHasNext) return;
+    const newOffset = popularOffset + 10;
+    setPopularOffset(newOffset);
+    getPopularList({ limit: 10, offset: newOffset, sortLike: true });
+  };
+
+  // 최신 무한스크롤 로드
+  const loadMoreRecent = () => {
+    if (recentLoading || !recentHasNext) return;
+    const newOffset = recentOffset + 10;
+    setRecentOffset(newOffset);
+    getRecentList({ limit: 10, offset: newOffset, sortLike: false });
+  };
 
   return (
     <div className={styles['list-page']}>
       {/* 인기 롤링 페이퍼 🔥 */}
       <section className={styles['list-page__section']}>
         <h2 className={styles['list-page__title']}>인기 롤링 페이퍼 🔥</h2>
-        <Slider cards={popularCards} hasNext={hasNext} loadMore={loadMore} />
+        <Slider cards={popularCards} hasNext={popularHasNext} loadMore={loadMorePopular} />
       </section>
 
       {/* 최근에 만든 롤링 페이퍼 ⭐️ */}
       <section className={styles['list-page__section']}>
         <h2 className={styles['list-page__title']}>최근에 만든 롤링 페이퍼 ⭐️</h2>
-        <Slider className={styles['list-page_slider']} cards={recentCards} />
+        <Slider cards={recentCards} hasNext={recentHasNext} loadMore={loadMoreRecent} />
       </section>
 
       <Link to='/post' style={{ textDecoration: 'none', textAlign: 'center' }}>
