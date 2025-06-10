@@ -274,23 +274,23 @@
   justify-content: center;
 }
 
-/* 2-2. Secondary Stretch (100%×39) - Secondary Small의 너비만 늘린 버전 */
+/* 2-2. Secondary Stretch (100%×56) - Secondary Small의 stretch 버전 */
 .secondary-stretch {
   background-color: var(--color-white);
   color: var(--color-purple-600);
   border: 1px solid var(--color-purple-600);
-  width: 100%; /*  너비만 100%로 변경 */
-  height: 39px; /*  Secondary Small과 동일한 높이 유지 */
-  padding: 7px 16px;
-  border-radius: 6px;
-  font-size: var(--font-size-16);
-  font-weight: var(--font-weight-regular);
+  width: 100%; /*  너비 100%로 변경 */
+  height: 56px; /*  높이 56px로 늘림 */
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-size: var(--font-size-18);
+  font-weight: var(--font-weight-bold);
   font-family: var(--font-family-base);
-  letter-spacing: -0.16px;
-  line-height: 26px;
+  letter-spacing: -0.18px;
+  line-height: 28px;
   text-align: center;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.5s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -313,14 +313,14 @@
   color: var(--color-white);
   border: 1px solid var(--color-gray-300);
   width: 100%; /*  너비만 100%로 변경 */
-  height: 39px; /*  Secondary Small과 동일한 높이 유지 */
-  padding: 7px 16px;
-  border-radius: 6px;
-  font-size: var(--font-size-16);
-  font-weight: var(--font-weight-regular);
+  height: 56px;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-size: var(--font-size-18);
+  font-weight: var(--font-weight-bold);
   font-family: var(--font-family-base);
-  letter-spacing: -0.16px;
-  line-height: 26px;
+  letter-spacing: -0.18px;
+  line-height: 28px;
   text-align: center;
   cursor: not-allowed;
   display: flex;
