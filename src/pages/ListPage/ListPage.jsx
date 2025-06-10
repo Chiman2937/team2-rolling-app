@@ -21,7 +21,7 @@ const ListPage = () => {
     refetch: getPopularList,
   } = useApi(
     listRecipients,
-    { limit: 10, offset: popularOffset, sortLike: true },
+    { limit: 20, offset: popularOffset, sortLike: true },
     {
       errorMessage: '인기 롤링페이퍼 목록을 불러오는 데 실패했습니다.',
       retry: 1,
@@ -36,7 +36,7 @@ const ListPage = () => {
     refetch: getRecentList,
   } = useApi(
     listRecipients,
-    { limit: 10, offset: recentOffset, sortLike: false },
+    { limit: 20, offset: recentOffset, sortLike: false },
     {
       errorMessage: '최근 롤링페이퍼 목록을 불러오는 데 실패했습니다.',
       retry: 1,
@@ -65,17 +65,17 @@ const ListPage = () => {
   // 인기 무한스크롤 로드
   const loadMorePopular = () => {
     if (popularLoading || !popularHasNext) return;
-    const newOffset = popularOffset + 10;
+    const newOffset = popularOffset + 20;
     setPopularOffset(newOffset);
-    getPopularList({ limit: 10, offset: newOffset, sortLike: true });
+    getPopularList({ limit: 20, offset: newOffset, sortLike: true });
   };
 
   // 최신 무한스크롤 로드
   const loadMoreRecent = () => {
     if (recentLoading || !recentHasNext) return;
-    const newOffset = recentOffset + 10;
+    const newOffset = recentOffset + 20;
     setRecentOffset(newOffset);
-    getRecentList({ limit: 10, offset: newOffset, sortLike: false });
+    getRecentList({ limit: 20, offset: newOffset, sortLike: false });
   };
 
   return (
