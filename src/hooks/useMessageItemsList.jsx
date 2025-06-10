@@ -32,22 +32,9 @@ export const useMessageItemsList = (id) => {
   );
 
   const [showOverlay, setShowOverlay] = useState(false);
+  const [showInfinityLoading, setShowInfinityLoading] = useState(false);
   const isLoading =
     recipientDataLoading || messageLoading || deleteMessageLoading || deleteRecipientLoading;
-
-  const getLoadingDescription = () => {
-    let description = '';
-    if (recipientDataLoading || messageLoading) {
-      description = '롤링페이퍼 메시지 목록을 불러오고 있어요';
-    } else if (deleteMessageLoading) {
-      description = '롤링페이퍼 메시지를 삭제하고 있어요';
-    } else if (deleteRecipientLoading) {
-      description = '롤링페이퍼를 삭제하고 있어요';
-    }
-    return description;
-  };
-
-  const loadingDescription = getLoadingDescription();
 
   const [itemList, setItemList] = useState([]);
   const hasNext = !!messageList?.next;
@@ -63,17 +50,20 @@ export const useMessageItemsList = (id) => {
   }, [messageList, isFirstCall, messageLoading]);
 
   /* 롤링페이퍼 삭제 시 로딩 오버레이 컴포넌트 처리  */
-  useEffect(() => {
-    if (deleteRecipientLoading) {
-      setShowOverlay(true);
-    }
-  }, [deleteRecipientLoading]);
+  // useEffect(() => {
+  //   if (deleteRecipientLoading) {
+  //     setShowOverlay(true);
+  //   }
+  // }, [deleteRecipientLoading]);
 
   /* 스크롤 시 데이터 다시 불러옴  */
   const loadMore = () => {
     if (messageLoading || !hasNext) return;
+    setShowInfinityLoading(true);
     const newOffset = isFirstCall ? offset + 8 : offset + 6;
-    getMessageListRefetch({ recipientId: id, limit: 6, offset: newOffset });
+    getMessageListRefetch({ recipientId: id, limit: 6, offset: newOffset }).finally(() =>
+      setShowInfinityLoading(false),
+    ); // 로딩 종료);
     setOffset(newOffset);
   };
 
@@ -96,7 +86,7 @@ export const useMessageItemsList = (id) => {
 
   const onDeletePaperConfirm = async (callback) => {
     try {
-      await deleteRecipientRefetch({ id });
+      await deleteRecipientRefetch({ id }).finally(() => setShowOverlay(true));
       callback();
     } catch (error) {
       console.error('롤링페이퍼 삭제 시 오류 발생:', error);
@@ -109,7 +99,7 @@ export const useMessageItemsList = (id) => {
     hasNext,
     isLoading,
     showOverlay,
-    loadingDescription,
+    showInfinityLoading,
     loadMore,
     onClickDeleteMessage,
     onDeletePaperConfirm,

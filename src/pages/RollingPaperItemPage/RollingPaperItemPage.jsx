@@ -7,6 +7,7 @@ import { COLOR_STYLES } from '@/constants/colorThemeStyle';
 import CardModal from '@/components/CardModal';
 import PostHeader from '@/components/PostHeader/PostHeader';
 import LoadingOverlay from '@/components/LoadingOverlay';
+import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner';
 import styles from '@/pages/RollingPaperItemPage/RollingPaperItemPage.module.scss';
 import ListCard from '@/pages/RollingPaperItemPage/components/ListCard';
 import ActionCard from '@/pages/RollingPaperItemPage/components/ActionCard';
@@ -28,8 +29,8 @@ const RollingPaperItemPage = () => {
     itemList,
     hasNext,
     showOverlay,
+    showInfinityLoading,
     isLoading,
-    loadingDescription,
     loadMore,
     onClickDeleteMessage,
     onDeletePaperConfirm,
@@ -138,7 +139,7 @@ const RollingPaperItemPage = () => {
   };
 
   if (showOverlay) {
-    return <LoadingOverlay description={loadingDescription} />;
+    return <LoadingOverlay description='롤링페이퍼 메시지를 삭제하고 있어요' />;
   }
   return (
     <>
@@ -173,6 +174,11 @@ const RollingPaperItemPage = () => {
               ))}
             </div>
           </InfinityScrollWrapper>
+          {showInfinityLoading && (
+            <div className={styles['list__loading']}>
+              <LoadingSpinner.dotCircle dotCount={8} dotSize={12} distanceFromCenter={30} />
+            </div>
+          )}
         </div>
       </section>
     </>
