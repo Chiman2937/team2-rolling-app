@@ -41,6 +41,8 @@ const Slider = ({ cards, hasNext, loadMore }) => {
       <div className={styles['slider__container']}>
         {isDesktop ? (
           <div className={styles['slider__track']}>
+            {visibleCards.length === 0 &&
+              new Array(4).fill(0).map((_, i) => <ItemCard.skeleton key={i} />)}
             {visibleCards.map((card) => (
               <ItemCard
                 key={card.id}

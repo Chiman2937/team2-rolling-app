@@ -4,7 +4,7 @@ export const getBackgroundStylesFromPostData = ({ backgroundColor, backgroundIma
   let backgroundStyle = {
     backgroundColor: 'none',
     backgroundImage: 'none',
-    backgroundRepeat: 'no-repeaet',
+    backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
     backgroundSize: 'cover',
   };
