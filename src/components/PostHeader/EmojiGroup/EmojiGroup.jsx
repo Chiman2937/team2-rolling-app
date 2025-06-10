@@ -59,7 +59,8 @@ export default function EmojiGroup({ id }) {
         layout='row'
         ButtonClassName={Style['emoji-group__toggle']}
         MenuClassName={Style['emoji-group__menu']}
-        openOnHover={true}
+        trigger='always'
+        offset={18}
       />
       <EmojiAdd id={id} onSuccess={handleAddSuccess} />
     </div>

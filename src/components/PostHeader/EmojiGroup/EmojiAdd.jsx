@@ -8,6 +8,9 @@ import EmojiPicker from 'emoji-picker-react';
 import Style from './EmojiAdd.module.scss';
 import { createRecipientReaction } from '@/apis/recipientReactionsApi';
 import { useToast } from '@/hooks/useToast';
+import Button from '@/components/Button/Button';
+import { DEVICE_TYPES } from '@/constants/deviceType';
+import { useDeviceType } from '@/hooks/useDeviceType';
 
 /**
  * EmojiAdd 컴포넌트
@@ -23,7 +26,9 @@ import { useToast } from '@/hooks/useToast';
  *        - 이모지 추가 API 호출이 성공했을 때 실행할 콜백 (예: 반응 목록을 다시 불러오기)
  */
 export default function EmojiAdd({ id, onSuccess }) {
+  const deviceType = useDeviceType();
   const { showToast } = useToast();
+  const isMobile = deviceType === DEVICE_TYPES.PHONE;
   /**
    * useApi 훅을 통해 createRecipientReaction API 호출을 관리합니다.
    * - immediate: false 로 설정하여 컴포넌트 마운트 시 자동 호출을 방지
@@ -55,7 +60,7 @@ export default function EmojiAdd({ id, onSuccess }) {
           message: emojiData.emoji + ' 이모지 추가 성공!',
           timer: 1000,
         });
-        onSuccess && onSuccess();
+        onSuccess && onSuccess(emojiData.emoji);
       })
       .catch(() => {
         // error는 useApi 내부에서 errorMessage로 Toast 처리됨
@@ -65,16 +70,19 @@ export default function EmojiAdd({ id, onSuccess }) {
   /**
    * @todo IconButton 컴포넌트로 변경 예정
    */
-  const toggleButton = (
-    <button
+  const toggleButton = isMobile ? (
+    <Button icon={AddImojiIcon} enabled={!loading} variant='outlined' size='36' iconOnly={true} />
+  ) : (
+    <Button
       icon={AddImojiIcon}
-      disabled={loading}
-      aria-label='이모지 추가'
+      enabled={!loading}
+      variant='outlined'
+      size='36'
       className={Style['emoji-add__icon-btn']}
+      aria-label='이모지 추가'
     >
-      <img src={AddImojiIcon} alt='이모지 추가 아이콘' />
       추가
-    </button>
+    </Button>
   );
 
   /**
