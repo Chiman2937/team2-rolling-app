@@ -5,11 +5,11 @@
   /* 각 아이템(열)의 너비는 내용 크기에 맞추기 */
   grid-auto-columns: max-content;
   align-items: center;
-  overflow-x: auto;
-  overflow-y: hidden;
 }
 
 .horizontal-scroll--hide-scrollbar {
+  overflow-x: auto;
+  overflow-y: hidden;
   /* Firefox 스크롤바 숨김 */
   @supports (scrollbar-width: none) {
     scrollbar-width: none; /* Firefox 에서만 스크롤바 숨김 */
