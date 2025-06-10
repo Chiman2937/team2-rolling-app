@@ -6,7 +6,7 @@ import styles from './ProfileSelector.module.scss';
 import AVATAR_PLACEHOLDER from '@/assets/images/image_profile_default.svg';
 import HorizontalScrollContainer from '@/components/HorizontalScrollContainer/HorizontalScrollContainer';
 import GradientImage from '@/components/GradientImage/GradientImage';
-import LoadingLabel from '@/components/LoadingLabels/LoadingLabel';
+import LoadingLabel from '@/components/LoadingLabel/LoadingLabel';
 
 /**
  * 프로필 이미지 선택기
