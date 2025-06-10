@@ -49,13 +49,6 @@ export const useMessageItemsList = (id) => {
     setItemList((prevList) => (isFirstCall || !previous ? results : [...prevList, ...results]));
   }, [messageList, isFirstCall, messageLoading]);
 
-  /* 롤링페이퍼 삭제 시 로딩 오버레이 컴포넌트 처리  */
-  // useEffect(() => {
-  //   if (deleteRecipientLoading) {
-  //     setShowOverlay(true);
-  //   }
-  // }, [deleteRecipientLoading]);
-
   /* 스크롤 시 데이터 다시 불러옴  */
   const loadMore = () => {
     if (messageLoading || !hasNext) return;
@@ -63,7 +56,7 @@ export const useMessageItemsList = (id) => {
     const newOffset = isFirstCall ? offset + 8 : offset + 6;
     getMessageListRefetch({ recipientId: id, limit: 6, offset: newOffset }).finally(() =>
       setShowInfinityLoading(false),
-    ); // 로딩 종료);
+    );
     setOffset(newOffset);
   };
 
