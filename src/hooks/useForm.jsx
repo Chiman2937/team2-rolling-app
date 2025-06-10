@@ -5,85 +5,79 @@ import { useState, useCallback, useMemo } from 'react';
  * 폼 상태와 검증을 관리하는 커스텀 훅
  *
  * @param {Object} initialValues
- *   - ex: { senderName: '', relationship: '친구', profileImageUrl: ''...}
- * @param {Object.<string, (value: any) => boolean>} [customValidationRules]
- *   - key: 필드명, value: 해당 필드의 추가 검증 함수
- *   - ex: { content: v => v.trim().length >= 10 }
+ * @param {Object.<string,(value:any)=>boolean>} [customValidationRules]
  *
  * @returns {{
- *   values: Object,                 // 현재 폼 값
- *   handleChange: (field: string) => (newValue: any) => void,
- *   resetForm: () => void,
- *   isFormValid: boolean            // 모든 필드가 유효한지 여부
+ *   values:        Object,
+ *   validity:      Object,                     //  필드별 유효성
+ *   touched:       Object,                     //  필드별 입력 여부
+ *   handleChange:  (field:string)=>(v:any)=>void,
+ *   handleBlur:    (field:string)=>() => void, //  blur 전용
+ *   resetForm:     () => void,
+ *   isFormValid:   boolean
  * }}
- *
  */
 
 export const useForm = (initialValues = {}, customValidationRules = {}) => {
-  // 1) 폼 값 관리
+  /* 1) 값 관리 */
   const [values, setValues] = useState(initialValues);
 
-  // 2) 필드별 유효 여부 초기 계산
+  /* 2) 초기 유효성 계산 */
   const initValidity = useMemo(() => {
-    return Object.keys(initialValues).reduce((acc, key) => {
-      const value = initialValues[key];
-      // 커스텀 검증 규칙이 있는 경우
-      if (typeof customValidationRules[key] === 'function') {
-        acc[key] = customValidationRules[key](value);
-        // 기본 검증: 문자열은 빈 문자열이 아니고, 나머지는 null이 아닌지 확인
-      } else {
-        if (typeof value === 'string') {
-          acc[key] = value.trim() !== '';
-        } else {
-          acc[key] = value != null;
-        }
-      }
-      return acc;
-    }, {});
-  }, [initialValues, customValidationRules]);
+    const validate = (k, v) =>
+      typeof customValidationRules[k] === 'function'
+        ? customValidationRules[k](v)
+        : typeof v === 'string'
+          ? v.trim() !== ''
+          : v != null;
 
+    return Object.fromEntries(Object.entries(initialValues).map(([k, v]) => [k, validate(k, v)]));
+  }, [initialValues, customValidationRules]);
   const [validity, setValidity] = useState(initValidity);
 
-  // 3) 값 업데이트 및 즉시 검증
+  /* 3) touched 상태 */
+  const [touched, setTouched] = useState(
+    Object.fromEntries(Object.keys(initialValues).map((k) => [k, false])),
+  );
+
+  /* 4) 값 & 유효성 & touched 업데이트 */
   const handleChange = useCallback(
     (field) => (newValue) => {
-      setValues((prev) => ({
-        ...prev,
-        [field]: newValue,
-      }));
+      setValues((p) => ({ ...p, [field]: newValue }));
+      setTouched((p) => ({ ...p, [field]: true }));
 
-      if (typeof customValidationRules[field] === 'function') {
-        setValidity((prev) => ({
-          ...prev,
-          [field]: customValidationRules[field](newValue),
-        }));
-      } else {
-        if (typeof newValue === 'string') {
-          setValidity((prev) => ({
-            ...prev,
-            [field]: newValue.trim() !== '',
-          }));
-        } else {
-          setValidity((prev) => ({
-            ...prev,
-            [field]: newValue != null,
-          }));
-        }
-      }
+      const isValid =
+        typeof customValidationRules[field] === 'function'
+          ? customValidationRules[field](newValue)
+          : typeof newValue === 'string'
+            ? newValue.trim() !== ''
+            : newValue != null;
+
+      setValidity((p) => ({ ...p, [field]: isValid }));
     },
     [customValidationRules],
   );
 
-  // 4) 초기화
+  /* blur 만으로 touched 표시하고 싶을 때 */
+  const handleBlur = useCallback((field) => () => setTouched((p) => ({ ...p, [field]: true })), []);
+
+  /* 5) 초기화 */
   const resetForm = useCallback(() => {
     setValues(initialValues);
     setValidity(initValidity);
+    setTouched(Object.fromEntries(Object.keys(initialValues).map((k) => [k, false])));
   }, [initialValues, initValidity]);
 
-  // 5) 최종 폼 유효성: validity 객체의 값이 전부 true여야 true
-  const isFormValid = useMemo(() => {
-    return Object.values(validity).every((v) => v === true);
-  }, [validity]);
+  /* 6) 폼 전체 유효성 */
+  const isFormValid = useMemo(() => Object.values(validity).every(Boolean), [validity]);
 
-  return { values, handleChange, resetForm, isFormValid };
+  return {
+    values,
+    validity, // ➕
+    touched, // ➕
+    handleChange,
+    handleBlur, // ➕
+    resetForm,
+    isFormValid,
+  };
 };

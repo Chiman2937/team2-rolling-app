@@ -17,11 +17,14 @@
   overflow: hidden;
   display: inline-block;
   border: none;
+  pointer-events: none;
+  cursor: default;
 
   &::before {
     content: '';
     position: absolute;
     inset: 0;
+
     /* 그라디언트 색상 움직임 */
     background: linear-gradient(
       90deg,
@@ -60,5 +63,7 @@
     .gradient-image__img {
       opacity: 1;
     }
+    pointer-events: auto;
+    cursor: pointer;
   }
 }

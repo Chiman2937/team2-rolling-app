@@ -58,7 +58,6 @@ export default function Editor({
       strikethrough: styles.editor__textStrikethrough,
     },
   };
-  console.log('foooont', font, 'getFontFamily(font)', getFontFamily(font));
 
   // 2) initialEditorState: content가 있으면 파싱해서 DOM => 노드 트리로 초기화
   const initialEditorState = useMemo(() => {
