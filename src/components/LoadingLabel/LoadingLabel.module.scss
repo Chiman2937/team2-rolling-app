@@ -1,0 +1,47 @@
+// src/components/LoadingLabel/LoadingLabel.module.scss
+
+@keyframes loading01 {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.wrapper {
+  position: relative;
+  display: inline-block;
+
+  /* 로딩 텍스트 */
+  .loadingText {
+    span {
+      display: inline-block;
+      animation: loading01 1.4s infinite alternate;
+    }
+    /* 기본 보이기 */
+    opacity: 1;
+    transition: opacity 0.4s ease;
+  }
+
+  /* 로드 완료 텍스트 */
+  .loadedText {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* 겹쳐서 감추기 */
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  /* 로딩이 끝났을 때 */
+  &.loaded {
+    .loadingText {
+      opacity: 0;
+    }
+    .loadedText {
+      opacity: 1;
+    }
+  }
+}
