@@ -34,7 +34,6 @@
   &__container {
     width: 100%;
     overflow: visible;
-
     @media (max-width: 1199px) {
       overflow-x: auto;
       overflow-y: hidden;
@@ -45,6 +44,7 @@
   &__track {
     display: flex;
     gap: 16px;
+    padding: 8px;
     overflow: visible;
   }
 }
