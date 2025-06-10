@@ -33,6 +33,7 @@ const ReceiverField = ({ formDataChange }) => {
         message={messageByValid[isInputValid]}
         value={inputValue}
         onChange={handleInputChange}
+        isValid={isInputValid}
       />
     </article>
   );
