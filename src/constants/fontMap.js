@@ -8,19 +8,22 @@
 /**
  * FONT_STYLES: 각 폰트 이름 → 스타일 매핑
  * (COLOR_STYLES와 동일한 형태)
+ *
  */
-export const FONT_STYLES = {
-  'Noto Sans': {
-    fontFamily: 'var(--font-family-noto-sans)',
-  },
+
+const FONT_STYLES = {
   Pretendard: {
-    fontFamily: 'var(--font-family-base)',
+    /* --font-family-base 가 없다면 즉시 'Pretendard', sans-serif 사용 */
+    fontFamily: "var(--font-family-base, 'Pretendard', sans-serif)",
+  },
+  'Noto Sans': {
+    fontFamily: "var(--font-family-noto-sans, 'Noto Sans', sans-serif)",
   },
   나눔명조: {
-    fontFamily: 'var(--font-family-nanum-myeongjo)',
+    fontFamily: "var(--font-family-nanum-myeongjo, 'Nanum Myeongjo', serif)",
   },
   '나눔손글씨 손편지체': {
-    fontFamily: 'var(--font-family-nanum-son-pyeonji)',
+    fontFamily: "var(--font-family-nanum-son-pyeonji, 'Nanum Son Pyeonji', cursive)",
   },
 };
 

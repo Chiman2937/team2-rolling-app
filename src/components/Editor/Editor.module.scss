@@ -5,7 +5,7 @@
   min-height: 260px;
   padding: 12px;
   outline: none;
-  font-family: inherit;
+  font-family: inherit !important; /* 부모에서 상속받은 폰트 사용 */
   font-size: var(--font-size-16);
   color: var(--color-gray-900);
 

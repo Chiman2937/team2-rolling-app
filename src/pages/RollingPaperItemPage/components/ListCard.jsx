@@ -3,7 +3,7 @@ import DeleteIcon from './DeleteIcon';
 import Button from '@/components/Button/Button';
 import SenderProfile from '@/components/SenderProfile';
 import ContentViewer from '@/components/ContentViewer/ContentViewer';
-import { FONT_STYLES } from '@/constants/fontMap';
+
 const ListCard = ({ cardData, showDelete, onClick, onDelete }) => {
   /* 폰트 확인 후 해당 폰트로 보여줘야 함 */
   const { id, sender, profileImageURL, content, createdAt, relationship, font } = cardData;
@@ -26,6 +26,7 @@ const ListCard = ({ cardData, showDelete, onClick, onDelete }) => {
       imageUrl: profileImageURL,
       createdAt: formatDateKRW(createdAt),
       content: content,
+      font: font,
     });
   };
 
