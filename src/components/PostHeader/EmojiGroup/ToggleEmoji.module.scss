@@ -4,6 +4,11 @@
   display: flex;
   align-items: center;
   gap: 8px; /* 각 뱃지 간격 */
+	@include mobile {
+		justify-content: start;
+	}
+	width: 270px;
+	justify-content: end;
 
   &__button-icon {
     transition: transform 0.3s ease;
