@@ -57,7 +57,7 @@
     display: block; // inline → block으로 바꿔서 margin:auto 적용
     margin: 0 auto;
 
-    @media screen and (max-width: 1247px) {
+    @include tablet {
       width: 100%;
       margin-bottom: 20px;
     }
