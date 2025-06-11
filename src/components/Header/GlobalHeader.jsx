@@ -4,6 +4,8 @@ import Style from './GlobalHeader.module.scss';
 import useShowComponent from '@/hooks/useShowComponent';
 import { DEVICE_TYPES } from '@/constants/deviceType';
 import { useDeviceType } from '@/hooks/useDeviceType';
+import Button from '../Button/Button';
+import LogoButton from '../Button/LogoButton';
 /**
  * GlobalHeader 컴포넌트
  * @description - 애플리케이션의 상단 헤더 컴포넌트로, 로고와 버튼을 포함합니다.
@@ -29,20 +31,18 @@ function GlobalHeader() {
     <header className={Style['header']}>
       <div className={Style['header__container']}>
         {/*  루트로 이동*/}
-        <Link to='/' className={Style['header__logo-link']}>
-          <img src={LOGO} alt='Logo' className={Style['header__logo']} />
-        </Link>
+        <LogoButton />
         {/* todo: 디자인시스템 버튼으로 교체 */}
         {showButton && (
-          <button
-            size='36'
+          <Button
+            size='40'
             variant='outlined'
             onClick={handleButtonClick}
             aria-label='롤링 페이퍼 만들기'
             className={Style['header__button']}
           >
             롤링 페이퍼 만들기
-          </button>
+          </Button>
         )}
       </div>
     </header>
