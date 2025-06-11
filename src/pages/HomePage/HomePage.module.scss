@@ -14,12 +14,12 @@
   width: var(--wrapper-width);
   margin: 0 auto;
 
-  @media screen and (min-width: 768px) and (max-width: 1247px) {
+  @include tablet {
     width: 100%;
     padding: 49px 24px 24px;
   }
 
-  @media screen and (max-width: 767px) {
+  @include mobile {
     width: 100%;
     padding: 42px 20px 24px;
   }
@@ -35,7 +35,10 @@
     line-height: 28px;
     color: var(--color-white);
 
-    @media screen and (max-width: 1247px) {
+    @include tablet {
+      width: 100%;
+    }
+    @include mobile {
       width: 100%;
     }
   }
@@ -99,7 +102,11 @@
       width: 100%;
       max-width: 720px;
       height: auto;
-      @media screen and (max-width: 1247px) {
+      @include tablet {
+        width: 500px;
+        height: auto;
+      }
+      @include mobile {
         width: 500px;
         height: auto;
       }
@@ -121,7 +128,7 @@
   }
 
   /* 모바일 화면 */
-  @media screen and (max-width: 767px) {
+  @include mobile {
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
