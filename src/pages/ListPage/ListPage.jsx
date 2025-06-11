@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Slider from './components/Slider';
 import styles from './ListPage.module.scss';
-import { Link } from 'react-router-dom';
 import Button from '@/components/Button/Button';
 
 import { listRecipients } from '@/apis/recipientsApi';
@@ -9,6 +9,7 @@ import { useApi } from '@/hooks/useApi';
 
 const ListPage = () => {
   // 인기/최신 각각 오프셋·hasNext 관리
+  const navigate = useNavigate();
   const [popularOffset, setPopularOffset] = useState(0);
   const [recentOffset, setRecentOffset] = useState(0);
   const [popularHasNext, setPopularHasNext] = useState(false);
@@ -92,9 +93,9 @@ const ListPage = () => {
         <Slider cards={recentCards} hasNext={recentHasNext} loadMore={loadMoreRecent} />
       </section>
 
-      <Link to='/post'>
-        <Button className={styles['list-page__createButton']}>나도 만들어보기</Button>
-      </Link>
+      <Button className={styles['list-page__createButton']} onClick={() => navigate('/post')}>
+        나도 만들어보기
+      </Button>
     </div>
   );
 };
