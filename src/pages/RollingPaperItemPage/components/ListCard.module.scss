@@ -145,6 +145,15 @@
   align-items: center;
   box-shadow: 0px 2px 12px 0px #00000014;
 
+  @include tablet {
+    aspect-ratio: 352 / 284;
+    max-width: none;
+  }
+
+  @include desktop {
+    aspect-ratio: 384 / 280;
+  }
+
 	&__container {
 		width: clamp(272px, 80vw, 384px);
 		height: 100%;

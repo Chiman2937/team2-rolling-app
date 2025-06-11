@@ -28,9 +28,11 @@ body {
   width: 1200px;
   padding: 90px;
   overflow: hidden;
+	animation: slide-in-left 1s ease;
 
   &--reverse {
     flex-direction: row-reverse;
+		animation: slide-in-right 1s ease;
   }
 
   &__context {
@@ -110,4 +112,26 @@ body {
       align-items: flex-start;
     }
   }
+}
+
+@keyframes slide-in-left {
+	0% {
+		opacity: 0.5;
+		transform: translateX(50px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes slide-in-right {
+	0% {
+		opacity: 0.5;
+		transform: translateX(-50px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+	}
 }

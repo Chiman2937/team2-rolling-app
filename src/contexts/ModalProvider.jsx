@@ -56,6 +56,7 @@ export const ModalProvider = ({ children }) => {
 
   useEffect(() => {
     if (!isOpen) return;
+    if (isClosing) return;
     const handleMouseDown = (e) => {
       if (modalWrapperRef.current?.contains(e.target)) {
         isMouseDownInsideModal.current = true;
@@ -85,7 +86,7 @@ export const ModalProvider = ({ children }) => {
       document.removeEventListener('mousedown', handleMouseDown);
       document.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isOpen]);
+  }, [isOpen, isClosing]);
 
   //Modal이 열렸을 때 esc를 누르면 Modal Close
   useEffect(() => {
