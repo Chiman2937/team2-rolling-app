@@ -12,6 +12,9 @@
 }
 .toggle-avatars--loading {
   display: flex;
+  align-items: center;
+  font-size: var(--font-size-18);
+  color: var(--color-gray-900);
 }
 .toggle-avatars--error {
   font-size: 14px;
@@ -47,11 +50,17 @@
   font-size: var(--font-size-18);
   color: var(--color-gray-900);
 }
-.toggle-avatars__empty {
+.toggle-avatars--empty {
   display: flex;
   align-items: center;
   font-size: var(--font-size-18);
   color: var(--color-gray-900);
+  @include tablet {
+    display: none; /* 태블릿 이상에서는 숨김 */
+  }
+  @include mobile {
+    display: none; /* 모바일에서는 숨김 */
+  }
 }
 .toggle-avatars__count-number {
   font-weight: bold;

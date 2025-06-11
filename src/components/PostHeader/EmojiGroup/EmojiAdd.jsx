@@ -9,8 +9,6 @@ import Style from './EmojiAdd.module.scss';
 import { createRecipientReaction } from '@/apis/recipientReactionsApi';
 import { useToast } from '@/hooks/useToast';
 import Button from '@/components/Button/Button';
-import { DEVICE_TYPES } from '@/constants/deviceType';
-import { useDeviceType } from '@/hooks/useDeviceType';
 
 /**
  * EmojiAdd 컴포넌트
@@ -25,16 +23,14 @@ import { useDeviceType } from '@/hooks/useDeviceType';
  * @param {(emoji: string) => void} [props.onSuccess]
  *        - 이모지 추가 API 호출이 성공했을 때 실행할 콜백 (예: 반응 목록을 다시 불러오기)
  */
-export default function EmojiAdd({ id, onSuccess }) {
-  const deviceType = useDeviceType();
+export default function EmojiAdd({ id, onSuccess, isMobile = false }) {
   const { showToast } = useToast();
-  const isMobile = deviceType === DEVICE_TYPES.PHONE;
   /**
    * useApi 훅을 통해 createRecipientReaction API 호출을 관리합니다.
    * - immediate: false 로 설정하여 컴포넌트 마운트 시 자동 호출을 방지
    * - refetch(params) 형태로 이모지를 선택할 때마다 호출하며, loading / error 상태를 관리
    */
-  const { loading, error, refetch } = useApi(
+  const { loading, refetch } = useApi(
     createRecipientReaction,
     { recipientId: id, emoji: '', type: 'increase' },
     {
@@ -108,12 +104,8 @@ export default function EmojiAdd({ id, onSuccess }) {
         layout='column'
         ButtonClassName={Style['emoji-add__toggle']}
         MenuClassName={Style['emoji-add__menu']}
+        offset={20}
       />
-
-      {/* API 에러가 있다면 화면에 간단히 보여줌 */}
-      {error && (
-        <div className={Style['emoji-add__error']}>이모지 추가 중 오류 발생: {error.message}</div>
-      )}
     </div>
   );
 }

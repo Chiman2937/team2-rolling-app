@@ -3,6 +3,13 @@
 .post-header {
   background-color: var(--color-white);
   box-shadow: 0 1px 4px var(--color-gray-200);
+  position: sticky;
+  top: 64px; // 뷰포트 최상단에 붙임
+  z-index: 1000;
+
+  @include mobile {
+    top: 0;
+  }
 
   &__container {
     display: flex;

@@ -14,12 +14,22 @@
 
 /* 드롭다운 메뉴 컨테이너 (최대 8개 이모지를 그리드로) */
 .emoji-group__menu {
-  width: 320px; /* 적절히 조절 가능 */
+  width: 312px;
   margin-top: 8px;
   background: var(--color-white);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 8px;
   z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @include tablet {
+    width: 100%;
+  }
+  @include mobile {
+    width: 100%;
+  }
 }
 
 /* 로딩, 에러, 빈 상태 표시 */
@@ -31,4 +41,5 @@
   align-items: center;
   font-size: var(--font-size-18);
   color: var(--color-gray-900);
+  padding-right: 24px;
 }

@@ -4,6 +4,7 @@ import Style from './ToggleAvatars.module.scss';
 import GradientImage from '@/components/GradientImage/GradientImage';
 import CountUp from '@/components/CountUp';
 import { Link } from 'react-router-dom';
+import LoadingLabel from '@/components/LoadingLabel/LoadingLabel';
 /**
  * ToggleAvatars 컴포넌트
  *
@@ -14,7 +15,7 @@ import { Link } from 'react-router-dom';
  * @param {boolean} props.loading
  * @param {Error|null} props.error
  */
-export default function ToggleAvatars({ id, profiles, totalCount, error }) {
+export default function ToggleAvatars({ id, profiles, totalCount, loading, error }) {
   // totalCount를 최대 999로 제한
   const displayCount = totalCount > 999 ? '999+' : totalCount;
 
@@ -39,17 +40,6 @@ export default function ToggleAvatars({ id, profiles, totalCount, error }) {
         const marginRight = idx === visibleCount - 1 ? 0 : -16;
         const zIndex = idx + 1;
         return (
-          // <img
-          //   key={profile.id}
-          //   src={profile.profileImageURL}
-          //   alt={profile.sender}
-          //   className={Style['toggle-avatars__avatar']}
-          //   style={{
-          //     marginRight: `${marginRight}px`,
-          //     zIndex: zIndex,
-          //   }}
-          // />
-
           <GradientImage
             key={profile.id}
             src={profile.profileImageURL}
@@ -64,8 +54,14 @@ export default function ToggleAvatars({ id, profiles, totalCount, error }) {
       })}
 
       {extraCount > 0 && <div className={Style['toggle-avatars__extra']}>+{displayExtra}</div>}
-      {totalCount === 0 ? (
-        <Link to={`/post/${id}/message`} className={Style['toggle-avatars__empty']}>
+      {loading ? (
+        <LoadingLabel
+          loading={loading}
+          className={Style['toggle-avatars--loading']}
+          loadingText='작성자 둘러보는 중'
+        />
+      ) : totalCount === 0 ? (
+        <Link to={`/post/${id}/message`} className={Style['toggle-avatars--empty']}>
           마음을 담은 메시지를 보내주세요!
         </Link>
       ) : (
