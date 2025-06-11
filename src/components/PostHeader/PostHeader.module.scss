@@ -36,14 +36,25 @@
     gap: 28px;
   }
 
-  &__emoji-container {
-    display: flex;
-    align-items: center;
-  }
   &__reaction-container {
     display: flex;
     align-items: center;
     gap: 13px;
+
+    @include mobile {
+      width: 100%; // 모바일에서는 전체 너비 사용
+      gap: 8px; // 아이템 간격 축소
+    }
+  }
+
+  &__emoji-container {
+    display: flex;
+    align-items: center;
+
+    @include mobile {
+      width: 100%; // 모바일에서는 전체 너비 사용
+      justify-content: space-between; // 아이템 간격 조정
+    }
   }
 
   &__divider {
@@ -72,7 +83,7 @@
     &__menu-container {
       width: 100%; // 가로 전체 너비
       height: 52px;
-      justify-content: start; // 중앙 정렬
+      justify-content: space-between; // 중앙 정렬
       margin: 0 auto; // 중앙 정렬
       gap: 12px; // 아이템 간격 축소
     }

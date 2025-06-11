@@ -42,12 +42,14 @@ function OnEditorChange({ onUpdate }) {
  * @param {boolean} [readOnly=false] - 읽기 전용 모드 여부
  */
 export default function Editor({
+  inputId = '',
   content = '',
   onUpdate = () => {},
   style = {},
   readOnly = false,
   font = 'Pretendard',
   className = '',
+  onBlur,
 }) {
   // 1) theme: 텍스트 포맷 → CSS 클래스 매핑
   const theme = {
@@ -102,6 +104,8 @@ export default function Editor({
             <ContentEditable
               style={{ fontFamily: getFontFamily(font) }}
               className={styles.editor__content}
+              id={inputId}
+              onBlur={onBlur} // 블러 이벤트 핸들러
             />
           }
           placeholder={

@@ -1,82 +1,104 @@
 // src/hooks/useForm.jsx
-import { useState, useCallback, useMemo } from 'react';
+import { useState } from 'react';
 
 /**
- * 폼 상태와 검증을 관리하는 커스텀 훅
+ * 범용 폼 훅 – 모든 검증 규칙은 호출 측에서 주입
  *
- * @param {Object} initialValues
- * @param {Object.<string,(value:any)=>boolean>} [customValidationRules]
+ * @template V
+ * @param {V} initialValues                             초기 필드 값
+ * @param {Object.<keyof V, Array<{test:(value:any, all:V)=>boolean, message:string}>>} validationRules
+ *        필드별 검증 규칙(배열). 규칙이 없으면 해당 필드는 항상 통과
  *
  * @returns {{
- *   values:        Object,
- *   validity:      Object,                     //  필드별 유효성
- *   touched:       Object,                     //  필드별 입력 여부
- *   handleChange:  (field:string)=>(v:any)=>void,
- *   handleBlur:    (field:string)=>() => void, //  blur 전용
- *   resetForm:     () => void,
- *   isFormValid:   boolean
+ *   values: V,
+ *   errorMessages: Record<keyof V, string|null>,
+ *   fieldValidity: Record<keyof V, boolean|null>,    // null=미검증, true=통과, false=실패
+ *   handleChange: (field:keyof V)=>(value:any)=>void,
+ *   handleBlur:   (field:keyof V)=>() => void,
+ *   resetForm: () => void,
+ *   isFormValid: boolean
  * }}
  */
 
-export const useForm = (initialValues = {}, customValidationRules = {}) => {
-  /* 1) 값 관리 */
+export const useForm = (initialValues = {}, validationRules = {}) => {
+  const fieldNames = Object.keys(initialValues);
+
+  // 다른 필드 값(allValue)들을 포함한 유효성 검사 -> 첫 번째 실패 메시지 또는 null
+  // 다른 필드의 값이 필요할 때는 allValues를 통해 접근
+  const validateField = (fieldName, value, allValues) => {
+    const rulesForField = validationRules[fieldName] ?? [];
+    const failedRule = rulesForField.find((rule) => !rule.test(value, allValues));
+    return failedRule ? failedRule.message : null;
+  };
+  /* ------------------------------- 상태 관리 ------------------------------- */
   const [values, setValues] = useState(initialValues);
 
-  /* 2) 초기 유효성 계산 */
-  const initValidity = useMemo(() => {
-    const validate = (k, v) =>
-      typeof customValidationRules[k] === 'function'
-        ? customValidationRules[k](v)
-        : typeof v === 'string'
-          ? v.trim() !== ''
-          : v != null;
+  // 초기값으로 각 필드의 유효성 검사 결과를 설정
+  const [errorMessages, setErrorMessages] = useState(() => {
+    const initialMessage = {};
+    for (const field in initialValues) {
+      initialMessage[field] = validateField(field, initialValues[field], initialValues);
+    }
+    return initialMessage;
+  });
 
-    return Object.fromEntries(Object.entries(initialValues).map(([k, v]) => [k, validate(k, v)]));
-  }, [initialValues, customValidationRules]);
-  const [validity, setValidity] = useState(initValidity);
-
-  /* 3) touched 상태 */
-  const [touched, setTouched] = useState(
-    Object.fromEntries(Object.keys(initialValues).map((k) => [k, false])),
+  // 한번이라도 입력된 필드인지 여부
+  // 초기값으로 필드별 touched 상태를 false로 설정
+  const [touchedFields, setTouchedFields] = useState(() =>
+    Object.fromEntries(fieldNames.map((name) => [name, false])),
   );
 
-  /* 4) 값 & 유효성 & touched 업데이트 */
-  const handleChange = useCallback(
-    (field) => (newValue) => {
-      setValues((p) => ({ ...p, [field]: newValue }));
-      setTouched((p) => ({ ...p, [field]: true }));
+  // 필드가 아직 건드리지 않았으면 null, 통과하면 true, 에러면 false
+  const getFieldValidity = (fieldName) => {
+    if (!touchedFields[fieldName]) {
+      return null; // 아직 건드리지 않음
+    }
+    if (errorMessages[fieldName] === null) {
+      return true; // 통과
+    }
+    return false; // 에러
+  };
 
-      const isValid =
-        typeof customValidationRules[field] === 'function'
-          ? customValidationRules[field](newValue)
-          : typeof newValue === 'string'
-            ? newValue.trim() !== ''
-            : newValue != null;
-
-      setValidity((p) => ({ ...p, [field]: isValid }));
-    },
-    [customValidationRules],
+  // 각 필드의 유효성 검사 결과를 객체로 반환
+  const fieldValidity = Object.fromEntries(
+    fieldNames.map((name) => [name, getFieldValidity(name)]),
   );
 
-  /* blur 만으로 touched 표시하고 싶을 때 */
-  const handleBlur = useCallback((field) => () => setTouched((p) => ({ ...p, [field]: true })), []);
+  // 전체 폼이 유효한지 여부
+  const isFormValid = fieldNames.every((name) => errorMessages[name] === null);
 
-  /* 5) 초기화 */
-  const resetForm = useCallback(() => {
+  /* -------------------------------------------- handlers */
+  const handleChange = (fieldName) => (newValue) => {
+    setValues((previous) => {
+      const next = { ...previous, [fieldName]: newValue };
+      setErrorMessages((previousErrors) => ({
+        ...previousErrors,
+        [fieldName]: validateField(fieldName, newValue, next),
+      }));
+      return next;
+    });
+  };
+
+  const handleBlur = (fieldName) => () =>
+    setTouchedFields((prev) => ({ ...prev, [fieldName]: true }));
+
+  const resetForm = () => {
     setValues(initialValues);
-    setValidity(initValidity);
-    setTouched(Object.fromEntries(Object.keys(initialValues).map((k) => [k, false])));
-  }, [initialValues, initValidity]);
+    setTouchedFields(Object.fromEntries(fieldNames.map((name) => [name, false])));
+    setErrorMessages(() =>
+      Object.fromEntries(
+        fieldNames.map((name) => [name, validateField(name, initialValues[name], initialValues)]),
+      ),
+    );
+  };
 
-  /* 6) 폼 전체 유효성 */
-  const isFormValid = useMemo(() => Object.values(validity).every(Boolean), [validity]);
-
+  /* ------------------------------------------------ return */
   return {
     values,
-    validity, // ➕
-    touched, // ➕
+    errorMessages,
+    fieldValidity,
     handleChange,
-    handleBlur, // ➕
+    handleBlur,
     resetForm,
     isFormValid,
   };
