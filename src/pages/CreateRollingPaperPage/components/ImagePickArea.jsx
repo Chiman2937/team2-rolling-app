@@ -29,16 +29,17 @@ const ImagePickArea = ({ formDataChange, setNewImageFileObject, showImagePickAre
 
     setCustomImageFileList((prev) => {
       const next = [file, ...prev];
+      setNewImageFileObject(next[0]);
       return next.slice(0, 3);
     });
 
     setCustomImagePreviewUrlList((prev) => {
       const next = [newUrl, ...prev];
+      setSelectedImageUrl(next[0]);
       if (next.length > 3) {
         const urlToRevoke = next[next.length - 1];
         URL.revokeObjectURL(urlToRevoke);
       }
-      handleImageSelect(next[0]);
       return next.slice(0, 3);
     });
   };
