@@ -67,7 +67,7 @@ export default function EmojiAdd({ id, onSuccess, isMobile = false }) {
    * @todo IconButton 컴포넌트로 변경 예정
    */
   const toggleButton = isMobile ? (
-    <Button icon={AddImojiIcon} enabled={!loading} variant='outlined' size='36' iconOnly={true} />
+    <Button icon={AddImojiIcon} enabled={!loading} variant='outlined' size='28' iconOnly={true} />
   ) : (
     <Button
       icon={AddImojiIcon}
