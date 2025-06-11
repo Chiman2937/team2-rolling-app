@@ -9,7 +9,7 @@
   padding-top: 50px;
   overflow: visible;
 
-  @media screen and (min-width: 768px) and (max-width: 1199px) {
+  @media screen and (min-width: 768px) and (max-width: 1247px) {
     padding: 0 24px;
     width: 100%;
     min-height: 100dvh;
@@ -57,7 +57,7 @@
     display: block; // inline → block으로 바꿔서 margin:auto 적용
     margin: 0 auto;
 
-    @media screen and (min-width: 355px) and (max-width: 1199px) {
+    @media screen and (max-width: 1247px) {
       width: 100%;
       margin-bottom: 20px;
     }

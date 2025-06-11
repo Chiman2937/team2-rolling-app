@@ -17,7 +17,7 @@
       z-index: 2;
 
       // 데스크톱에서만 보이도록
-      @media (min-width: 1200px) {
+      @media (min-width: 1248px) {
         display: flex;
       }
     }
@@ -34,7 +34,7 @@
   &__container {
     width: 100%;
     overflow: visible;
-    @media (max-width: 1199px) {
+    @media (max-width: 1247px) {
       overflow-x: auto;
       overflow-y: hidden;
       -webkit-overflow-scrolling: touch;

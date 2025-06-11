@@ -12,7 +12,7 @@ const Slider = ({ cards, hasNext, loadMore }) => {
   const { isDesktop, pageIndex, canPrev, canNext, goPrev, goNext } = useSliderPaging({
     totalItems: cards.length,
     pageSize: PAGE_SIZE,
-    breakpoint: 1200,
+    breakpoint: 1248,
   });
 
   // 데스크탑: 현재 페이지*4 ~ 페이지*4+4 슬라이스

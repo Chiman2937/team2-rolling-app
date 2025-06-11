@@ -1,7 +1,7 @@
 // src/hooks/useSliderPaging.js
 import { useState, useEffect, useMemo, useCallback } from 'react';
 
-export function useSliderPaging({ totalItems, pageSize, breakpoint = 1200 }) {
+export function useSliderPaging({ totalItems, pageSize, breakpoint = 1248 }) {
   // 1) 뷰포트 모드(데스크톱/모바일) 감지
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= breakpoint);
   useEffect(() => {
