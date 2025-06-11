@@ -15,6 +15,11 @@ $wrapper-desktop-width: 720px;
 		flex-direction: column;
 		gap: 30px;
 
+		@include tablet {
+      flex-direction: row;
+			gap:20px;			
+		}
+
     @include mobile {
       flex-direction: row;
 			gap:20px;

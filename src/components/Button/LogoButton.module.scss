@@ -1,0 +1,26 @@
+.button {
+	&__link {
+    padding: 10px 10px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--color-gray-100);
+    }
+  }
+  &__logo {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		font-family: var(--font-family-poppins);
+		font-weight: 700;
+		font-size: 20px;
+		color: #4A494F;
+		gap: 8px;
+  }
+	&__logo-icon {
+		aspect-ratio: 1;
+		width: 28px;
+	}
+}
