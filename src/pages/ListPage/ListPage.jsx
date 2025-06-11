@@ -83,7 +83,7 @@ const ListPage = () => {
     <div className={styles['list-page']}>
       {/* 인기 롤링 페이퍼 🔥 */}
       <section className={styles['list-page__section']}>
-        <h2 className={styles['list-page__title']}> 요즘 가장 사랑받는 롤링 페이퍼 💌</h2>
+        <h2 className={styles['list-page__title']}> 요즘 가장 사랑받는 롤링 페이퍼 Top 8 💌</h2>
         <Slider cards={popularCards} hasNext={false} loadMore={loadMorePopular} />
       </section>
 
