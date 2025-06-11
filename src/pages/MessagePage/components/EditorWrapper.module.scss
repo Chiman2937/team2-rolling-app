@@ -1,0 +1,41 @@
+/* src/pages/MessagePage/components/EditorWrapper.module.scss */
+.editor-wrapper__container {
+  position: relative;
+  width: 100%;
+}
+
+.editor-wrapper {
+  max-height: 500px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  border: 1px solid var(--color-gray-300);
+  border-radius: 8px;
+  transition: border-color 0.15s ease;
+
+  &:focus-within {
+    border-color: var(--color-purple-600);
+  }
+  /* 오류 & 성공 상태 */
+  &--error {
+    border-color: var(--color-error);
+  }
+  &--success {
+    border-color: var(--color-green-500);
+  }
+
+  &__message {
+    position: absolute;
+    bottom: -18px;
+    font-size: var(--font-size-12);
+    margin: 4px 0 0 10px;
+
+    &--error {
+      color: var(--color-error);
+    }
+    &--success {
+      color: var(--color-green-500);
+    }
+  }
+}
