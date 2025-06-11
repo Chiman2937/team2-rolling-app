@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Slider from './components/Slider';
 import styles from './ListPage.module.scss';
-import { Link } from 'react-router-dom';
 import Button from '@/components/Button/Button';
 
 import { listRecipients } from '@/apis/recipientsApi';
@@ -9,6 +9,7 @@ import { useApi } from '@/hooks/useApi';
 
 const ListPage = () => {
   // 인기/최신 각각 오프셋·hasNext 관리
+  const navigate = useNavigate();
   const [popularOffset, setPopularOffset] = useState(0);
   const [recentOffset, setRecentOffset] = useState(0);
   const [popularHasNext, setPopularHasNext] = useState(false);
@@ -21,7 +22,7 @@ const ListPage = () => {
     refetch: getPopularList,
   } = useApi(
     listRecipients,
-    { limit: 20, offset: popularOffset, sortLike: true },
+    { limit: 8, offset: popularOffset, sortLike: true },
     {
       errorMessage: '인기 롤링페이퍼 목록을 불러오는 데 실패했습니다.',
       retry: 1,
@@ -82,19 +83,19 @@ const ListPage = () => {
     <div className={styles['list-page']}>
       {/* 인기 롤링 페이퍼 🔥 */}
       <section className={styles['list-page__section']}>
-        <h2 className={styles['list-page__title']}>인기 롤링 페이퍼 🔥</h2>
-        <Slider cards={popularCards} hasNext={popularHasNext} loadMore={loadMorePopular} />
+        <h2 className={styles['list-page__title']}> 요즘 가장 사랑받는 롤링 페이퍼 Top 8 💌</h2>
+        <Slider cards={popularCards} hasNext={false} loadMore={loadMorePopular} />
       </section>
 
       {/* 최근에 만든 롤링 페이퍼 ⭐️ */}
       <section className={styles['list-page__section']}>
-        <h2 className={styles['list-page__title']}>최근에 만든 롤링 페이퍼 ⭐️</h2>
+        <h2 className={styles['list-page__title']}> 따끈따끈 신상 롤링 페이퍼 🍞</h2>
         <Slider cards={recentCards} hasNext={recentHasNext} loadMore={loadMoreRecent} />
       </section>
 
-      <Link to='/post'>
-        <Button className={styles['list-page__createButton']}>나도 만들어보기</Button>
-      </Link>
+      <Button className={styles['list-page__createButton']} onClick={() => navigate('/post')}>
+        나도 만들어보기
+      </Button>
     </div>
   );
 };
