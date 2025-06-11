@@ -95,7 +95,7 @@ const CreateRollingPaperPage = () => {
         </button>
         <button className={styles['post-section__back']} onClick={handleGoBackClick}>
           <img className={styles['post-section__button-logo']} src={backIcon} />
-          뒤로
+          돌아가기
         </button>
       </div>
       {isCreatingNewPost && <LoadingOverlay description='새로운 롤링페이퍼를 만들고 있어요' />}
