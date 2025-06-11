@@ -9,13 +9,13 @@
   padding-top: 50px;
   overflow: visible;
 
-  @media screen and (min-width: 768px) and (max-width: 1247px) {
+  @include tablet {
     padding: 0 24px;
     width: 100%;
     min-height: 100dvh;
   }
 
-  @media screen and (max-width: 767px) {
+  @include mobile {
     padding: 0 20px;
     width: 100%;
     padding-top: 40px;
