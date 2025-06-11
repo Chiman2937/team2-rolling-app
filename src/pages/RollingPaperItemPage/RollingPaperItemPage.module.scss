@@ -1,16 +1,16 @@
 .list {
   min-height: 100dvh;
-  padding: 24px 20px;
+  padding: 32px 20px;
   display: flex;
   justify-content: center;
   align-items: start;
 
   @include tablet {
-    padding: 92px 24px;
+    padding: 49px 24px;
   }
 
   @include desktop {
-    padding: 113px 24px;
+    padding: 63px 24px;
   }
 
   &__container {
@@ -45,21 +45,28 @@
       gap: 24px;
     }
   }
+
+  &__loading {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
 }
 
 .skeleton-list {
-	@include skeleton-style;
-	min-height: 100dvh;
-  padding: 24px 20px;
+  @include skeleton-style;
+  min-height: 100dvh;
+  padding: 32px 20px;
   display: flex;
   justify-content: center;
   align-items: start;
-	
+
   @include tablet {
-    padding: 92px 24px;
+    padding: 49px 24px;
   }
 
   @include desktop {
-    padding: 113px 24px;
+    padding: 62px 24px;
   }
 }
