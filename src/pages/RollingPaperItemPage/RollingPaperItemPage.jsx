@@ -131,6 +131,7 @@ const RollingPaperItemPage = () => {
         <DeletePaperSuccessModal
           onClose={() => {
             closeModal();
+            navigate('/list');
           }}
         />,
         {
@@ -143,7 +144,7 @@ const RollingPaperItemPage = () => {
   };
 
   if (showOverlay) {
-    return <LoadingOverlay description='롤링페이퍼 메시지를 삭제하고 있어요' />;
+    return <LoadingOverlay description='롤링페이퍼를 삭제하고 있어요' />;
   }
   return (
     <>

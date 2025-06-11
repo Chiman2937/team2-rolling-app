@@ -33,8 +33,8 @@ export const useMessageItemsList = (id) => {
 
   const [showOverlay, setShowOverlay] = useState(false);
   const [showInfinityLoading, setShowInfinityLoading] = useState(false);
-  const isLoading =
-    recipientDataLoading || messageLoading || deleteMessageLoading || deleteRecipientLoading;
+  const isLoading = recipientDataLoading || messageLoading || deleteMessageLoading;
+  const [isInitialize, setIsInitialize] = useState(false);
 
   const [itemList, setItemList] = useState([]);
   const hasNext = !!messageList?.next;
@@ -49,20 +49,35 @@ export const useMessageItemsList = (id) => {
     setItemList((prevList) => (isFirstCall || !previous ? results : [...prevList, ...results]));
   }, [messageList, isFirstCall, messageLoading]);
 
+  /* 롤링페이퍼 삭제 시 로딩 오버레이 컴포넌트 처리  */
+  useEffect(() => {
+    if (deleteRecipientLoading) {
+      setShowOverlay(true);
+    }
+  }, [deleteRecipientLoading]);
+
+  /* 무한스크롤 로딩: 초기, 메시지 삭제 시 로딩X */
+  useEffect(() => {
+    if (isFirstCall || isInitialize) return;
+    if (messageLoading) {
+      setShowInfinityLoading(true);
+    } else {
+      setShowInfinityLoading(false);
+    }
+  }, [messageLoading, isFirstCall, isInitialize]);
+
   /* 스크롤 시 데이터 다시 불러옴  */
   const loadMore = () => {
     if (messageLoading || !hasNext) return;
-    setShowInfinityLoading(true);
     const newOffset = isFirstCall ? offset + 8 : offset + 6;
-    getMessageListRefetch({ recipientId: id, limit: 6, offset: newOffset }).finally(() =>
-      setShowInfinityLoading(false),
-    );
+    getMessageListRefetch({ recipientId: id, limit: 6, offset: newOffset });
     setOffset(newOffset);
   };
 
   /* 삭제 후 데이터 초기 상태로 불러옴 */
   const initializeList = () => {
     if (messageLoading) return;
+    setIsInitialize(true);
     setOffset(0);
     getMessageListRefetch({ recipientId: id, limit: 8, offset: 0 });
   };
@@ -79,7 +94,7 @@ export const useMessageItemsList = (id) => {
 
   const onDeletePaperConfirm = async (callback) => {
     try {
-      await deleteRecipientRefetch({ id }).finally(() => setShowOverlay(true));
+      await deleteRecipientRefetch({ id });
       callback();
     } catch (error) {
       console.error('롤링페이퍼 삭제 시 오류 발생:', error);
