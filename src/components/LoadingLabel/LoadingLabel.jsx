@@ -13,7 +13,7 @@ import styles from './LoadingLabel.module.scss';
 export default function LoadingLabel({
   loading,
   loadingText = '로딩 중...',
-  loadedText = '완료',
+  loadedText = '',
   className = '',
 }) {
   return (

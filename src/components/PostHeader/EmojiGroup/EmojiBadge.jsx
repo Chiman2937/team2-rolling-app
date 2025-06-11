@@ -1,21 +1,44 @@
-// src/components/EmojiGroup/EmojiBadge.jsx
-import React from 'react';
+// EmojiBadge.jsx
+import { useEffect, useRef, useState } from 'react';
+import CountUp from '@/components/CountUp';
+import cn from 'classnames';
 import Style from './EmojiBadge.module.scss';
 
-/**
- * EmojiBadge 컴포넌트 (단일 사이즈)
- *
- * @param {object} props
- * @param {string} props.emoji - 화면에 표시할 이모지 기호 (예: "👍", "😍" 등)
- * @param {number} props.count - 해당 이모지의 누적 개수
- * @param {string} [props.className] - 추가 클래스
- * @param {object} [props.style]     - inline 스타일
- */
-export default function EmojiBadge({ emoji, count, className = '', style = {} }) {
+export default function EmojiBadge({ emoji, count, addedEmoji, className = '', style = {} }) {
+  /* ---------- 애니메이션 제어용 ref ---------- */
+  const prevCountRef = useRef(undefined); // undefined → 첫 렌더 감지
+  const prev = prevCountRef.current ?? 0; // undefined 면 0으로 처리
+
+  /* ---------- bump (icon scale) ---------- */
+  const [bump, setBump] = useState(false);
+  const handleEnd = () => setBump(false);
+  useEffect(() => {
+    // bump 는 오로지 addedEmoji 와 일치할 때만
+    if (emoji !== addedEmoji) return;
+    setBump(true);
+  }, [addedEmoji, emoji]);
+
+  /* ---------- prevCount 갱신 ---------- */
+  useEffect(() => {
+    prevCountRef.current = count; // 다음 렌더에 사용할 이전 값
+  }, [count]);
+
+  /* ---------- render ---------- */
   return (
-    <div className={`${Style['emoji-badge']} ${className}`} style={style}>
+    <div
+      className={cn(Style['emoji-badge'], { [Style['emoji-badge--bump']]: bump }, className)}
+      style={style}
+      onAnimationEnd={handleEnd} /* bump 애니메이션 끝나면 false로 */
+    >
       <span>{emoji}</span>
-      <span>{count}</span>
+
+      {/* CountUp 은 항상 prev → count 로 */}
+      <CountUp
+        start={prev}
+        end={count}
+        duration={300}
+        key={`${prev}-${count}`} /* 값이 달라질 때마다 재시작 */
+      />
     </div>
   );
 }

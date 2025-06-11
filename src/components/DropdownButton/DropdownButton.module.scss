@@ -46,22 +46,13 @@
     position: absolute;
     top: 100%; /* 토글 바로 아래 */
     left: 50%; /* 토글의 중앙 기준으로 정렬 */
-    margin-top: 4px;
+
     padding: 8px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: var(--color-white);
-
-    /* 중앙 정렬을 위해 X축으로 -50% 이동 */
     transform-origin: top center;
-    transform: scaleY(0) translateX(-50%);
-    opacity: 0;
     pointer-events: none;
-
-    /* 열림/닫힘 애니메이션 */
-    transition:
-      transform 100ms ease,
-      opacity 100ms ease;
     z-index: 100;
   }
 

@@ -5,10 +5,11 @@
   align-items: center;
   gap: 8px; /* 각 뱃지 간격 */
 
-  &__arrow {
-    margin-left: 4px;
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
+  &__button-icon {
+    transition: transform 0.3s ease;
+
+    &--open {
+      transform: rotate(180deg);
+    }
   }
 }

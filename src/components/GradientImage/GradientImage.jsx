@@ -12,6 +12,7 @@ import styles from './GradientImage.module.scss';
  * @param {string}   props.src        실제 이미지 URL
  * @param {string}   [props.alt]      대체 텍스트
  * @param {string}   [props.className] 추가 클래스
+ * @param {Object}   [props.style]    추가 스타일
  * @param {Function} [props.onLoaded] 이미지 로딩 완료 시 호출될 콜백
  * @param {Object}   [props.rest]     기타 <img> 속성
  */
@@ -19,6 +20,7 @@ export default function GradientImage({
   src,
   alt = '',
   className = '',
+  style = {},
   onClick,
   onLoaded,
   ...rest
@@ -37,6 +39,7 @@ export default function GradientImage({
       className={classNames(className, styles['gradient-image'], {
         [styles['gradient-image--loaded']]: loaded,
       })}
+      style={style}
       onClick={onClick}
     >
       {src && (

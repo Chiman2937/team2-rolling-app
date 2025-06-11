@@ -16,14 +16,15 @@ function GlobalHeader() {
   const VISIBLE_PATHS = ['/', '/list'];
   const showButton = useShowComponent(VISIBLE_PATHS);
   const isMobile = deviceType === DEVICE_TYPES.PHONE;
-  if (isMobile) {
-    // 모바일에서는 버튼을 숨김
-    return null;
-  }
+
   const handleButtonClick = () => {
     navigate('/post');
   };
 
+  if (isMobile && !showButton) {
+    // 모바일이면서 버튼을 보여주지 않는 경우 헤더를 숨김
+    return null;
+  }
   return (
     <header className={Style['header']}>
       <div className={Style['header__container']}>
