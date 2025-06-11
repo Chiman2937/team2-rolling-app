@@ -7,6 +7,9 @@ import ImagePickArea from './ImagePickArea';
 const BackgroundField = ({ formDataChange, setNewImageFileObject }) => {
   const [backgroundType, setBackgroundType] = useState(null);
 
+  const showColorPickArea = backgroundType === 'color';
+  const showImagePickArea = backgroundType === 'image';
+
   return (
     <article className={styles['background-field__container']}>
       <label className={styles['background-field__label']}>배경화면을 선택해주세요.</label>
@@ -17,18 +20,16 @@ const BackgroundField = ({ formDataChange, setNewImageFileObject }) => {
         <OptionToggle.button label={'컬러'} type={'color'} />
         <OptionToggle.button label={'이미지'} type={'image'} />
       </OptionToggle>
-      {backgroundType === 'color' && (
-        <ColorPickArea
-          formDataChange={formDataChange}
-          setNewImageFileObject={setNewImageFileObject}
-        />
-      )}
-      {backgroundType === 'image' && (
-        <ImagePickArea
-          formDataChange={formDataChange}
-          setNewImageFileObject={setNewImageFileObject}
-        />
-      )}
+      <ColorPickArea
+        formDataChange={formDataChange}
+        setNewImageFileObject={setNewImageFileObject}
+        showColorPickArea={showColorPickArea}
+      />
+      <ImagePickArea
+        formDataChange={formDataChange}
+        setNewImageFileObject={setNewImageFileObject}
+        showImagePickArea={showImagePickArea}
+      />
     </article>
   );
 };

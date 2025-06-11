@@ -7,6 +7,7 @@ import { COLOR_STYLES } from '@/constants/colorThemeStyle';
 import CardModal from '@/components/CardModal';
 import PostHeader from '@/components/PostHeader/PostHeader';
 import LoadingOverlay from '@/components/LoadingOverlay';
+import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner';
 import styles from '@/pages/RollingPaperItemPage/RollingPaperItemPage.module.scss';
 import ListCard from '@/pages/RollingPaperItemPage/components/ListCard';
 import ActionCard from '@/pages/RollingPaperItemPage/components/ActionCard';
@@ -14,6 +15,7 @@ import ListButtonGroup from '@/pages/RollingPaperItemPage/components/ListButtonG
 import RequestDeletePaperModal from '@/pages/RollingPaperItemPage/components/RequestDeletePaperModal';
 import DeletePaperSuccessModal from '@/pages/RollingPaperItemPage/components/DeletePaperSuccessModal';
 import InfinityScrollWrapper from '@/components/InfinityScrollWrapper/InfinityScrollWrapper';
+import { getBackgroundStylesFromPostData } from '../../utils/getBackgroundStylesFromPostData';
 
 const RollingPaperItemPage = () => {
   const navigate = useNavigate();
@@ -27,27 +29,18 @@ const RollingPaperItemPage = () => {
     itemList,
     hasNext,
     showOverlay,
+    showInfinityLoading,
     isLoading,
-    loadingDescription,
     loadMore,
     onClickDeleteMessage,
     onDeletePaperConfirm,
   } = useMessageItemsList(id); // 리스트 데이터 API 및 동작
 
   /* 전체 배경 스타일 적용 */
-  const containerStyle = recipientData
-    ? {
-        backgroundColor: !recipientData?.backgroundImageURL
-          ? COLOR_STYLES[recipientData?.backgroundColor]?.primary
-          : '',
-        backgroundImage: recipientData?.backgroundImageURL
-          ? `url(${recipientData?.backgroundImageURL})`
-          : 'none',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-      }
-    : {};
+  const containerStyle = getBackgroundStylesFromPostData({
+    backgroundColor: recipientData?.backgroundColor,
+    backgroundImageURL: recipientData?.backgroundImageURL,
+  });
 
   const paperDeleteModalData = {
     title: (
@@ -141,18 +134,26 @@ const RollingPaperItemPage = () => {
             navigate('/list');
           }}
         />,
+        {
+          onModalClose: () => {
+            navigate('/list');
+          },
+        },
       ),
     );
   };
 
-  if (showOverlay || isLoading) {
-    return <LoadingOverlay description={loadingDescription} />;
+  if (showOverlay) {
+    return <LoadingOverlay description='롤링페이퍼를 삭제하고 있어요' />;
   }
   return (
     <>
       {/* 헤더 영역 */}
       <PostHeader id={id} name={recipientData?.name} />
-      <section style={containerStyle} className={styles['list']}>
+      <section
+        style={itemList.length === 0 && isLoading ? {} : containerStyle}
+        className={itemList.length === 0 && isLoading ? styles['skeleton-list'] : styles['list']}
+      >
         <div className={styles['list__container']}>
           <ListButtonGroup
             showDelete={isEditMode}
@@ -164,6 +165,9 @@ const RollingPaperItemPage = () => {
             <div className={styles['list__grid']}>
               {!isEditMode && <ActionCard isAdd onAction={handleOnClickAddMessage} />}
               {isEditMode && <ActionCard onAction={handleOnClickDeletePaper} />}
+              {itemList.length === 0 &&
+                isLoading &&
+                new Array(5).fill(0).map((_, i) => <ListCard.skeleton key={i} />)}
               {itemList?.map((item) => (
                 <ListCard
                   key={item.id}
@@ -175,6 +179,11 @@ const RollingPaperItemPage = () => {
               ))}
             </div>
           </InfinityScrollWrapper>
+          {showInfinityLoading && (
+            <div className={styles['list__loading']}>
+              <LoadingSpinner.dotCircle dotCount={8} dotSize={12} distanceFromCenter={30} />
+            </div>
+          )}
         </div>
       </section>
     </>

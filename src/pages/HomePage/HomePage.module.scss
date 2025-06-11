@@ -1,4 +1,4 @@
-body {
+* {
   box-sizing: border-box;
   font-family: var(--font-family-base);
 }
@@ -9,11 +9,35 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 30px;
-  padding: 0 120px;
+  padding: 60px 120px 24px;
   min-height: 100dvh;
+  width: var(--wrapper-width);
+  margin: 0 auto;
 
-  @media screen and (max-width: 1199px) {
-    padding-bottom: 40px;
+  @media screen and (min-width: 768px) and (max-width: 1247px) {
+    width: 100%;
+    padding: 49px 24px 24px;
+  }
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+    padding: 42px 20px 24px;
+  }
+  &__view {
+    width: 280px;
+    height: 56px;
+    padding: 14px 24px;
+    background-color: var(--color-purple-600);
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 28px;
+    color: var(--color-white);
+
+    @media screen and (max-width: 1247px) {
+      width: 100%;
+    }
   }
 }
 
@@ -28,9 +52,11 @@ body {
   width: 1200px;
   padding: 90px;
   overflow: hidden;
+  animation: slide-in-left 1s ease;
 
   &--reverse {
     flex-direction: row-reverse;
+    animation: slide-in-right 1s ease;
   }
 
   &__context {
@@ -63,14 +89,7 @@ body {
       letter-spacing: -0.18px;
       color: var(--color-gray-500);
     }
-
-    &__view {
-      @media screen and (max-width: 1199px) {
-        width: 100%;
-      }
-    }
   }
-
   &__img-wrapper {
     width: 100%;
     display: flex;
@@ -80,11 +99,15 @@ body {
       width: 100%;
       max-width: 720px;
       height: auto;
+      @media screen and (max-width: 1247px) {
+        width: 500px;
+        height: auto;
+      }
     }
   }
 
   /* 태블릿 화면 */
-  @media screen and (min-width: 768px) and (max-width: 1199px) {
+  @media screen and (min-width: 768px) and (max-width: 1247px) {
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
@@ -98,7 +121,7 @@ body {
   }
 
   /* 모바일 화면 */
-  @media screen and (min-width: 355px) and (max-width: 767px) {
+  @media screen and (max-width: 767px) {
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
@@ -109,5 +132,27 @@ body {
       flex-direction: column;
       align-items: flex-start;
     }
+  }
+}
+
+@keyframes slide-in-left {
+  0% {
+    opacity: 0.5;
+    transform: translateX(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-right {
+  0% {
+    opacity: 0.5;
+    transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
   }
 }

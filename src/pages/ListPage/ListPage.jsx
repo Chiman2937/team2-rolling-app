@@ -62,7 +62,7 @@ const ListPage = () => {
     setRecentHasNext(!!next);
   }, [recentData, recentLoading, recentOffset]);
 
-  // 인기 무한스크롤 로드
+  // 인기 카드 추가 로드 함수
   const loadMorePopular = () => {
     if (popularLoading || !popularHasNext) return;
     const newOffset = popularOffset + 20;
@@ -70,7 +70,7 @@ const ListPage = () => {
     getPopularList({ limit: 20, offset: newOffset, sortLike: true });
   };
 
-  // 최신 무한스크롤 로드
+  // 최신 카드 추가 로드 함수
   const loadMoreRecent = () => {
     if (recentLoading || !recentHasNext) return;
     const newOffset = recentOffset + 20;

@@ -1,60 +1,34 @@
 // src/hooks/useSliderPaging.js
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 
-export function useSliderPaging({ totalItems, pageSize, cardWidth, gap, breakpoint = 1200 }) {
-  const wrapperRef = useRef(null);
-
-  // 1) 뷰포트가 데스크톱 모드인지
+export function useSliderPaging({ totalItems, pageSize, breakpoint = 1200 }) {
+  // 1) 뷰포트 모드(데스크톱/모바일) 감지
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= breakpoint);
   useEffect(() => {
-    const onResize = () => setIsDesktop(window.innerWidth >= breakpoint);
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
+    const handler = () => setIsDesktop(window.innerWidth >= breakpoint);
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
   }, [breakpoint]);
 
-  // 2) 페이지 인덱스
+  // 2) 페이지 인덱스 관리
   const [pageIndex, setPageIndex] = useState(0);
-  const totalPage = Math.max(0, Math.ceil(totalItems / pageSize) - 1);
-
-  // 3) 한 페이지당 스크롤 픽셀
-  const offset = pageSize * (cardWidth + gap);
-
-  // 4) 데스크톱: 버튼 클릭 시 페이지 이동
-  const slideTo = useCallback(
-    (idx) => {
-      const el = wrapperRef.current;
-      if (!el) return;
-      el.scrollTo({ left: idx * offset, behavior: 'smooth' });
-      setPageIndex(idx);
-    },
-    [offset],
+  const totalPage = useMemo(
+    () => Math.max(0, Math.ceil(totalItems / pageSize) - 1),
+    [totalItems, pageSize],
   );
 
+  // 3) 이전/다음 버튼 활성화 여부
   const canPrev = pageIndex > 0;
   const canNext = pageIndex < totalPage;
-  const goPrev = () => canPrev && slideTo(pageIndex - 1);
-  const goNext = () => canNext && slideTo(pageIndex + 1);
 
-  // 5) 모바일·태블릿: 직접 스크롤 → 페이지 인덱스 동기화
-  useEffect(() => {
-    if (isDesktop) return;
-    const el = wrapperRef.current;
-    if (!el) return;
-    const onScroll = () => {
-      const idx = Math.round(el.scrollLeft / offset);
-      setPageIndex(Math.min(Math.max(idx, 0), totalPage));
-    };
-    el.addEventListener('scroll', onScroll, { passive: true });
-    return () => el.removeEventListener('scroll', onScroll);
-  }, [isDesktop, offset, totalPage]);
+  // 4) 페이지 이동 함수
+  const goPrev = useCallback(() => {
+    if (canPrev) setPageIndex((idx) => idx - 1);
+  }, [canPrev]);
 
-  return {
-    wrapperRef,
-    isDesktop,
-    pageIndex,
-    canPrev,
-    canNext,
-    goPrev,
-    goNext,
-  };
+  const goNext = useCallback(() => {
+    // 항상 페이지 인덱스를 1 증가
+    setPageIndex((idx) => idx + 1);
+  }, []);
+  return { isDesktop, pageIndex, totalPage, canPrev, canNext, goPrev, goNext };
 }

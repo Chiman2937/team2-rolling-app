@@ -25,6 +25,7 @@ const ListCard = ({ cardData, showDelete, onClick, onDelete }) => {
       sender,
       imageUrl: profileImageURL,
       createdAt: formatDateKRW(createdAt),
+      relationship: relationship,
       content: content,
       font: font,
     });
@@ -63,5 +64,20 @@ const ListCard = ({ cardData, showDelete, onClick, onDelete }) => {
     </article>
   );
 };
+
+const Skeleton = () => {
+  return (
+    <article className={styles['skeleton-card']}>
+      <div className={styles['skeleton-card__container']}>
+        <div className={styles['skeleton-card__profile']} />
+        <hr className={styles['card__divider']} />
+        <div className={styles['skeleton-card__context']} />
+        <div className={styles['skeleton-card__date']} />
+      </div>
+    </article>
+  );
+};
+
+ListCard.skeleton = Skeleton;
 
 export default ListCard;
