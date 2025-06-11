@@ -66,7 +66,11 @@ const ItemCard = ({
             )}
           </p>
 
-          <div className={myDivClassName} />
+          {!messageCount ? (
+            <button className={styles['item-card__write']}>지금 작성하기</button>
+          ) : (
+            <div className={myDivClassName} />
+          )}
 
           {/* 반응 이모지 영역 (최대 3) */}
           <div className={styles['item-card__emojis-area']}>
