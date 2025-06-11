@@ -48,17 +48,21 @@ const ItemCard = ({
           <div className={styles['item-card__avatars-area']}>
             {/* 프로필 아바타 영역 (최대 3) */}
 
-            <ShowAvatars
-              profiles={recentMessages}
-              totalCount={messageCount}
-              loading={false}
-              error={null}
-            />
+            {!messageCount ? (
+              <div style={{ paddingTop: '15px' }}>✨ 첫 글을 기다리고 있어요!</div>
+            ) : (
+              <ShowAvatars
+                profiles={recentMessages}
+                totalCount={messageCount}
+                loading={false}
+                error={null}
+              />
+            )}
           </div>
 
           <p className={styles['item-card__meta']}>
             {!messageCount ? (
-              `아직 받은 메세지가 없어요🥲`
+              <div>따뜻한 한마디를 전해볼까요?</div>
             ) : (
               <span>
                 <strong style={{ fontWeight: 700 }}>{messageCount}</strong>명이 작성했어요!
@@ -69,6 +73,7 @@ const ItemCard = ({
           <div className={myDivClassName} />
 
           {/* 반응 이모지 영역 (최대 3) */}
+
           <div className={styles['item-card__emojis-area']}>
             <ShowEmoji emojis={topReactions} />
           </div>
