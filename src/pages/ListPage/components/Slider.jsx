@@ -32,7 +32,7 @@ const Slider = ({ cards, hasNext, loadMore }) => {
 
   return (
     <div className={styles.slider}>
-      {isDesktop && (
+      {isDesktop && canPrev && (
         <div className={styles['slider__arrow--left']}>
           <ArrowButton direction='left' onClick={goPrev} disabled={!canPrev} />
         </div>
