@@ -27,8 +27,8 @@ export function useSliderPaging({ totalItems, pageSize, breakpoint = 1200 }) {
   }, [canPrev]);
 
   const goNext = useCallback(() => {
-    if (canNext) setPageIndex((idx) => idx + 1);
-  }, [canNext]);
-
+    // 항상 페이지 인덱스를 1 증가
+    setPageIndex((idx) => idx + 1);
+  }, []);
   return { isDesktop, pageIndex, totalPage, canPrev, canNext, goPrev, goNext };
 }
