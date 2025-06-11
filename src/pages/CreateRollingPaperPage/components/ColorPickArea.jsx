@@ -1,5 +1,5 @@
 import styles from './ColorPickArea.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useModal } from '../../../hooks/useModal';
 import ColorPickerModal from './ColorPickerModal';
 import ColorSwatch from './ColorSwatch';
@@ -8,7 +8,7 @@ import { getColorImageBlob } from '../../../utils/getColorImageBlob';
 
 const DEFAULT_COLOR_KEY = ['#FFE2AD', '#ECD9FF', '#B1E4FF', '#D0F5C3'];
 
-const ColorPickArea = ({ formDataChange, setNewImageFileObject }) => {
+const ColorPickArea = ({ formDataChange, setNewImageFileObject, showColorPickArea }) => {
   const [selectedColor, setSelectedColor] = useState(null);
   const [customColorList, setCustomColorList] = useState([null, null, null]);
   const { showModal, closeModal } = useModal();
@@ -34,11 +34,24 @@ const ColorPickArea = ({ formDataChange, setNewImageFileObject }) => {
       if (prev.includes(hexColor)) return prev;
       return [hexColor, ...prev.slice(0, 2)];
     });
+    handleColorSelect(hexColor);
     closeModal();
   };
 
+  useEffect(() => {
+    if (!showColorPickArea) {
+      setSelectedColor(null);
+      setNewImageFileObject(null);
+    } else {
+      handleColorSelect(DEFAULT_COLOR_KEY[0]);
+    }
+  }, [showColorPickArea]);
+
   return (
-    <div className={styles['color-pick-area__container']}>
+    <div
+      className={styles['color-pick-area__container']}
+      style={showColorPickArea ? {} : { display: 'none' }}
+    >
       {/* 기본 색상 선택 팔레트 */}
       <label className={styles['color-pick-area__label']}>기본 색상</label>
       <div className={styles['color-pick-area__palette']}>

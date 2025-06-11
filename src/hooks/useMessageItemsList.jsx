@@ -32,22 +32,9 @@ export const useMessageItemsList = (id) => {
   );
 
   const [showOverlay, setShowOverlay] = useState(false);
-  const isLoading =
-    recipientDataLoading || messageLoading || deleteMessageLoading || deleteRecipientLoading;
-
-  const getLoadingDescription = () => {
-    let description = '';
-    if (recipientDataLoading || messageLoading) {
-      description = '롤링페이퍼 메시지 목록을 불러오고 있어요';
-    } else if (deleteMessageLoading) {
-      description = '롤링페이퍼 메시지를 삭제하고 있어요';
-    } else if (deleteRecipientLoading) {
-      description = '롤링페이퍼를 삭제하고 있어요';
-    }
-    return description;
-  };
-
-  const loadingDescription = getLoadingDescription();
+  const [showInfinityLoading, setShowInfinityLoading] = useState(false);
+  const isLoading = recipientDataLoading || messageLoading || deleteMessageLoading;
+  const [isInitialize, setIsInitialize] = useState(false);
 
   const [itemList, setItemList] = useState([]);
   const hasNext = !!messageList?.next;
@@ -69,6 +56,16 @@ export const useMessageItemsList = (id) => {
     }
   }, [deleteRecipientLoading]);
 
+  /* 무한스크롤 로딩: 초기, 메시지 삭제 시 로딩X */
+  useEffect(() => {
+    if (isFirstCall || isInitialize) return;
+    if (messageLoading) {
+      setShowInfinityLoading(true);
+    } else {
+      setShowInfinityLoading(false);
+    }
+  }, [messageLoading, isFirstCall, isInitialize]);
+
   /* 스크롤 시 데이터 다시 불러옴  */
   const loadMore = () => {
     if (messageLoading || !hasNext) return;
@@ -80,6 +77,7 @@ export const useMessageItemsList = (id) => {
   /* 삭제 후 데이터 초기 상태로 불러옴 */
   const initializeList = () => {
     if (messageLoading) return;
+    setIsInitialize(true);
     setOffset(0);
     getMessageListRefetch({ recipientId: id, limit: 8, offset: 0 });
   };
@@ -109,7 +107,7 @@ export const useMessageItemsList = (id) => {
     hasNext,
     isLoading,
     showOverlay,
-    loadingDescription,
+    showInfinityLoading,
     loadMore,
     onClickDeleteMessage,
     onDeletePaperConfirm,
