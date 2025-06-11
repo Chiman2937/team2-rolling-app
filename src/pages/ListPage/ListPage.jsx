@@ -22,7 +22,7 @@ const ListPage = () => {
     refetch: getPopularList,
   } = useApi(
     listRecipients,
-    { limit: 20, offset: popularOffset, sortLike: true },
+    { limit: 8, offset: popularOffset, sortLike: true },
     {
       errorMessage: '인기 롤링페이퍼 목록을 불러오는 데 실패했습니다.',
       retry: 1,
@@ -83,13 +83,13 @@ const ListPage = () => {
     <div className={styles['list-page']}>
       {/* 인기 롤링 페이퍼 🔥 */}
       <section className={styles['list-page__section']}>
-        <h2 className={styles['list-page__title']}>인기 롤링 페이퍼 🔥</h2>
-        <Slider cards={popularCards} hasNext={popularHasNext} loadMore={loadMorePopular} />
+        <h2 className={styles['list-page__title']}> 요즘 가장 사랑받는 롤링 페이퍼 💌</h2>
+        <Slider cards={popularCards} hasNext={false} loadMore={loadMorePopular} />
       </section>
 
       {/* 최근에 만든 롤링 페이퍼 ⭐️ */}
       <section className={styles['list-page__section']}>
-        <h2 className={styles['list-page__title']}>최근에 만든 롤링 페이퍼 ⭐️</h2>
+        <h2 className={styles['list-page__title']}> 따끈따끈 신상 롤링 페이퍼 🍞</h2>
         <Slider cards={recentCards} hasNext={recentHasNext} loadMore={loadMoreRecent} />
       </section>
 
