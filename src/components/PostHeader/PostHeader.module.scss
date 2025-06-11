@@ -3,6 +3,13 @@
 .post-header {
   background-color: var(--color-white);
   box-shadow: 0 1px 4px var(--color-gray-200);
+  position: sticky;
+  top: 64px; // 뷰포트 최상단에 붙임
+  z-index: 1000;
+
+  @include mobile {
+    top: 0;
+  }
 
   &__container {
     display: flex;
@@ -32,7 +39,11 @@
   &__emoji-container {
     display: flex;
     align-items: center;
-    gap: 8px;
+  }
+  &__reaction-container {
+    display: flex;
+    align-items: center;
+    gap: 13px;
   }
 
   &__divider {
@@ -61,7 +72,7 @@
     &__menu-container {
       width: 100%; // 가로 전체 너비
       height: 52px;
-      justify-content: space-between; // 왼쪽 정렬
+      justify-content: start; // 중앙 정렬
       margin: 0 auto; // 중앙 정렬
       gap: 12px; // 아이템 간격 축소
     }

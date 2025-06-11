@@ -10,15 +10,15 @@
   opacity: 0;
   animation: fade-in-spinner 2s forwards;
 }
-
+.toggle-avatars--loading {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-18);
+  color: var(--color-gray-900);
+}
 .toggle-avatars--error {
   font-size: 14px;
   color: #e53e3e;
-}
-
-.toggle-avatars--empty {
-  display: flex;
-  align-items: center;
 }
 
 .toggle-avatars__avatar {
@@ -49,6 +49,18 @@
   margin-left: 8px;
   font-size: var(--font-size-18);
   color: var(--color-gray-900);
+}
+.toggle-avatars--empty {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-18);
+  color: var(--color-gray-900);
+  @include tablet {
+    display: none; /* 태블릿 이상에서는 숨김 */
+  }
+  @include mobile {
+    display: none; /* 모바일에서는 숨김 */
+  }
 }
 .toggle-avatars__count-number {
   font-weight: bold;

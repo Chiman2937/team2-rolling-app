@@ -4,9 +4,9 @@
  * 디바이스 타입을 구분하는 문자열 상수
  */
 export const DEVICE_TYPES = {
-  PHONE: 'phone', // ≤ 640px
-  TABLET: 'tablet', // 641px ~ 1024px
-  DESKTOP: 'desktop', // > 1024px
+  PHONE: 'phone', // ≤ 767px
+  TABLET: 'tablet', // 768px ~ 1247px
+  DESKTOP: 'desktop', // > 1247px
 };
 
 /**
@@ -15,8 +15,8 @@ export const DEVICE_TYPES = {
 export const DEFAULT_DEVICE_TYPE = DEVICE_TYPES.DESKTOP;
 
 export const BREAKPOINTS = {
-  PHONE_MAX: 640,
-  TABLET_MAX: 1024,
+  PHONE_MAX: 767,
+  TABLET_MAX: 1247,
 };
 
 /**
