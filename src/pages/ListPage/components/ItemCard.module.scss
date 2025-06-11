@@ -17,15 +17,36 @@
   transform: translateZ(0);
   &:hover {
     transform: scale(1.05);
-  }
+  }	
+
+	&__shinning {
+		position: absolute;
+		width: 90px;
+		height: 200px;
+		right: 20px;
+		top: 20px;
+		background-color: #ffffff;
+		filter: blur(60px);
+		z-index: -1;
+	}
+
+	&__shadow {
+		position: absolute;
+		width: 10px;
+		height: 200px;
+		left: 20px;
+		top: 20px;
+		background-color: #222222;
+		filter: blur(55px);
+		z-index: -1;
+	}
 
   &__content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 10px;
+    gap: 12px;
     height: 100%;
-    padding: 30px 24px;
+    padding: 30px 24px 20px;
     color: var(--color-gray-900);
   }
 
@@ -39,12 +60,26 @@
     margin: 0;
     font-size: var(--font-size-24);
     font-weight: var(--font-weight-bold);
+		line-height: 36px;
+		height:36px;
   }
 
+	&__avatars-area {
+		height: 29px;
+	}
+	
   &__meta {
-    margin: 4px 0;
     font-size: var(--font-size-16);
+		line-height: 26px;
+		height: 26px;
+		flex-grow: 1;
   }
+
+	&__emojis-area {
+		height: 36px;
+		display: flex;
+		align-items: center;
+	}
 
   &__top-reactions {
     display: flex;
@@ -64,6 +99,73 @@
   &__myDiv {
     width: 100%;
     margin: 1% 0;
-    border: 0.5px solid rgba(0, 0, 0, 0.12);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+		&.card-dark {
+			border: 1px solid rgba(255, 255, 255, 0.4);
+		}
+		&.card-light {
+			border: 1px solid rgba(0, 0, 0, 0.12);
+		}
+  }
+}
+
+.skeleton-card {
+	position: relative;
+	width: 275px;
+	height: 260px;
+	overflow: hidden;
+	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+	border-radius: 16px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	transform: scale(1);
+	transition: transform 0.5s;
+	will-change: transform;
+	transform: translateZ(0);
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 100%;
+    padding: 30px 24px 20px;
+	}
+
+	&__title {
+		@include skeleton-style;
+		width: 100%;
+		height:36px;
+	}
+
+	&__profile {
+		@include skeleton-style;
+		width: 30%;
+		height: 30px;
+		border-radius: 16px;
+	}
+
+	&__meta {
+		@include skeleton-style;
+		height: 26px;
+		flex-grow: 1;
+	}
+
+	&__emojis-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+		height: 36px;
+	}
+
+	&__emoji {
+		@include skeleton-style;
+		width: 64px;
+		height: 32px;
+		border-radius: 16px;
+	}
+
+  &__myDiv {
+    width: 100%;
+    margin: 1% 0;
+		border: 1px solid rgba(0, 0, 0, 0.12);
   }
 }
