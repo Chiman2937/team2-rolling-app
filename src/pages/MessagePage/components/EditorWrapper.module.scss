@@ -24,6 +24,10 @@
   &--success {
     border-color: var(--color-green-500);
   }
+  &__content {
+    flex: 1;
+    max-height: inherit;
+  }
 
   &__message {
     position: absolute;

@@ -43,6 +43,7 @@ const EditorWrapper = ({
           onUpdate={handleUpdate}
           font={font}
           onBlur={onBlur}
+          className={styles['editor-wrapper__editor']}
         />
       </div>
 

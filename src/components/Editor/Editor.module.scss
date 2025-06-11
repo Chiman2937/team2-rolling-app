@@ -9,6 +9,8 @@
   font-family: inherit !important; /* 부모에서 상속받은 폰트 사용 */
   font-size: var(--font-size-16);
   color: var(--color-gray-900);
+  max-height: 400px;
+  overflow-y: auto;
 
   /* 롤링페이퍼 폰트는 부모에서 전달받음 */
   /* 혹시 모를 리셋(reset.css) 덮어쓰기 방지 */
