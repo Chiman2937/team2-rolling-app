@@ -3,6 +3,9 @@ import ShareIcon from '@/assets/icons/share-20.svg'; // SVG를 URL로 import 한
 import Style from './ShareMenu.module.scss';
 import { useCallback } from 'react';
 import { useToast } from '@/hooks/useToast';
+import Button from '@/components/Button/Button';
+import { useDeviceType } from '@/hooks/useDeviceType';
+import { DEVICE_TYPES } from '@/constants/deviceType';
 /**
  *
  * 공유 아이콘(버튼)을 클릭했을 때 아래 두 가지 메뉴가 표시됩니다.
@@ -17,6 +20,8 @@ import { useToast } from '@/hooks/useToast';
  */
 export default function ShareMenu({ onKakaoClick }) {
   const { showToast } = useToast();
+  const deviceType = useDeviceType();
+  const isMobile = deviceType === DEVICE_TYPES.PHONE;
   const handleUrlCopy = useCallback(async () => {
     try {
       const currentUrl = window.location.href;
@@ -39,14 +44,10 @@ export default function ShareMenu({ onKakaoClick }) {
   }, [showToast]);
 
   // 토글 버튼(Share 아이콘)
-  const toggleButton = (
-    /**
-     * @todo 디자인시스템 버튼으로 교체
-     */
-    <button aria-label='공유하기' className={Style['share-menu__toggle-btn']}>
-      {/* SVG를 <img> 태그로 불러오는 예시 */}
-      <img src={ShareIcon} alt='공유 아이콘' />
-    </button>
+  const toggleButton = isMobile ? (
+    <Button icon={ShareIcon} iconOnly variant='outlined' size='28' aria-label='공유하기' />
+  ) : (
+    <Button icon={ShareIcon} iconOnly variant='outlined' size='36' aria-label='공유하기' />
   );
 
   // 드롭다운 메뉴 리스트

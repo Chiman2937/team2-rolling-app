@@ -1,11 +1,11 @@
 import styles from './ImagePickArea.module.scss';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useApi } from '@/hooks/useApi';
 import { getBackgroundImages } from '@/apis/backgroundImagesApi';
 import AddItemButton from './AddItemButton';
 import ImageSwatch from './ImageSwatch';
 
-const ImagePickArea = ({ formDataChange, setNewImageFileObject }) => {
+const ImagePickArea = ({ formDataChange, setNewImageFileObject, showImagePickArea }) => {
   const [selectedImageUrl, setSelectedImageUrl] = useState(null);
   const [customImageFileList, setCustomImageFileList] = useState([]);
   const [customImagePreviewUrlList, setCustomImagePreviewUrlList] = useState([]);
@@ -29,11 +29,13 @@ const ImagePickArea = ({ formDataChange, setNewImageFileObject }) => {
 
     setCustomImageFileList((prev) => {
       const next = [file, ...prev];
+      setNewImageFileObject(next[0]);
       return next.slice(0, 3);
     });
 
     setCustomImagePreviewUrlList((prev) => {
       const next = [newUrl, ...prev];
+      setSelectedImageUrl(next[0]);
       if (next.length > 3) {
         const urlToRevoke = next[next.length - 1];
         URL.revokeObjectURL(urlToRevoke);
@@ -59,8 +61,20 @@ const ImagePickArea = ({ formDataChange, setNewImageFileObject }) => {
     fileInputRef.current.click();
   };
 
+  useEffect(() => {
+    if (!showImagePickArea) {
+      setSelectedImageUrl(null);
+      setNewImageFileObject(null);
+    } else {
+      handleImageSelect(backgroundImageURL[0]);
+    }
+  }, [showImagePickArea]);
+
   return (
-    <div className={styles['color-pick-area__container']}>
+    <div
+      className={styles['color-pick-area__container']}
+      style={showImagePickArea ? {} : { display: 'none' }}
+    >
       {/* 기본 색상 선택 팔레트 */}
       <label className={styles['color-pick-area__label']}>기본 이미지</label>
       <div className={styles['color-pick-area__palette']}>

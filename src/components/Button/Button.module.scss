@@ -1,375 +1,145 @@
-/* ===== 실제 스펙 기반 새 CSS ===== */
+/* ================================================ */
+/* 1. VARIANT 클래스들 (테마 스타일) */
+/* ================================================ */
 
-/** 1. Primary 버튼들 (4가지) **/
-
-/* 1-1. Primary Large (280×56) - 구경해보기, 나도 만들어보기 */
-.primary-large {
+/* Primary 테마 */
+.primary {
   background-color: var(--color-purple-600);
   color: var(--color-white);
-  width: 280px;
-  height: 56px;
-  padding: 14px 24px;
   border: none;
-  border-radius: 12px;
-  font-size: var(--font-size-18);
-  font-weight: var(--font-weight-bold);
-  font-family: var(--font-family-base);
-  letter-spacing: -0.18px;
-  line-height: 28px;
-  text-align: center;
   cursor: pointer;
   transition: background-color 0.5s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+  &:hover {
+    background-color: var(--color-purple-700);
+  }
+
+  &:active {
+    background-color: var(--color-purple-800);
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-purple-900);
+  }
 }
 
-.primary-large:hover {
-  background-color: var(--color-purple-700);
-}
-
-.primary-large:active {
-  background-color: var(--color-purple-800);
-}
-
-.primary-large:focus {
-  border: 2px solid var(--color-purple-900);
-}
-
-.primary-large-disabled {
-  background-color: var(--color-gray-300);
-  color: var(--color-white);
-  width: 280px;
-  height: 56px;
-  padding: 14px 24px;
-  border: none;
-  border-radius: 12px;
-  font-size: var(--font-size-18);
-  font-weight: var(--font-weight-bold);
-  font-family: var(--font-family-base);
-  letter-spacing: -0.18px;
-  line-height: 28px;
-  text-align: center;
-  cursor: not-allowed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* 1-2. Primary Stretch (100%×56) - 생성하기 */
-.primary-stretch {
-  background-color: var(--color-purple-600);
-  color: var(--color-white);
-  width: 100%;
-  height: 56px;
-  padding: 14px 24px;
-  border: none;
-  border-radius: 12px;
-  font-size: var(--font-size-18);
-  font-weight: var(--font-weight-bold);
-  font-family: var(--font-family-base);
-  letter-spacing: -0.18px;
-  line-height: 28px;
-  text-align: center;
-  cursor: pointer;
-  transition: background-color 0.5s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.primary-stretch:hover {
-  background-color: var(--color-purple-700);
-}
-
-.primary-stretch:active {
-  background-color: var(--color-purple-800);
-}
-
-.primary-stretch:focus {
-  border: 2px solid var(--color-purple-900);
-}
-
-.primary-stretch-disabled {
-  background-color: var(--color-gray-300);
-  color: var(--color-white);
-  width: 100%;
-  height: 56px;
-  padding: 14px 24px;
-  border: none;
-  border-radius: 12px;
-  font-size: var(--font-size-18);
-  font-weight: var(--font-weight-bold);
-  font-family: var(--font-family-base);
-  letter-spacing: -0.18px;
-  line-height: 28px;
-  text-align: center;
-  cursor: not-allowed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* 1-3. Primary Medium (120×40) - 모달 확인 */
-.primary-medium {
-  background-color: var(--color-purple-600);
-  color: var(--color-white);
-  width: 120px;
-  height: 40px;
-  padding: 7px 16px;
-  border: none;
-  border-radius: 6px;
-  font-size: var(--font-size-16);
-  font-weight: var(--font-weight-regular);
-  font-family: var(--font-family-base);
-  letter-spacing: -0.16px;
-  line-height: 26px;
-  text-align: center;
-  cursor: pointer;
-  transition: background-color 0.5s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.primary-medium:hover {
-  background-color: var(--color-purple-700);
-}
-
-.primary-medium:active {
-  background-color: var(--color-purple-800);
-}
-
-.primary-medium:focus {
-  border: 2px solid var(--color-purple-900);
-}
-
-.primary-medium-disabled {
-  background-color: var(--color-gray-300);
-  color: var(--color-white);
-  width: 120px;
-  height: 40px;
-  padding: 7px 16px;
-  border: none;
-  border-radius: 6px;
-  font-size: var(--font-size-16);
-  font-weight: var(--font-weight-regular);
-  font-family: var(--font-family-base);
-  letter-spacing: -0.16px;
-  line-height: 26px;
-  text-align: center;
-  cursor: not-allowed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* 1-4. Primary Small (92×39) - 삭제하기 */
-.primary-small {
-  background-color: var(--color-purple-600);
-  color: var(--color-white);
-  width: 92px;
-  height: 39px;
-  padding: 7px 16px;
-  border: none;
-  border-radius: 6px;
-  font-size: var(--font-size-16);
-  font-weight: var(--font-weight-regular);
-  font-family: var(--font-family-base);
-  letter-spacing: -0.16px;
-  line-height: 26px;
-  text-align: center;
-  cursor: pointer;
-  transition: background-color 0.5s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.primary-small:hover {
-  background-color: var(--color-purple-700);
-}
-
-.primary-small:active {
-  background-color: var(--color-purple-800);
-}
-
-.primary-small:focus {
-  border: 2px solid var(--color-purple-900);
-}
-
-.primary-small-disabled {
-  background-color: var(--color-gray-300);
-  color: var(--color-white);
-  width: 92px;
-  height: 39px;
-  padding: 7px 16px;
-  border: none;
-  border-radius: 6px;
-  font-size: var(--font-size-16);
-  font-weight: var(--font-weight-regular);
-  font-family: var(--font-family-base);
-  letter-spacing: -0.16px;
-  line-height: 26px;
-  text-align: center;
-  cursor: not-allowed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/** 2. Secondary 버튼들 (2가지) **/
-
-/* 2-1. Secondary Small (92×39) - Primary Small과 같은 크기, 다른 스타일 */
-.secondary-small {
+/* Secondary 테마 */
+.secondary {
   background-color: var(--color-white);
   color: var(--color-purple-600);
   border: 1px solid var(--color-purple-600);
-  width: 92px;
-  height: 39px;
-  padding: 7px 16px;
-  border-radius: 6px;
-  font-size: var(--font-size-16);
-  font-weight: var(--font-weight-regular);
-  font-family: var(--font-family-base);
-  letter-spacing: -0.16px;
-  line-height: 26px;
-  text-align: center;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+  &:hover {
+    background-color: var(--color-purple-100);
+  }
+
+  &:active {
+    background-color: var(--color-purple-100);
+  }
+
+  &:focus {
+    outline: 1px solid var(--color-purple-800);
+  }
 }
 
-.secondary-small:hover {
-  background-color: var(--color-purple-100);
-}
-
-.secondary-small:active {
-  background-color: var(--color-purple-100);
-}
-
-.secondary-small:focus {
-  border: 1px solid var(--color-purple-800);
-}
-
-.secondary-small-disabled {
-  background-color: var(--color-gray-300);
-  color: var(--color-white);
-  border: 1px solid var(--color-gray-300);
-  width: 92px;
-  height: 39px;
-  padding: 7px 16px;
-  border-radius: 6px;
-  font-size: var(--font-size-16);
-  font-weight: var(--font-weight-regular);
-  font-family: var(--font-family-base);
-  letter-spacing: -0.16px;
-  line-height: 26px;
-  text-align: center;
-  cursor: not-allowed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* 2-2. Secondary Stretch (100%×56) - Secondary Small의 stretch 버전 */
-.secondary-stretch {
-  background-color: var(--color-white);
-  color: var(--color-purple-600);
-  border: 1px solid var(--color-purple-600);
-  width: 100%; /*  너비 100%로 변경 */
-  height: 56px; /*  높이 56px로 늘림 */
-  padding: 14px 24px;
-  border-radius: 12px;
-  font-size: var(--font-size-18);
-  font-weight: var(--font-weight-bold);
-  font-family: var(--font-family-base);
-  letter-spacing: -0.18px;
-  line-height: 28px;
-  text-align: center;
-  cursor: pointer;
-  transition: background-color 0.5s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.secondary-stretch:hover {
-  background-color: var(--color-purple-100);
-}
-
-.secondary-stretch:active {
-  background-color: var(--color-purple-100);
-}
-
-.secondary-stretch:focus {
-  border: 1px solid var(--color-purple-800);
-}
-
-.secondary-stretch-disabled {
-  background-color: var(--color-gray-300);
-  color: var(--color-white);
-  border: 1px solid var(--color-gray-300);
-  width: 100%; /*  너비만 100%로 변경 */
-  height: 56px;
-  padding: 14px 24px;
-  border-radius: 12px;
-  font-size: var(--font-size-18);
-  font-weight: var(--font-weight-bold);
-  font-family: var(--font-family-base);
-  letter-spacing: -0.18px;
-  line-height: 28px;
-  text-align: center;
-  cursor: not-allowed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/** 3. Outlined 버튼들 (4가지) **/
-
-/* 3-1. Outlined 40px 텍스트 (157×40) - 롤링 페이퍼 만들기 */
-.outlined-40-text {
+/* Outlined 테마 */
+.outlined {
   background-color: var(--color-white);
   color: var(--color-gray-900);
   border: 1px solid var(--color-gray-300);
-  width: 157px;
-  height: 40px;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: var(--font-size-16);
-  font-weight: var(--font-weight-regular);
-  font-family: var(--font-family-base);
-  line-height: 20px;
-  letter-spacing: -0.16px;
-  text-align: center;
   cursor: pointer;
   transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--color-gray-100);
+  }
+
+  &:active {
+    background-color: var(--color-gray-200);
+  }
+
+  &:focus {
+    outline: 1px solid var(--color-gray-500);
+  }
+}
+
+/* ================================================ */
+/* 2. SIZE 클래스들 (크기 스타일) */
+/* ================================================ */
+
+/* Large 사이즈 (56px 높이) - 기본 280px, 텍스트에 따라 무제한 확장 */
+.size-large {
+  min-width: 280px; /* 최소 280px */
+  width: fit-content; /* 텍스트에 맞춰 자동 조절 */
+  /* max-width 없음 - 텍스트에 따라 무제한 확장 */
+  height: 56px;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-size: var(--font-size-18);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-family-base);
+  letter-spacing: -0.18px;
+  line-height: 28px;
+  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.outlined-40-text:hover {
-  background-color: var(--color-gray-100);
+/* Medium 사이즈 (40px 높이) - 기본 120px, 텍스트에 따라 무제한 확장 */
+.size-medium {
+  min-width: 120px;
+  width: fit-content;
+  /* max-width 없음 - 텍스트에 따라 무제한 확장 */
+  height: 40px;
+  padding: 7px 16px;
+  border-radius: 6px;
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-regular);
+  font-family: var(--font-family-base);
+  letter-spacing: -0.16px;
+  line-height: 26px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.outlined-40-text:active {
-  background-color: var(--color-gray-100);
+/* Small 사이즈 (39px 높이) - 기본 92px, 텍스트에 따라 무제한 확장 */
+.size-small {
+  min-width: 92px;
+  width: fit-content;
+  /* max-width 없음 - 텍스트에 따라 무제한 확장 */
+  height: 39px;
+  padding: 7px 16px;
+  border-radius: 6px;
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-regular);
+  font-family: var(--font-family-base);
+  letter-spacing: -0.16px;
+  line-height: 26px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.outlined-40-text:focus {
-  border: 1px solid var(--color-gray-500);
+/* Stretch 사이즈 (전체 너비) */
+.size-stretch {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
-.outlined-40-text-disabled {
-  background-color: var(--color-gray-300);
-  color: var(--color-white);
-  border: 1px solid var(--color-gray-300);
-  cursor: not-allowed;
-  width: 157px;
+/* 40px 버튼 (Outlined 전용) - 기본 157px, 텍스트에 따라 무제한 확장 */
+.size-40 {
+  min-width: 92px;
+  width: fit-content;
+  /* max-width 없음 - 텍스트에 따라 무제한 확장 */
   height: 40px;
   padding: 8px 16px;
   border-radius: 6px;
@@ -384,52 +154,11 @@
   justify-content: center;
 }
 
-/* 3-2. Outlined 36px 아이콘+텍스트 (89×36) - 이모티콘+추가 */
-.outlined-36-text {
-  background-color: var(--color-white);
-  color: var(--color-gray-900);
-  border: 1px solid var(--color-gray-300);
-  width: 89px;
-  height: 36px;
-  padding: 6px 16px;
-  border-radius: 6px;
-  font-size: var(--font-size-16);
-  font-weight: var(--font-weight-medium);
-  font-family: var(--font-family-base);
-  line-height: 24px;
-  letter-spacing: -0.15px;
-  text-align: center;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-
-  img {
-    width: 24px;
-    height: 24px;
-  }
-}
-
-.outlined-36-text:hover {
-  background-color: var(--color-gray-100);
-}
-
-.outlined-36-text:active {
-  background-color: var(--color-gray-100);
-}
-
-.outlined-36-text:focus {
-  border: 1px solid var(--color-gray-500);
-}
-
-.outlined-36-text-disabled {
-  background-color: var(--color-gray-300);
-  color: var(--color-white);
-  border: 1px solid var(--color-gray-300);
-  cursor: not-allowed;
-  width: 89px;
+/* 36px 버튼 (Outlined 전용) - 기본 89px, 텍스트에 따라 무제한 확장 */
+.size-36 {
+  min-width: 89px;
+  width: fit-content;
+  /* max-width 없음 - 텍스트에 따라 무제한 확장 */
   height: 36px;
   padding: 6px 16px;
   border-radius: 6px;
@@ -443,116 +172,147 @@
   align-items: center;
   justify-content: center;
   gap: 3px;
-
-  img {
-    width: 24px;
-    height: 24px;
-  }
 }
 
-/* 3-3. Outlined 36px 아이콘만 (56×36) - 헤더 아이콘들 */
-.outlined-36-icon {
-  background-color: var(--color-white);
-  color: var(--color-gray-900);
-  border: 1px solid var(--color-gray-300);
-  width: 56px;
-  height: 36px;
+.size-32 {
+  min-width: 36px;
+  width: fit-content;
+  /* max-width 없음 - 텍스트에 따라 무제한 확장 */
+  height: 32px;
+  padding: 8px 8px;
   border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-family-base);
+  line-height: 24px;
+  letter-spacing: -0.15px;
+  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  img {
-    width: 24px;
-    height: 24px;
-  }
+  gap: 3px;
 }
 
-.outlined-36-icon:hover {
-  background-color: var(--color-gray-100);
-}
-
-.outlined-36-icon:active {
-  background-color: var(--color-gray-200);
-}
-
-.outlined-36-icon:focus {
-  border: 1px solid var(--color-gray-500);
-}
-
-.outlined-36-icon-disabled {
-  background-color: var(--color-gray-300);
-  border: 1px solid var(--color-gray-300);
-  cursor: not-allowed;
-  width: 56px;
-  height: 36px;
+/* 28px 버튼 (Outlined 전용) - 기본 80px, 텍스트에 따라 무제한 확장 */
+.size-28 {
+  min-width: 80px;
+  width: fit-content;
+  /* max-width 없음 - 텍스트에 따라 무제한 확장 */
+  height: 28px;
+  padding: 6px 16px;
   border-radius: 6px;
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-family-base);
+  line-height: 20px;
+  letter-spacing: -0.14px;
+  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 2px;
+}
+
+/* ================================================ */
+/* 3. 상태 클래스들 */
+/* ================================================ */
+
+/* Disabled 상태 */
+.disabled {
+  background-color: var(--color-gray-300) !important;
+  color: var(--color-white) !important;
+  border-color: var(--color-gray-300) !important;
+  cursor: not-allowed !important;
+
+  &:hover,
+  &:active,
+  &:focus {
+    background-color: var(--color-gray-300) !important;
+    color: var(--color-white) !important;
+    border-color: var(--color-gray-300) !important;
+  }
 
   img {
-    width: 24px;
-    height: 24px;
     filter: brightness(0) invert(1);
     opacity: 0.6;
   }
 }
 
-/* 3-4. Outlined 40px 아이콘만 (40×40) - 휴지통 삭제 */
-.outlined-40-icon {
-  background-color: var(--color-white);
-  color: var(--color-gray-900);
-  border: 1px solid var(--color-gray-300);
-  width: 40px;
-  height: 40px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Icon-only 상태 */
+.icon-only {
+  /* 아이콘 전용일 때 고정 너비 */
 
-  img {
-    width: 24px;
-    height: 24px;
+  &.size-40 {
+    min-width: 40px;
+    width: 40px;
+    max-width: 40px;
+  }
+
+  &.size-36 {
+    min-width: 56px;
+    width: 56px;
+    max-width: 56px;
+  }
+
+  &.size-32 {
+    min-width: 32px;
+    width: 32px;
+    max-width: 32px;
+    padding: 8px 6px;
+  }
+
+  &.size-28 {
+    min-width: 32px;
+    height: 32px;
+    max-width: 32px;
+    padding: 8px 6px;
   }
 }
 
-.outlined-40-icon:hover {
-  background-color: var(--color-gray-100);
+/* ================================================ */
+/* 4. 특별 조합 처리 */
+/* ================================================ */
+
+/* Primary + Stretch 조합 (56px 높이) */
+.primary.size-stretch {
+  height: 56px;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-size: var(--font-size-18);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-family-base);
+  letter-spacing: -0.18px;
+  line-height: 28px;
 }
 
-.outlined-40-icon:active {
-  background-color: var(--color-gray-200);
+/* Secondary + Stretch 조합 (39px 높이 유지) */
+.secondary.size-stretch {
+  height: 56px;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-size: var(--font-size-18);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.16px;
+  line-height: 26px;
 }
 
-.outlined-40-icon:focus {
-  border: 1px solid var(--color-gray-500);
+/* ================================================ */
+/* 5. 아이콘 스타일 */
+/* ================================================ */
+
+/* 아이콘 크기는 JavaScript에서 자동 설정되므로 여기서는 기본 스타일만 */
+.size-36 img,
+.size-40 img {
+  /* 24x24 아이콘 (JavaScript에서 설정) */
 }
 
-.outlined-40-icon-disabled {
-  background-color: var(--color-gray-300);
-  border: 1px solid var(--color-gray-300);
-  cursor: not-allowed;
-  width: 40px;
-  height: 40px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  img {
-    width: 24px;
-    height: 24px;
-    filter: brightness(0) invert(1);
-    opacity: 0.6;
-  }
+.size-28 img {
+  /* 20x20 아이콘 (JavaScript에서 설정) */
 }
 
-/* 전역 disabled 이미지 스타일 */
+/* ================================================ */
+/* 6. 전역 disabled 이미지 스타일 */
+/* ================================================ */
 button:disabled img {
   filter: brightness(0) invert(1);
   opacity: 0.8;

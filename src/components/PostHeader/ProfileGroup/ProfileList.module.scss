@@ -30,6 +30,12 @@
     flex-direction: column;
     justify-content: center;
   }
+  &__title {
+    padding: 5px;
+    text-align: center;
+    font-size: var(--font-size-16);
+    font-weight: var(--font-weight-bold);
+  }
 
   &__item {
     display: flex;
@@ -37,6 +43,7 @@
     padding: 8px 12px;
     cursor: pointer;
     justify-content: space-between;
+    gap: 5px;
     transition: background-color 0.2s ease;
 
     &:hover {
@@ -58,7 +65,7 @@
   }
 
   &__name {
-    font-size: var(--font-size-16);
+    font-size: var(--font-size-14);
     color: #333;
   }
   &__time {

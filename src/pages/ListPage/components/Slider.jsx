@@ -12,7 +12,7 @@ const Slider = ({ cards, hasNext, loadMore }) => {
   const { isDesktop, pageIndex, canPrev, canNext, goPrev, goNext } = useSliderPaging({
     totalItems: cards.length,
     pageSize: PAGE_SIZE,
-    breakpoint: 1200,
+    breakpoint: 1248,
   });
 
   // 데스크탑: 현재 페이지*4 ~ 페이지*4+4 슬라이스
@@ -32,7 +32,7 @@ const Slider = ({ cards, hasNext, loadMore }) => {
 
   return (
     <div className={styles.slider}>
-      {isDesktop && (
+      {isDesktop && canPrev && (
         <div className={styles['slider__arrow--left']}>
           <ArrowButton direction='left' onClick={goPrev} disabled={!canPrev} />
         </div>

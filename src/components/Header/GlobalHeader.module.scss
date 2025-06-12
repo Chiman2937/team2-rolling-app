@@ -2,6 +2,9 @@
   display: flex;
   justify-content: center;
   background-color: var(--color-white);
+  position: sticky;
+  top: 0; // 뷰포트 최상단에 붙임
+  z-index: 1000;
 
   &__container {
     display: flex;
@@ -11,32 +14,5 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 24px;
-  }
-  &__logo-link {
-    padding: 6px 12px;
-    border-radius: 6px;
-    transition: background-color 0.2s ease-in-out;
-    cursor: pointer;
-
-    &:hover {
-      background-color: var(--color-gray-100);
-    }
-  }
-  &__logo {
-    height: 30px;
-  }
-  // 임시 버튼입니다.
-  &__button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px 16px;
-    font-size: var(--font-size-16);
-    font-weight: var(--font-weight-medium);
-    font-family: var(--font-family-base);
-    height: var(--button-size-36);
-    background-color: var(--color-white);
-    border-radius: 6px;
-    border: 1px solid var(--color-gray-300);
   }
 }

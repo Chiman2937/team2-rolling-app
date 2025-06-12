@@ -1,14 +1,11 @@
 // src/hooks/useSliderPaging.js
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback } from 'react';
+import { useDeviceType } from '@/hooks/useDeviceType';
 
-export function useSliderPaging({ totalItems, pageSize, breakpoint = 1200 }) {
-  // 1) 뷰포트 모드(데스크톱/모바일) 감지
-  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= breakpoint);
-  useEffect(() => {
-    const handler = () => setIsDesktop(window.innerWidth >= breakpoint);
-    window.addEventListener('resize', handler);
-    return () => window.removeEventListener('resize', handler);
-  }, [breakpoint]);
+export function useSliderPaging({ totalItems, pageSize }) {
+  // deviceType을 통한 데스크톱 여부 감지
+  const deviceType = useDeviceType();
+  const isDesktop = deviceType === 'desktop';
 
   // 2) 페이지 인덱스 관리
   const [pageIndex, setPageIndex] = useState(0);
@@ -27,8 +24,8 @@ export function useSliderPaging({ totalItems, pageSize, breakpoint = 1200 }) {
   }, [canPrev]);
 
   const goNext = useCallback(() => {
-    if (canNext) setPageIndex((idx) => idx + 1);
-  }, [canNext]);
-
+    // 항상 페이지 인덱스를 1 증가
+    setPageIndex((idx) => idx + 1);
+  }, []);
   return { isDesktop, pageIndex, totalPage, canPrev, canNext, goPrev, goNext };
 }

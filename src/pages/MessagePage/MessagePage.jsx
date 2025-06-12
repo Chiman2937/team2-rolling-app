@@ -9,15 +9,15 @@ import Textfield from '@/components/Textfield';
 import Dropdown from '@/components/Dropdown/Dropdown';
 import ProfileSelector from './components/ProfileSelector';
 import styles from './MessagePage.module.scss';
-import Editor from '@/components/Editor/Editor';
 import { FONT_OPTIONS, FONT_DROPDOWN_ITEMS } from '@/constants/fontMap';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import Button from '@/components/Button/Button';
+import EditorWrapper from '@/pages/MessagePage/components/EditorWrapper';
 
 // 상대와의 관계 옵션
 const RELATIONSHIP_OPTIONS = ['친구', '지인', '동료', '가족'];
 
 function MessagePage() {
-  const [fontDropdownOpen, setFontDropdownOpen] = useState(false);
   const { showToast } = useToast();
   const navigate = useNavigate();
   const { id: recipientId } = useParams();
@@ -30,22 +30,27 @@ function MessagePage() {
     content: '',
     font: FONT_OPTIONS[0],
   };
-
-  // content 필드만 HTML 태그 제거 후 텍스트 길이 > 0 체크
+  // 유효성 검사 규칙 정의
   const validationRules = {
-    content: (html) => {
-      const div = document.createElement('div');
-      div.innerHTML = html;
-      // &nbsp; 같은 비문자 공백도 제거
-      const text = div.textContent.replace(/\u00a0/g, '').trim();
-      return text.length > 0;
-    },
+    sender: [
+      { test: (v) => v.trim() !== '', message: '이름은 필수입니다.' },
+      { test: (v) => v.trim().length <= 20, message: '이름은 20자 이내입니다.' },
+    ],
+    content: [
+      {
+        test: (html) => {
+          const div = document.createElement('div');
+          div.innerHTML = html;
+          const text = div.textContent.replace(/\u00a0/g, '').trim();
+          return text.length > 0;
+        },
+        message: '내용은 필수입니다.',
+      },
+    ],
   };
   // useForm 훅으로 모든 필드(특히 content) 값을 관리
-  const { values, validity, touched, handleChange, handleBlur, resetForm, isFormValid } = useForm(
-    initialValues,
-    validationRules,
-  );
+  const { values, errorMessages, fieldValidity, handleChange, handleBlur, resetForm, isFormValid } =
+    useForm(initialValues, validationRules);
 
   // 메시지 생성 API 호출을 위한 useApi 훅 사용
   const { data, loading, refetch } = useApi(createRecipientMessage, null, {
@@ -87,24 +92,27 @@ function MessagePage() {
       <form className={styles['message-page__form']} onSubmit={handleSubmit}>
         {/* 1) From (이름 입력) */}
         <div className={styles['message-page__field']}>
-          <label htmlFor='senderName' className={styles['message-page__label']}>
+          <label htmlFor='sender-input' className={styles['message-page__label']}>
             From.
           </label>
           <Textfield
+            id='sender-input'
             value={values.sender}
             placeholder='이름을 입력해 주세요.'
             onChange={handleChange('sender')}
             onBlur={handleBlur('sender')}
-            isValid={touched.sender ? validity.sender : null}
-            message='이름은 필수 입력 사항입니다.'
+            isValid={fieldValidity.sender}
+            message={errorMessages.sender}
             disabled={loading}
           />
         </div>
 
         {/* 2) 프로필 이미지 선택 */}
         <div className={styles['message-page__field']}>
-          <label className={styles['message-page__label']}>프로필 이미지</label>
-          <ProfileSelector onSelectImage={handleChange('profileImageURL')} />
+          <label htmlFor='profile-image' className={styles['message-page__label']}>
+            프로필 이미지
+          </label>
+          <ProfileSelector id='profile-image' onSelectImage={handleChange('profileImageURL')} />
         </div>
 
         {/* 3) 상대와의 관계 (select) */}
@@ -113,6 +121,7 @@ function MessagePage() {
             상대와의 관계
           </label>
           <Dropdown
+            id='relationship'
             value={values.relationship}
             dropdownItems={RELATIONSHIP_OPTIONS}
             onChange={handleChange('relationship')}
@@ -120,46 +129,47 @@ function MessagePage() {
           />
         </div>
 
-        {/* 4) 내용 (laxical Editor) */}
-        <div className={styles['message-page__field']}>
-          <label className={styles['message-page__label']}>내용을 입력해 주세요</label>
-          <div className={styles['message-page__editor-wrapper']}>
-            {/* 
-              Editor 컴포넌트에 content(HTML)와 onUpdate 콜백을 전달:
-              onUpdate(html) → handleChange('content')(html) 형태로 폼 값이 갱신됩니다.
-            */}
-            <Editor
-              content={values.content}
-              onUpdate={handleChange('content')}
-              font={values.font}
-            />
-          </div>
-        </div>
-
-        {/* 5) 폰트 선택 (select) */}
+        {/* 4) 폰트 선택 (select) */}
         <div className={styles['message-page__field']}>
           <label htmlFor='font' className={styles['message-page__label']}>
             폰트 선택
           </label>
           <Dropdown
+            id='font'
             dropdownItems={FONT_DROPDOWN_ITEMS}
             value={values.font}
             onChange={handleChange('font')}
             disabled={loading}
-            onOpenChange={setFontDropdownOpen}
+          />
+        </div>
+
+        {/* 5) 내용 (laxical Editor) */}
+        <div className={styles['message-page__field']}>
+          <label htmlFor='content-editor' className={styles['message-page__label']}>
+            내용을 입력해 주세요
+          </label>
+          <EditorWrapper
+            inputId='content-editor'
+            value={values.content}
+            onChange={handleChange('content')}
+            onBlur={handleBlur('content')}
+            isValid={fieldValidity.content}
+            message={errorMessages.content}
+            font={values.font}
           />
         </div>
 
         {/* 6) 전송 버튼 */}
         <div className={styles['message-page__actions']}>
-          {fontDropdownOpen && <div className={styles['message-page__spacer']} />}
-          <button
+          <Button
             type='submit'
+            variant='primary'
+            size='stretch'
             className={styles['message-page__submit']}
             disabled={!isFormValid || loading}
           >
             생성하기
-          </button>
+          </Button>
         </div>
       </form>
     </div>
