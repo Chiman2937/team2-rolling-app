@@ -34,38 +34,73 @@
   }
 
   /* 전송 버튼 영역 */
-  &__actions {
+  &__button-area {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  &__spacer {
-    height: 200px;
+    gap: 30px;
+
+    @include tablet {
+      flex-direction: row;
+      gap: 20px;
+    }
+
+    @include mobile {
+      flex-direction: row;
+      gap: 20px;
+    }
   }
 
   &__submit {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 14px 0;
     background-color: var(--color-purple-600);
-    color: var(--color-white);
-    padding: 0.75rem 2rem;
     border: none;
     border-radius: 12px;
-    font-size: 1rem;
-    font-weight: 600;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 28px;
+    color: var(--color-white);
     cursor: pointer;
-    transition: background-color 0.3s ease;
 
     &:hover {
       background-color: var(--color-purple-700);
     }
 
-    &:active {
-      background-color: var(--color-purple-800);
-    }
-
     &:disabled {
-      background-color: var(--color-gray-400);
+      background-color: var(--color-gray-300);
       cursor: not-allowed;
     }
+  }
+
+  &__back {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 14px 0;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-purple-600);
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 28px;
+    color: var(--color-purple-600);
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--color-purple-100);
+    }
+  }
+
+  &__button-logo {
+    aspect-ratio: 1;
+    width: 18px;
   }
 }

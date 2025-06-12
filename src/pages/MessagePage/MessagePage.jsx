@@ -13,6 +13,8 @@ import { FONT_OPTIONS, FONT_DROPDOWN_ITEMS } from '@/constants/fontMap';
 import { useEffect } from 'react';
 import Button from '@/components/Button/Button';
 import EditorWrapper from '@/pages/MessagePage/components/EditorWrapper';
+import logoIcon from '@/assets/icons/icon_logo_white.svg';
+import backIcon from '@/assets/icons/icon_back.svg';
 
 // 상대와의 관계 옵션
 const RELATIONSHIP_OPTIONS = ['친구', '지인', '동료', '가족'];
@@ -85,6 +87,11 @@ function MessagePage() {
 
     resetForm();
     navigate(`/post/${recipientId}`); // 실제 라우트에 맞게 수정
+  };
+
+  const handleGoBackClick = (e) => {
+    e.preventDefault();
+    navigate(-1);
   };
 
   return (
@@ -160,16 +167,19 @@ function MessagePage() {
         </div>
 
         {/* 6) 전송 버튼 */}
-        <div className={styles['message-page__actions']}>
-          <Button
-            type='submit'
-            variant='primary'
-            size='stretch'
+        <div className={styles['message-page__button-area']}>
+          <button
             className={styles['message-page__submit']}
             disabled={!isFormValid || loading}
+            type='submit'
           >
+            <img className={styles['message-page__button-logo']} src={logoIcon} />
             생성하기
-          </Button>
+          </button>
+          <button className={styles['message-page__back']} onClick={handleGoBackClick}>
+            <img className={styles['message-page__button-logo']} src={backIcon} />
+            돌아가기
+          </button>
         </div>
       </form>
     </div>

@@ -1,9 +1,18 @@
+.profile-selector__container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .profile-selector {
   width: 100%;
   display: flex;
   gap: 32px;
   align-items: center;
   justify-content: center;
+  @include mobile {
+    gap: 0;
+  }
 
   &__preview-container {
     display: flex;
@@ -31,6 +40,11 @@
     font-size: var(--font-size-16);
     font-weight: var(--font-weight-regular);
     color: var(--color-gray-500);
+    //텍스트 잘리지 않게
+    white-space: nowrap;
+    @include mobile {
+      margin-left: -40px;
+    }
   }
   &__images {
     gap: 4px;
