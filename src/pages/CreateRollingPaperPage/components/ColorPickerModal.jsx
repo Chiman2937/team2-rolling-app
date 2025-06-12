@@ -13,12 +13,20 @@ const ColorPickerModal = ({ initialColor = '#ffffff', onSubmit, onClose }) => {
     setColor(e.target.value);
   };
 
-  const handleColorCopyClick = () => {
+  const handleColorCopyClick = async () => {
     const isHexColor = (str) => /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/.test(str);
-    if (isHexColor(color)) {
-      showToast({ type: 'success', message: '복사 성공', timer: 1000 });
-    } else {
+
+    if (!isHexColor(color)) {
       showToast({ type: 'fail', message: '유효한 값이 아닙니다', timer: 1000 });
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(color);
+      showToast({ type: 'success', message: '복사 성공', timer: 1000 });
+    } catch (err) {
+      showToast({ type: 'fail', message: '복사 실패', timer: 1000 });
+      console.error(err);
     }
   };
 
