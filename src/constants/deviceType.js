@@ -5,8 +5,8 @@
  */
 export const DEVICE_TYPES = {
   PHONE: 'phone', // ≤ 640px
-  TABLET: 'tablet', // 641px ~ 1024px
-  DESKTOP: 'desktop', // > 1024px
+  TABLET: 'tablet', // 641px ~ 1247px
+  DESKTOP: 'desktop', // > 1248px
 };
 
 /**
@@ -16,7 +16,7 @@ export const DEFAULT_DEVICE_TYPE = DEVICE_TYPES.DESKTOP;
 
 export const BREAKPOINTS = {
   PHONE_MAX: 640,
-  TABLET_MAX: 1024,
+  TABLET_MAX: 1247,
 };
 
 /**

@@ -1,19 +1,13 @@
 .list {
-  min-height: 100dvh;
-  padding: 32px 20px;
+  width: 100%;
+  padding-bottom: 40rem;
   display: flex;
   justify-content: center;
   align-items: start;
 
-  @include tablet {
-    padding: 49px 24px;
-  }
-
-  @include desktop {
-    padding: 63px 24px;
-  }
-
   &__container {
+    padding: 32px 20px;
+    min-height: 100dvh;
     width: 45rem;
     box-sizing: border-box;
     display: flex;
@@ -22,8 +16,13 @@
     gap: 11px;
     max-width: var(--wrapper-width);
 
+    @include tablet {
+      padding: 49px 24px;
+    }
+
     @include desktop {
       width: 100%;
+      padding: 63px 24px;
     }
   }
 
@@ -56,17 +55,9 @@
 
 .skeleton-list {
   @include skeleton-style;
-  min-height: 100dvh;
-  padding: 32px 20px;
+  width: 100%;
+  padding-bottom: 40rem;
   display: flex;
   justify-content: center;
   align-items: start;
-
-  @include tablet {
-    padding: 49px 24px;
-  }
-
-  @include desktop {
-    padding: 62px 24px;
-  }
 }

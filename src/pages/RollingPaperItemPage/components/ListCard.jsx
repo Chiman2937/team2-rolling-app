@@ -50,7 +50,7 @@ const ListCard = ({ cardData, showDelete, onClick, onDelete }) => {
                 style={deleteIconStyle}
                 onClick={onClickDeleteBtn}
               >
-                <DeleteIcon />
+                <DeleteIcon width={24} />
               </Button>
             )}
           </header>
