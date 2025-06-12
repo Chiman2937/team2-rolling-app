@@ -42,6 +42,11 @@ export const useMessageItemsList = (id) => {
   /* 초기 호출인지 확인 */
   const isFirstCall = offset === 0;
 
+  /* 스크롤 위치 초기화 */
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   /* API 실행 후 데이터 세팅 */
   useEffect(() => {
     if (messageLoading || !messageList) return;
@@ -68,7 +73,7 @@ export const useMessageItemsList = (id) => {
 
   /* 스크롤 시 데이터 다시 불러옴  */
   const loadMore = () => {
-    if (messageLoading || !hasNext) return;
+    if (messageLoading || !hasNext || itemList.length === 0) return;
     const newOffset = isFirstCall ? offset + 8 : offset + 6;
     getMessageListRefetch({ recipientId: id, limit: 6, offset: newOffset });
     setOffset(newOffset);
