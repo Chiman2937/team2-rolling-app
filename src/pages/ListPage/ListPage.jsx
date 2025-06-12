@@ -37,7 +37,7 @@ const ListPage = () => {
     refetch: getRecentList,
   } = useApi(
     listRecipients,
-    { limit: 20, offset: recentOffset, sortLike: false },
+    { limit: 8, offset: recentOffset, sortLike: false },
     {
       errorMessage: '최근 롤링페이퍼 목록을 불러오는 데 실패했습니다.',
       retry: 1,
@@ -74,9 +74,9 @@ const ListPage = () => {
   // 최신 카드 추가 로드 함수
   const loadMoreRecent = () => {
     if (recentLoading || !recentHasNext) return;
-    const newOffset = recentOffset + 20;
+    const newOffset = recentOffset + 8;
     setRecentOffset(newOffset);
-    getRecentList({ limit: 20, offset: newOffset, sortLike: false });
+    getRecentList({ limit: 8, offset: newOffset, sortLike: false });
   };
 
   return (

@@ -13,12 +13,12 @@
     bottom: 24px;
   }
 
-  @media screen and (min-width: 1247px) {
+  @include desktop {
     position: static;
   }
 }
 
 .list__button {
   display: flex;
-  flex: 1;
+  gap: 10px;
 }

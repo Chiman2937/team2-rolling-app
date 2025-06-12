@@ -10,6 +10,9 @@ const ListCard = ({ cardData, showDelete, onClick, onDelete }) => {
 
   const deleteIconStyle = {
     color: 'var(--color-gray-500)',
+    minWidth: '36px',
+    width: '36px',
+    padding: '0px',
   };
 
   const formatDateKRW = (isoString) => {
@@ -45,12 +48,12 @@ const ListCard = ({ cardData, showDelete, onClick, onDelete }) => {
             {showDelete && (
               <Button
                 variant={'outlined'}
-                size={'40'}
+                size={'36'}
                 iconOnly={true}
                 style={deleteIconStyle}
                 onClick={onClickDeleteBtn}
               >
-                <DeleteIcon />
+                <DeleteIcon width={24} />
               </Button>
             )}
           </header>
