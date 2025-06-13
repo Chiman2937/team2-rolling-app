@@ -94,6 +94,11 @@ function MessagePage() {
     navigate(-1);
   };
 
+  /* 스크롤 위치 초기화 */
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className={styles['message-page']}>
       <form className={styles['message-page__form']} onSubmit={handleSubmit}>

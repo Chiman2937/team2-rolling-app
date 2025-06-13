@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './HomePage.module.scss';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,6 +12,11 @@ import Button from '@/components/Button/Button';
 
 const HomePage = () => {
   const navigate = useNavigate();
+
+  /* 스크롤 위치 초기화 */
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <main>

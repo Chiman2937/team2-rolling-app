@@ -79,6 +79,11 @@ const ListPage = () => {
     getRecentList({ limit: 8, offset: newOffset, sortLike: false });
   };
 
+  /* 스크롤 위치 초기화 */
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className={styles['list-page']}>
       {/* 인기 롤링 페이퍼 🔥 */}
