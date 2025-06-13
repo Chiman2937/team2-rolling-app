@@ -42,3 +42,4 @@ node_modules/
 # Optional: OS-specific
 Thumbs.db
 ehthumbs.db
+.env.local

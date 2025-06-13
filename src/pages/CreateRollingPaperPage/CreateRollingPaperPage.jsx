@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import BackgroundField from './components/BackgroundField';
 import ReceiverField from './components/ReceiverField';
 import styles from './CreateRollingPaperPage.module.scss';
@@ -76,6 +76,11 @@ const CreateRollingPaperPage = () => {
     e.preventDefault();
     navigate(-1);
   };
+
+  /* 스크롤 위치 초기화 */
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <section className={styles['post-section']}>
